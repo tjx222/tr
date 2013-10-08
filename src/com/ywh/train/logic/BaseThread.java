@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import com.ywh.train.ResManager;
+import com.ywh.train.Util;
 import com.ywh.train.gui.RobTicket;
 
 public abstract class BaseThread extends Thread {
@@ -56,18 +57,18 @@ public abstract class BaseThread extends Thread {
 	 */
 	private String getCode(byte[] image){
 		String randCodeByRob = "";
-//  	String[] vcode = new String[1];
-//		int ret = Util.dama2.d2Buf("694f40021a34f601b069a415cabf4d5d", "test", "test", image, (short)20, (long)42, vcode);
-//		if(ret > 0){
-//			randCodeByRob = vcode[0];
-//		}else{
-//			rob.console(ResManager.getString("dama2 error:"+ ret));
-//		}
+  	    String[] vcode = new String[1];
+		int ret = Util.dama2.d2Buf("694f40021a34f601b069a415cabf4d5d", "test", "test", image, (short)20, (long)42, vcode);
+		if(ret > 0){
+			randCodeByRob = vcode[0];
+		}else{
+			rob.console(ResManager.getString("dama2 error:"+ ret));
+		}
 		return randCodeByRob;
 	}
 
 	class CodeMouseAdapter extends MouseAdapter {
-		private String randCodeByRob;
+		private String randCodeByRob="";
 		private String url;
 
 		/**
@@ -84,7 +85,8 @@ public abstract class BaseThread extends Thread {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			byte[] image = client.getCodeByte(url);
-			randCodeByRob = getCode(image);
+			if(rob.isAutocode())
+				randCodeByRob = getCode(image);
 			JLabel label = (JLabel) e.getSource();
 			label.setIcon(new ImageIcon(image));
 			label.setText(ResManager.getString("LogicThread.26") + randCodeByRob); //$NON-NLS-1$
