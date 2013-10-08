@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.ywh.train.bean;
 
 /**
