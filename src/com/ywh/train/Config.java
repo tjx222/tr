@@ -7,8 +7,8 @@ import java.util.Properties;
 
 /**
  * 功能描述
- * @author YAOWENHAO
- * @since 2011-12-20 
+ * @author Tmser
+ * @since 2013-10-10 
  * @version 1.0
  */
 public class Config {

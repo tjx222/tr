@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -30,6 +32,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -217,7 +220,7 @@ public class RobTicket {
 	public RobTicket() {
 		initNetwork();
 		installCert();
-		initProxy();
+	//	initProxy();
 		initialize();
 		Runtime.getRuntime().addShutdownHook(new ExitThread());
 	}
@@ -345,7 +348,7 @@ public class RobTicket {
 		boxNeedRember.setToolTipText(ResManager.getString("RobTicket.boxNeedRember.Tip")); //$NON-NLS-1$
 		p1.add(boxNeedRember);
 		
-		btnLOGIN = new JButton(ResManager.getString("RobTicket.login")); //$NON-NLS-1$
+		btnLOGIN = new JButton(ResManager.getString("RobTicket.btnLogin")); //$NON-NLS-1$
 		btnLOGIN.setBounds(430, 2, 56, 23);
 		p1.add(btnLOGIN);
 		btnLOGIN.addActionListener(new LoginAction());
@@ -643,25 +646,31 @@ public class RobTicket {
 		menuBar.setBounds(0, 0, 518, 21);
 		frame.getContentPane().add(menuBar);
 
-		JMenu mnOpt = new JMenu(ResManager.getString("RobTicket.mnOpt")); //$NON-NLS-1$
+		JMenu mnOpt = new JMenu(ResManager.getString("RobTicket.mnOpt"));
 		menuBar.add(mnOpt);
 
-		JMenuItem miOpt = new JMenuItem(ResManager.getString("RobTicket.miOpt")); //$NON-NLS-1$
-		mnOpt.add(miOpt);
-		miOpt.addActionListener(new UseSkillAction(frame));
-
-		JMenuItem miExit = new JMenuItem(
-				ResManager.getString("RobTicket.miExit")); //$NON-NLS-1$
-		mnOpt.add(miExit);
-		miExit.addActionListener(new ExitAction());
-
+		JMenuItem miProxy = new JMenuItem(
+				ResManager.getString("RobTicket.miProxy"));
+		mnOpt.add(miProxy);
+		miProxy.addActionListener(new ProxySetAction(frame));
+		
+		JMenuItem miDama = new JMenuItem(
+				ResManager.getString("RobTicket.miDama"));
+		mnOpt.add(miDama);
+		miProxy.addActionListener(new DamaSetAction(frame));
+		
 		JMenu mnHelp = new JMenu(ResManager.getString("RobTicket.mnHelp")); //$NON-NLS-1$
 		menuBar.add(mnHelp);
-
+		
+		JMenuItem miOpt = new JMenuItem(ResManager.getString("RobTicket.miOpt")); //$NON-NLS-1$
+		mnHelp.add(miOpt);
+		miOpt.addActionListener(new UseSkillAction(frame));
+		
 		JMenuItem miAbout = new JMenuItem(
 				ResManager.getString("RobTicket.miAbout")); //$NON-NLS-1$
 		miAbout.addActionListener(new AboutAction(frame));
 		mnHelp.add(miAbout);
+		
 	}
 	
 	private void addButtons(){
@@ -1147,7 +1156,7 @@ private void selectUser(JList list){
 	class LoginAction implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			JButton btn = (JButton) e.getSource();
-			if (ResManager.getString("RobTicket.login").equals(btn.getText())) {
+			if (ResManager.getString("RobTicket.btnLogin").equals(btn.getText())) {
 				login();
 			} else {
 				loginTread.setEnd(true);
@@ -1342,5 +1351,53 @@ private void selectUser(JList list){
 				msg.toString(),ResManager.getString("RobTicket.UseSkillAction.title"),
 				JOptionPane.DEFAULT_OPTION);
 		}
+	}
+	
+	/**
+	 * 代理设置菜单类
+	 * @author tmser
+	 *
+	 */
+	static class ProxySetAction extends AbstractAction{
+		private static final long serialVersionUID = -798538352042404436L;
+		JFrame parentsFrame;
+
+		protected ProxySetAction(JFrame frame) {
+			this.parentsFrame = frame;
+		}
+
+		public void actionPerformed(ActionEvent e) {
+	        final JDialog dialog = new JDialog(parentsFrame,
+	                ResManager.getString("RobTicket.miProxy"),
+	                true);
+//			dialog.setDefaultCloseOperation(
+//			JDialog.DO_NOTHING_ON_CLOSE);
+	        dialog.pack();
+            dialog.setLocationRelativeTo(parentsFrame);
+            dialog.setVisible(true);
+		}
+
+	}
+	
+	static class DamaSetAction extends AbstractAction{
+		/** 字段注释 */
+		private static final long serialVersionUID = -7920604352042404436L;
+		JFrame parentsFrame;
+
+		protected DamaSetAction(JFrame frame) {
+			this.parentsFrame = frame;
+		}
+
+		public void actionPerformed(ActionEvent e) {
+	        final JDialog dialog = new JDialog(parentsFrame,
+	                ResManager.getString("RobTicket.miDama"),
+	                true);
+//			dialog.setDefaultCloseOperation(
+//			JDialog.DO_NOTHING_ON_CLOSE);
+	        dialog.pack();
+            dialog.setLocationRelativeTo(parentsFrame);
+            dialog.setVisible(true);
+		}
+
 	}
 }
