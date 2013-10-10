@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
  * @version 1.0
  */
 public class ResManager {
-	private static final String BUNDLE_NAME = "resources.ticketrob"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "resources.ticketrob";
 	private static final String IMAGES_PATH = "/resources/images/";
 
 	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle

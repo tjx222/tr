@@ -40,6 +40,10 @@ public class Config {
 		return "true".equals(getProperty("proxyset"));
 	}
 	
+	public static boolean isUseDama() {
+		return "true".equals(getProperty("damaset"));
+	}
+	
 	public static String getProxyIp() {
 		return getProperty("proxyhost");
 	}
@@ -48,81 +52,24 @@ public class Config {
 		return Integer.parseInt(getProperty("proxyport"));
 	}
 	
-	public static String getTrainCode() {
-		return getProperty("traincode").trim();
-	}
-	
 	public static int getSleepTime() {
 		return Integer.parseInt(getProperty("sleeptime"));
 	}
 	
-	public static String getAccount() {
-		return getProperty("account").trim();
-	}
-	
 	public static String getPassword() {
-		return getProperty("password").trim();
+		return getProperty("dama.password").trim();
 	}
 	
-	public static String[] getUserInfoNames() {
-		String s = getProperty("userinfonames").trim();
-		if(s.equals("")) return null;
-		else return s.split("\\|");
+	public static String getUserName() {
+		return getProperty("dama.username").trim();
 	}
 	
-	public static String[] getUserInfoIDs() {
-		String s = getProperty("userinfoids").trim();
-		if(s.equals("")) return null;
-		else return s.split("\\|");
-	}
-	
-	public static String[] getUserInfoPhones() {
-		String s = getProperty("userinfophones").trim();
-		if(s.equals("")) return null;
-		else return s.split("\\|");
-	}
-	
-	public static String[] getUserInfoCardTypes() {
-		String s = getProperty("userinfocardtype").trim();
-		if(s.equals("")) return null;
-		else return s.split("\\|");
-	}
-	
-	public static String getRangTime() {
-		return getProperty("rangtime").trim();
-	}
-	
-	public static String getTicketType() {
-		return getProperty("tickettype").trim();
-	}
-	
-	public static String getStartDate() {
-		return getProperty("date").trim();
-	}
-	
-	public static String getFromStation() {
-		return getProperty("from").trim();
-	}
-	
-	public static String getToStation() {
-		return getProperty("to").trim();
-	}
-	
+
 	public static void main(String[] args) {
 		System.out.println(isUseProxy());
 		System.out.println(getProxyIp());
 		System.out.println(getProxyPort());
 		System.out.println(getSleepTime());
-		System.out.println(getTrainCode());
-		System.out.println(getAccount());
 		System.out.println(getPassword());
-		System.out.println(getUserInfoNames());
-		System.out.println(getUserInfoIDs());
-		System.out.println(getUserInfoPhones());
-		System.out.println(getUserInfoCardTypes());
-		System.out.println(getRangTime());
-		System.out.println(getStartDate());
-		System.out.println(getFromStation());
-		System.out.println(getToStation());
 	}
 }

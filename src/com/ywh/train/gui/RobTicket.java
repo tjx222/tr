@@ -1,10 +1,8 @@
 package com.ywh.train.gui;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,14 +25,11 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import javax.swing.AbstractAction;
-import javax.swing.Box;
-import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -325,7 +320,7 @@ public class RobTicket {
 		p1.add(label);
 		label.setHorizontalAlignment(SwingConstants.RIGHT);
 
-		txtUsername = new JTextField(Config.getAccount());
+		txtUsername = new JTextField();
 		txtUsername.setToolTipText(ResManager
 				.getString("RobTicket.txtUsernameTip")); //$NON-NLS-1$
 		txtUsername.setBounds(59, 2, 91, 21);
@@ -418,7 +413,6 @@ public class RobTicket {
 
 		ticketRang = new JComboBox(Constants.getTicketType());
 		ticketRang.setBounds(395, 19, 92, 21);
-		ticketRang.setSelectedItem(Config.getTicketType());
 		panel_1.add(ticketRang);
 		
 		
@@ -469,7 +463,6 @@ public class RobTicket {
 		boxoRang = new JComboBox(Constants.getRangTime());
 		boxoRang.setToolTipText(ResManager.getString("RobTicket.boxoRangTip")); //$NON-NLS-1$
 		boxoRang.setBounds(79, 21, 92, 21);
-		boxoRang.setSelectedItem(Config.getRangTime());
 		panel_1.add(boxoRang);
 		
 		JLabel label_6 = new JLabel(
@@ -491,7 +484,6 @@ public class RobTicket {
 		txtStartDate.setBounds(342, 21, 84, 21);
 		panel_1.add(txtStartDate);
 		txtStartDate.setColumns(10);
-		txtStartDate.setText(Config.getStartDate());
 
 		JLabel label_4 = new JLabel(
 				ResManager.getString("RobTicket.txtFromStation")); //$NON-NLS-1$
@@ -505,7 +497,6 @@ public class RobTicket {
 		txtFromStation.setBounds(79, 46, 92, 21);
 		panel_1.add(txtFromStation);
 		txtFromStation.setColumns(10);
-		txtFromStation.setText(Config.getFromStation());
 
 		JLabel label_7 = new JLabel(
 				ResManager.getString("RobTicket.txtToStation")); //$NON-NLS-1$
@@ -519,7 +510,6 @@ public class RobTicket {
 		txtToStation.setBounds(342, 46, 84, 21);
 		panel_1.add(txtToStation);
 		txtToStation.setColumns(10);
-		txtToStation.setText(Config.getToStation());
 		
 		JLabel label_10 = new JLabel(ResManager.getString("RobTicket.label_10")); //$NON-NLS-1$
 		label_10.setBounds(10, 73, 63, 15);
@@ -667,6 +657,8 @@ public class RobTicket {
 		JMenuItem miOpt = new JMenuItem(ResManager.getString("RobTicket.miOpt")); //$NON-NLS-1$
 		mnHelp.add(miOpt);
 		miOpt.addActionListener(new UseSkillAction(frame));
+		ImageIcon helpIco = ResManager.createImageIcon("help.gif");
+		miOpt.setIcon(helpIco);
 		
 		JMenuItem miAbout = new JMenuItem(
 				ResManager.getString("RobTicket.miAbout")); //$NON-NLS-1$
@@ -1353,97 +1345,5 @@ private void selectUser(JList list){
 				msg.toString(),ResManager.getString("RobTicket.UseSkillAction.title"),
 				JOptionPane.DEFAULT_OPTION);
 		}
-	}
-	
-	/**
-	 * 代理设置菜单类
-	 * @author tmser
-	 *
-	 */
-	static class ProxySetAction extends AbstractAction{
-		private static final long serialVersionUID = -798538352042404436L;
-		JFrame parentsFrame;
-		JRadioButton rbEnableProxy,rbDisableProxy;
-
-		protected ProxySetAction(JFrame frame) {
-			this.parentsFrame = frame;
-		}
-
-		public void actionPerformed(ActionEvent e) {
-	        final JDialog dialog = new JDialog(parentsFrame,
-	                ResManager.getString("RobTicket.miProxy"),
-	                true);
-//			dialog.setDefaultCloseOperation(
-//			JDialog.DO_NOTHING_ON_CLOSE);
-	        JPanel panelProxy = new JPanel();
-	        panelProxy.setLayout(new BorderLayout(5,5));
-			Box vBox = Box.createVerticalBox();
-			vBox.setBorder(new TitledBorder(ResManager
-					.getString("RobTicket.panelProxyName"))); 
-			ButtonGroup group = new ButtonGroup();
-			
-			rbEnableProxy = new JRadioButton(ResManager
-					.getString("RobTicket.rbEnableProxy"),Config.isUseProxy());
-			
-			rbDisableProxy = new JRadioButton(ResManager
-					.getString("RobTicket.rbDisableProxy"),!Config.isUseProxy());
-			group.add(rbDisableProxy);
-			group.add(rbEnableProxy);
-			
-			vBox.add(rbDisableProxy);
-			vBox.add(Box.createVerticalStrut(5));
-			vBox.add(rbEnableProxy);
-			
-			Box vBox1 = Box.createVerticalBox();
-			
-			Box hBox = Box.createHorizontalBox();
-			JLabel lbProxyIp = new JLabel(ResManager.getString("RobTicket.lbProxyIp")+":");
-			JTextField txtProxyIp = new JTextField(Config.getProxyIp(),16);
-			hBox.add(lbProxyIp);
-			hBox.add(Box.createHorizontalStrut(32));
-			hBox.add(txtProxyIp);
-			
-			Box hBoxport = Box.createHorizontalBox();
-			JLabel lbProxyPort = new JLabel(ResManager.getString("RobTicket.lbProxyPort")+":");
-			JTextField txtProxyPort = new JTextField(Config.getProxyPort()+"",16);
-			hBoxport.add(lbProxyPort);
-			hBoxport.add(Box.createHorizontalStrut(20));
-			hBoxport.add(txtProxyPort);
-			
-			vBox1.add(hBox);
-			vBox1.add(Box.createVerticalStrut(5));
-			vBox1.add(hBoxport);
-			
-			panelProxy.add(vBox,BorderLayout.NORTH);
-			panelProxy.add(vBox1,BorderLayout.NORTH);
-			
-			dialog.setContentPane(panelProxy);
-			dialog.setSize(new Dimension(300,250));
-            dialog.setLocationRelativeTo(parentsFrame);
-            dialog.setVisible(true);
-		}
-
-	}
-	
-	static class DamaSetAction extends AbstractAction{
-		/** 字段注释 */
-		private static final long serialVersionUID = -7920604352042404436L;
-		JFrame parentsFrame;
-
-		protected DamaSetAction(JFrame frame) {
-			this.parentsFrame = frame;
-		}
-
-		public void actionPerformed(ActionEvent e) {
-	        final JDialog dialog = new JDialog(parentsFrame,
-	                ResManager.getString("RobTicket.miDama"),
-	                true);
-//			dialog.setDefaultCloseOperation(
-//			JDialog.DO_NOTHING_ON_CLOSE);
-	        dialog.pack();
-            dialog.setLocationRelativeTo(parentsFrame);
-            dialog.setVisible(true);
-		}
-
 	}
 }
