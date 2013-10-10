@@ -1,7 +1,9 @@
 package com.ywh.train.gui;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
@@ -12,6 +14,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -21,12 +24,17 @@ import com.ywh.train.Config;
 import com.ywh.train.ResManager;
 
 class DamaSetAction extends AbstractAction{
+	public static final String LOGIN_PANEL = "login_panel";
+	public static final String SUCC_PANEL = "succ_panel";
+	
 	/** 字段注释 */
 	private static final long serialVersionUID = -7920604352042404436L;
 	JFrame parentsFrame;
 	JRadioButton rbEnableDama,rbDisableDama;
-	JButton btnApply;
-
+	JButton btnApply,btnLogin,btnReg;
+	CardLayout card;
+	JPanel panel;
+	
 	protected DamaSetAction(JFrame frame) {
 		this.parentsFrame = frame;
 	}
@@ -39,7 +47,7 @@ class DamaSetAction extends AbstractAction{
         panelProxy.setLayout(new BorderLayout(10,5));
 		Box vBox = Box.createVerticalBox();
 		vBox.setBorder(new TitledBorder(ResManager
-				.getString("RobTicket.panelProxyName"))); 
+				.getString("RobTicket.panelDama"))); 
 		ButtonGroup group = new ButtonGroup();
 		
 		rbEnableDama = new JRadioButton(ResManager
@@ -56,33 +64,51 @@ class DamaSetAction extends AbstractAction{
 		
 		Box vBox1 = Box.createVerticalBox();
 		
+		card = new CardLayout();
+		panel = new JPanel(card);
+		panel.setBorder(new TitledBorder(ResManager
+				.getString("RobTicket.panelBorderName")));
+	
 		Box hBox = Box.createHorizontalBox();
 		JLabel lbDamaUsername = new JLabel(ResManager.getString("RobTicket.txtUsername"));
-		JTextField txtDamaUsername = new JTextField(Config.getProxyIp(),16);
+		JTextField txtDamaUsername = new JTextField(Config.getUserName(),16);
 		hBox.add(lbDamaUsername);
 		hBox.add(Box.createHorizontalStrut(14));
 		hBox.add(txtDamaUsername);
 		
 		Box hBoxport = Box.createHorizontalBox();
 		JLabel lbDamaPass = new JLabel(ResManager.getString("RobTicket.txtPassword"));
-		JTextField txtDamaPass = new JTextField(Config.getProxyPort()+"",16);
+		JPasswordField txtDamaPass = new JPasswordField(Config.getPassword(),16);
 		hBoxport.add(lbDamaPass);
 		hBoxport.add(Box.createHorizontalStrut(20));
 		hBoxport.add(txtDamaPass);
 		
+		JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,10,2));
+		btnLogin = new JButton(ResManager.getString("RobTicket.btnLogin"));
+		btnReg = new JButton(ResManager.getString("RobTicket.btnReg"));
+		btnPanel.add(btnLogin);
+		btnPanel.add(btnReg);
+		
 		vBox1.add(hBox);
 		vBox1.add(Box.createVerticalStrut(5));
 		vBox1.add(hBoxport);
+		vBox1.add(Box.createVerticalStrut(5));
+		vBox1.add(btnPanel);
+		vBox1.setBorder(new EmptyBorder(5,5,5,5));
 		
+		panel.add(vBox1,LOGIN_PANEL);
+		
+		JPanel plApply = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		btnApply = new JButton(ResManager.getString("RobTicket.btnApply"));
+		plApply.add(btnApply);
 		
 		panelProxy.setBorder(new EmptyBorder(10, 10, 10, 10));
 		panelProxy.add(vBox,BorderLayout.NORTH);
-		panelProxy.add(vBox1);
-		panelProxy.add(btnApply,BorderLayout.SOUTH);
+		panelProxy.add(panel);
+		panelProxy.add(plApply,BorderLayout.SOUTH);
 		
 		dialog.setContentPane(panelProxy);
-		dialog.setSize(new Dimension(300,240));
+		dialog.setSize(new Dimension(300,260));
         dialog.setLocationRelativeTo(parentsFrame);
         dialog.setVisible(true);
 	}

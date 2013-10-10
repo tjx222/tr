@@ -50,6 +50,7 @@ import javax.swing.SwingConstants;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.MaskFormatter;
 
@@ -351,7 +352,7 @@ public class RobTicket {
 		btnLOGIN.addActionListener(new LoginAction());
 		
 		panel.add(p1,LOGIN_BEGIN); //登陆界面
-		
+
 		labLoginInfo = new JLabel();
 		labLoginInfo.setBounds(12, 4, 343, 15);
 		p2.add(labLoginInfo);
