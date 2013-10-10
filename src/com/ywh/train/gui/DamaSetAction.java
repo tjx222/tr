@@ -31,9 +31,10 @@ class DamaSetAction extends AbstractAction{
 	private static final long serialVersionUID = -7920604352042404436L;
 	JFrame parentsFrame;
 	JRadioButton rbEnableDama,rbDisableDama;
-	JButton btnApply,btnLogin,btnReg;
+	JButton btnApply,btnLogin,btnReg,btnCharge,btnBuyCard;
 	CardLayout card;
 	JPanel panel;
+	JLabel lbMsg;
 	
 	protected DamaSetAction(JFrame frame) {
 		this.parentsFrame = frame;
@@ -96,7 +97,24 @@ class DamaSetAction extends AbstractAction{
 		vBox1.add(btnPanel);
 		vBox1.setBorder(new EmptyBorder(5,5,5,5));
 		
+		Box vBox2 = Box.createVerticalBox();
+		
+		lbMsg = new JLabel();
+		btnCharge = new JButton();
+		btnBuyCard = new JButton();
+		
+		JPanel btnPanel1 = new JPanel(new FlowLayout(FlowLayout.CENTER,10,2));
+		btnPanel1.add(btnCharge);
+		btnPanel1.add(btnBuyCard);
+		
+		vBox2.add(lbMsg);
+		vBox2.add(Box.createVerticalStrut(5));
+		vBox2.add(btnPanel1);
+		vBox2.setBorder(new EmptyBorder(5,5,5,5));
+		
 		panel.add(vBox1,LOGIN_PANEL);
+		panel.add(vBox2,SUCC_PANEL);
+		card.show(panel,SUCC_PANEL);
 		
 		JPanel plApply = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		btnApply = new JButton(ResManager.getString("RobTicket.btnApply"));
@@ -108,7 +126,7 @@ class DamaSetAction extends AbstractAction{
 		panelProxy.add(plApply,BorderLayout.SOUTH);
 		
 		dialog.setContentPane(panelProxy);
-		dialog.setSize(new Dimension(300,260));
+		dialog.setSize(new Dimension(300,290));
         dialog.setLocationRelativeTo(parentsFrame);
         dialog.setVisible(true);
 	}
