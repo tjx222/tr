@@ -16,7 +16,6 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 import org.htmlparser.Attribute;
 import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;
@@ -27,10 +26,14 @@ import org.htmlparser.filters.TagNameFilter;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
 import org.htmlparser.visitors.NodeVisitor;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import cn.smy.dama2.Dama2;
 
 import com.ywh.train.bean.TrainQueryInfo;
+import com.ywh.train.bean.UserInfo;
 
 /**
  * 功能描述
@@ -122,25 +125,6 @@ public class Util {
 				TrainQueryInfo tqi = new TrainQueryInfo();
 				tqi.setTrainDate(startDate);
 				try {
-				/*
-				 * 火车票相关信息，可以通过input 按钮获取。
-				 *	parserSpan(st[i++], tqi);
-					String temp2[] = st[i++].split("<br>");
-					if (temp2[0].startsWith("<img")) {
-						tqi.setFromStation(temp2[0].split(">")[1]);
-					} else {
-						tqi.setFromStation(temp2[0]);
-					}
-					tqi.setStartTime(temp2[1]);
-					String temp3[] = st[i++].split("<br>");
-					if (temp3[0].startsWith("<img")) {
-						tqi.setToStation(temp3[0].split(">")[1]);
-					} else {
-						tqi.setToStation(temp3[0]);
-					}
-					tqi.setEndTime(temp3[1]);
-					tqi.setTakeTime(st[i++]);
-					*/
 					i+=4;
 					tqi.setBuss_seat(parserFont(st[i++]));
 					tqi.setBest_seat(parserFont(st[i++]));
@@ -163,6 +147,35 @@ public class Util {
 				}
 			} else {
 				i++;
+			}
+		}
+		return tqis;
+	}
+	
+	/**
+	 * 查询返回字符对象化
+	 * 
+	 * @param response
+	 * @return
+	 */
+	public static List<UserInfo> parserUserInfo(String response) {
+		List<UserInfo> tqis = new ArrayList<UserInfo>();
+		if(response != null && response.startsWith("{")){
+			try {
+				JSONObject rs = new JSONObject(response);
+				JSONArray contacts = rs.getJSONArray("rows");
+				for(int i= 0;i<contacts.length();i++){
+					JSONObject jo = contacts.getJSONObject(i);
+					UserInfo u = new UserInfo();
+					u.setCardType(jo.getString("passenger_id_type_code"));
+					u.setID(jo.getString("passenger_id_no"));
+					u.setName(jo.getString("passenger_name"));
+					u.setPhone(jo.getString("mobile_no"));
+					u.setTickType(jo.getString("passenger_type"));
+					tqis.add(u);
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
 			}
 		}
 		return tqis;
@@ -343,25 +356,25 @@ public class Util {
 		return MessageFormat.format(pattern, argumentStr);
 	}
 
-	// public static void main(String[] args) {
-	// System.out.println(getCityCode("太原"));
-	// System.out.println(getHour2Min("09:13"));
-	// }
-	
+
 	public static void main(String[] args) throws Exception {
 		//String html="0,<span id='id_240000T14500' class='base_txtdiv' onmouseover=javascript:onStopHover('240000T14500#BJP#PXG') onmouseout='onStopOut()'>T145</span>,<img src='/otsweb/images/tips/first.gif'>北京<br>12:09,萍乡<br>06:51,18:42,--,--,--,--,--,<font color='darkgray'>无</font>,<font color='darkgray'>无</font>,--,<font color='#008800'>有</font>,<font color='#008800'>有</font>,--,<input type='button' class='yuding_u' onmousemove=this.className='yuding_u_over' onmousedown=this.className='yuding_u_down' onmouseout=this.className='yuding_u' onclick=javascript:getSelected('T145#18:42#12:09#240000T14500#BJP#PXG#06:51#北京#萍乡#1*****30754*****00001*****04293*****0000#8950D43445E29A496A7F868A209DD2295FAFE47A61734FCF8D3B98E1') value='预订'></input>";
 		//String s = "{\"errMsg\":\"Y\"}";
 		//System.out.println(s.contains("Y"));
 		//System.out.println(getRoundDate());
 		//System.out.println(parserQueryInfo(html,"20121102").get(0).toString());
-		File f = new File("d:\\html.txt");
-		BufferedReader fis = new BufferedReader(new FileReader(f));
-		StringBuilder sb = new StringBuilder();
-		String line = null;
-		while((line = fis.readLine())!= null){
-			sb.append(line);
+//		File f = new File("d:\\html.txt");
+//		BufferedReader fis = new BufferedReader(new FileReader(f));
+//		StringBuilder sb = new StringBuilder();
+//		String line = null;
+//		while((line = fis.readLine())!= null){
+//			sb.append(line);
+//		}
+		String response = "{\"recordCount\":8,\"rows\":[{\"address\":\"\",\"born_date\":{\"date\":6,\"day\":1,\"hours\":0,\"minutes\":0,\"month\":7,\"seconds\":0,\"time\":460569600000,\"timezoneOffset\":-480,\"year\":84},\"code\":\"1\",\"country_code\":\"CN\",\"email\":\"\",\"first_letter\":\"LSQ\",\"isUserSelf\":\"N\",\"mobile_no\":\"13120194361\",\"old_passenger_id_no\":\"\",\"old_passenger_id_type_code\":\"\",\"old_passenger_name\":\"\",\"passenger_flag\":\"0\",\"passenger_id_no\":\"360321198408065032\",\"passenger_id_type_code\":\"1\",\"passenger_id_type_name\":\"二代身份证\",\"passenger_name\":\"刘松青\",\"passenger_type\":\"1\",\"passenger_type_name\":\"成人\",\"phone_no\":\"\",\"postalcode\":\"\",\"recordCount\":\"8\",\"sex_code\":\"M\",\"sex_name\":\"男\",\"studentInfo\":null},{\"address\":\"\",\"born_date\":{\"date\":17,\"day\":2,\"hours\":11,\"minutes\":9,\"month\":0,\"seconds\":32,\"time\":1326769772493,\"timezoneOffset\":-480,\"year\":112},\"code\":\"2\",\"country_code\":\"\",\"email\":\"\",\"first_letter\":\"WDJ\",\"isUserSelf\":\"N\",\"mobile_no\":\"13671246705\",\"old_passenger_id_no\":\"\",\"old_passenger_id_type_code\":\"\",\"old_passenger_name\":\"\",\"passenger_flag\":\"0\",\"passenger_id_no\":\"411424198410249236\",\"passenger_id_type_code\":\"1\",\"passenger_id_type_name\":\"二代身份证\",\"passenger_name\":\"王东杰\",\"passenger_type\":\"1\",\"passenger_type_name\":\"成人\",\"phone_no\":\"\",\"postalcode\":\"\",\"recordCount\":\"8\",\"sex_code\":\"\",\"sex_name\":\"\",\"studentInfo\":null}]}";
+		List<UserInfo> ls = parserUserInfo(response);
+		for(UserInfo u : ls){
+			System.out.println(u.toString());
 		}
-		
-		System.out.println(parserTagValue(sb.toString(),"input","org.apache.struts.taglib.html.TOKEN"));
+		//System.out.println(parserTagValue(sb.toString(),"input","org.apache.struts.taglib.html.TOKEN"));
 	}
 }

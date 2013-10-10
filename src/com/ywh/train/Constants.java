@@ -59,6 +59,9 @@ public class Constants {
 	public static String CHECK_ORDER_URL = "https://dynamic.12306.cn/otsweb/order/confirmPassengerAction.do?method=checkOrderInfo&rand=";
 	
 	public static String LOGIN_OUT_URL = "https://dynamic.12306.cn/otsweb/loginAction.do?method=logout";
+	
+	public static String TOP_CONTACTS_URL = "https://dynamic.12306.cn/otsweb/passengerAction.do?method=getPagePassengerAll";
+	
 	public static String BUSS_SEAT = "9"; // 商务座
 	public static String BEST_SEAT = "p";// 特等座(余票)
 	public static String ONE_SEAT = "M";// 一等座(余票)
