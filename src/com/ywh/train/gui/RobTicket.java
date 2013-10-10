@@ -1,15 +1,15 @@
 package com.ywh.train.gui;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -27,8 +27,6 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import javax.swing.AbstractAction;
-import javax.swing.Box;
-import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -45,7 +43,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -67,6 +64,7 @@ import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.PoolingClientConnectionManager;
+
 
 import com.ice.jni.registry.RegDWordValue;
 import com.ice.jni.registry.RegStringValue;
@@ -659,7 +657,7 @@ public class RobTicket {
 		JMenuItem miDama = new JMenuItem(
 				ResManager.getString("RobTicket.miDama"));
 		mnOpt.add(miDama);
-		miDama.addActionListener(new DamaSetAction(frame));
+		miProxy.addActionListener(new DamaSetAction(frame));
 		
 		JMenu mnHelp = new JMenu(ResManager.getString("RobTicket.mnHelp")); //$NON-NLS-1$
 		menuBar.add(mnHelp);
@@ -1363,7 +1361,6 @@ private void selectUser(JList list){
 	static class ProxySetAction extends AbstractAction{
 		private static final long serialVersionUID = -798538352042404436L;
 		JFrame parentsFrame;
-		JRadioButton rbEnableProxy,rbDisableProxy;
 
 		protected ProxySetAction(JFrame frame) {
 			this.parentsFrame = frame;
@@ -1375,50 +1372,7 @@ private void selectUser(JList list){
 	                true);
 //			dialog.setDefaultCloseOperation(
 //			JDialog.DO_NOTHING_ON_CLOSE);
-	        JPanel panelProxy = new JPanel();
-	        panelProxy.setLayout(new BorderLayout(5,5));
-			Box vBox = Box.createVerticalBox();
-			vBox.setBorder(new TitledBorder(ResManager
-					.getString("RobTicket.panelProxyName"))); 
-			ButtonGroup group = new ButtonGroup();
-			
-			rbEnableProxy = new JRadioButton(ResManager
-					.getString("RobTicket.rbEnableProxy"),Config.isUseProxy());
-			
-			rbDisableProxy = new JRadioButton(ResManager
-					.getString("RobTicket.rbDisableProxy"),!Config.isUseProxy());
-			group.add(rbDisableProxy);
-			group.add(rbEnableProxy);
-			
-			vBox.add(rbDisableProxy);
-			vBox.add(Box.createVerticalStrut(5));
-			vBox.add(rbEnableProxy);
-			
-			Box vBox1 = Box.createVerticalBox();
-			
-			Box hBox = Box.createHorizontalBox();
-			JLabel lbProxyIp = new JLabel(ResManager.getString("RobTicket.lbProxyIp")+":");
-			JTextField txtProxyIp = new JTextField(Config.getProxyIp(),16);
-			hBox.add(lbProxyIp);
-			hBox.add(Box.createHorizontalStrut(32));
-			hBox.add(txtProxyIp);
-			
-			Box hBoxport = Box.createHorizontalBox();
-			JLabel lbProxyPort = new JLabel(ResManager.getString("RobTicket.lbProxyPort")+":");
-			JTextField txtProxyPort = new JTextField(Config.getProxyPort()+"",16);
-			hBoxport.add(lbProxyPort);
-			hBoxport.add(Box.createHorizontalStrut(20));
-			hBoxport.add(txtProxyPort);
-			
-			vBox1.add(hBox);
-			vBox1.add(Box.createVerticalStrut(5));
-			vBox1.add(hBoxport);
-			
-			panelProxy.add(vBox,BorderLayout.NORTH);
-			panelProxy.add(vBox1,BorderLayout.NORTH);
-			
-			dialog.setContentPane(panelProxy);
-			dialog.setSize(new Dimension(300,250));
+	        dialog.pack();
             dialog.setLocationRelativeTo(parentsFrame);
             dialog.setVisible(true);
 		}
