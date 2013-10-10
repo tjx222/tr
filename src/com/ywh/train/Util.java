@@ -1,8 +1,5 @@
 package com.ywh.train;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
@@ -32,6 +29,7 @@ import org.json.JSONObject;
 
 import cn.smy.dama2.Dama2;
 
+import com.ywh.train.bean.Page;
 import com.ywh.train.bean.TrainQueryInfo;
 import com.ywh.train.bean.UserInfo;
 
@@ -158,11 +156,13 @@ public class Util {
 	 * @param response
 	 * @return
 	 */
-	public static List<UserInfo> parserUserInfo(String response) {
+	public static Page<UserInfo> parserUserInfo(String response) {
 		List<UserInfo> tqis = new ArrayList<UserInfo>();
+		int total = 0;
 		if(response != null && response.startsWith("{")){
 			try {
 				JSONObject rs = new JSONObject(response);
+				total = rs.getInt("recordCount");
 				JSONArray contacts = rs.getJSONArray("rows");
 				for(int i= 0;i<contacts.length();i++){
 					JSONObject jo = contacts.getJSONObject(i);
@@ -178,7 +178,7 @@ public class Util {
 				e.printStackTrace();
 			}
 		}
-		return tqis;
+		return new Page<UserInfo>(tqis,total);
 	}
 
 	/**
@@ -371,10 +371,10 @@ public class Util {
 //			sb.append(line);
 //		}
 		String response = "{\"recordCount\":8,\"rows\":[{\"address\":\"\",\"born_date\":{\"date\":6,\"day\":1,\"hours\":0,\"minutes\":0,\"month\":7,\"seconds\":0,\"time\":460569600000,\"timezoneOffset\":-480,\"year\":84},\"code\":\"1\",\"country_code\":\"CN\",\"email\":\"\",\"first_letter\":\"LSQ\",\"isUserSelf\":\"N\",\"mobile_no\":\"13120194361\",\"old_passenger_id_no\":\"\",\"old_passenger_id_type_code\":\"\",\"old_passenger_name\":\"\",\"passenger_flag\":\"0\",\"passenger_id_no\":\"360321198408065032\",\"passenger_id_type_code\":\"1\",\"passenger_id_type_name\":\"二代身份证\",\"passenger_name\":\"刘松青\",\"passenger_type\":\"1\",\"passenger_type_name\":\"成人\",\"phone_no\":\"\",\"postalcode\":\"\",\"recordCount\":\"8\",\"sex_code\":\"M\",\"sex_name\":\"男\",\"studentInfo\":null},{\"address\":\"\",\"born_date\":{\"date\":17,\"day\":2,\"hours\":11,\"minutes\":9,\"month\":0,\"seconds\":32,\"time\":1326769772493,\"timezoneOffset\":-480,\"year\":112},\"code\":\"2\",\"country_code\":\"\",\"email\":\"\",\"first_letter\":\"WDJ\",\"isUserSelf\":\"N\",\"mobile_no\":\"13671246705\",\"old_passenger_id_no\":\"\",\"old_passenger_id_type_code\":\"\",\"old_passenger_name\":\"\",\"passenger_flag\":\"0\",\"passenger_id_no\":\"411424198410249236\",\"passenger_id_type_code\":\"1\",\"passenger_id_type_name\":\"二代身份证\",\"passenger_name\":\"王东杰\",\"passenger_type\":\"1\",\"passenger_type_name\":\"成人\",\"phone_no\":\"\",\"postalcode\":\"\",\"recordCount\":\"8\",\"sex_code\":\"\",\"sex_name\":\"\",\"studentInfo\":null}]}";
-		List<UserInfo> ls = parserUserInfo(response);
-		for(UserInfo u : ls){
-			System.out.println(u.toString());
-		}
+//		List<UserInfo> ls = parserUserInfo(response);
+//		for(UserInfo u : ls){
+//			System.out.println(u.toString());
+//		}
 		//System.out.println(parserTagValue(sb.toString(),"input","org.apache.struts.taglib.html.TOKEN"));
 	}
 }
