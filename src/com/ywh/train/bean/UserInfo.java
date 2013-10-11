@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 
 /**
- * 用户信息
+ * 订票用户信息
  * 
  * @author tmser
  * @since 2011-11-27
@@ -142,8 +142,7 @@ public class UserInfo implements Serializable {
 		builder.append("UserInfo [ID=").append(ID).append(", name=")
 				.append(name).append(", phone=").append(phone)
 				.append(", seatType=").append(", tickType=").append(tickType).append(", cardType=")
-				.append(cardType).append(", idMode=")
-				.append("]");
+				.append(cardType).append("]");
 		return builder.toString();
 	}
 

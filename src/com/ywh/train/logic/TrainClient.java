@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.net.ssl.SSLContext;
@@ -681,15 +682,6 @@ public class TrainClient {
 	
 	/**
 	 * 查询列车信息
-	&orderRequest.train_date=2013-02-14
-	&orderRequest.from_station_telecode=PXG
-	&orderRequest.to_station_telecode=BJP
-	&orderRequest.train_no=
-	&trainPassType=QB
-	&trainClass=QB%23D%23Z%23T%23K%23QT%23
-	&includeStudent=00
-	&seatTypeAndNum=
-	&orderRequest.start_time_str=00%3A00--24%3A00
 	 * @param from
 	 * @param to
 	 * @param startDate
@@ -722,7 +714,7 @@ public class TrainClient {
 		get.setHeader("Accept-Charset","GBK,utf-8;q=0.7,*;q=0.3");
 		
 		String responseBody = null;
-		List<TrainQueryInfo> all = new ArrayList<TrainQueryInfo>();
+		List<TrainQueryInfo> all = Collections.emptyList();
 		try {
 			HttpResponse response = httpclient.execute(get);
 			//log.info(response.getStatusLine().getStatusCode());
@@ -741,9 +733,49 @@ public class TrainClient {
 		}
 		log.debug("-------------------query train end-------------------");
 		return all;
-		
 	}
 
+	/**
+	 * 查询列车信息
+	 * @param from
+	 * @param to
+	 * @param startDate
+	 * @param rangDate
+	 * @return
+	 */
+	public List<UserInfo> loadContacts() {
+		log.debug("-------------------load contacts start-------------------");
+		HttpGet get = new HttpGet(Constants.TOP_CONTACTS_URL);
+		get.setHeader("Referer","https://dynamic.12306.cn/otsweb/passengerAction.do?method=initUsualPassenger12306");
+		get.setHeader("Host","dynamic.12306.cn");
+		get.setHeader("Content-Type","application/x-www-form-urlencoded");
+		get.setHeader("Accept-Language","zh-CN,zh");
+		get.setHeader("Connection","keep-alive");
+		get.setHeader("Accept-Charset","GBK,utf-8;q=0.7,*;q=0.3");
+		
+		String responseBody = null;
+		List<UserInfo> all = Collections.emptyList();;
+		try {
+			HttpResponse response = httpclient.execute(get);
+			//log.info(response.getStatusLine().getStatusCode());
+			ResponseHandler<String> responseHandler = new BasicResponseHandler();
+			responseBody = responseHandler.handleResponse(response);
+			if(responseBody.startsWith("-")){
+				checkIsLogin();
+			}
+			//log.info(responseBody);
+			all = Util.parserUserInfo(responseBody); 
+//			for(TrainQueryInfo tInfo : all) {
+//				System.out.println(tInfo);
+//			}
+		} catch (Exception e) {
+			log.error(e);
+		}
+		log.debug("-------------------query train end-------------------");
+		return all;
+		
+	}
+	
 	/**
 	 * 登录
 	 * @param username
