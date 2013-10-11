@@ -146,6 +146,15 @@ public class UserInfo implements Serializable {
 		return builder.toString();
 	}
 
-	
+	@Override
+	public boolean equals(Object j){
+		if(j ==  null)
+			return false;
+		
+		if(j instanceof UserInfo){
+			return ((UserInfo) j).ID.equals(ID);
+		}
+		return false;
+	}
 
 }

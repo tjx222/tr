@@ -100,8 +100,10 @@ class DamaSetAction extends AbstractAction{
 		Box vBox2 = Box.createVerticalBox();
 		
 		lbMsg = new JLabel();
-		btnCharge = new JButton();
-		btnBuyCard = new JButton();
+		btnCharge = new JButton(ResManager.getString("RobTicket.btnCharge"));
+		btnCharge.setToolTipText(ResManager.getString("RobTicket.btnCharge.tip"));
+		btnBuyCard = new JButton(ResManager.getString("RobTicket.btnBuyCard"));
+		btnBuyCard.setToolTipText(ResManager.getString("RobTicket.btnBuyCard.tip"));
 		
 		JPanel btnPanel1 = new JPanel(new FlowLayout(FlowLayout.CENTER,10,2));
 		btnPanel1.add(btnCharge);

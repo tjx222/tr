@@ -48,6 +48,7 @@ import org.json.JSONObject;
 import com.ywh.train.Config;
 import com.ywh.train.Constants;
 import com.ywh.train.Util;
+import com.ywh.train.bean.Page;
 import com.ywh.train.bean.Result;
 import com.ywh.train.bean.TokenAndTicket;
 import com.ywh.train.bean.TrainQueryInfo;
@@ -736,38 +737,42 @@ public class TrainClient {
 	}
 
 	/**
-	 * 查询列车信息
-	 * @param from
-	 * @param to
-	 * @param startDate
-	 * @param rangDate
+	 * 查询常用联系表
+	 * @param pageIndex
+	 * @param pageSize
 	 * @return
 	 */
-	public List<UserInfo> loadContacts() {
+	public Page<UserInfo> loadContacts(int pageIndex,int pageSize) {
 		log.debug("-------------------load contacts start-------------------");
-		HttpGet get = new HttpGet(Constants.TOP_CONTACTS_URL);
-		get.setHeader("Referer","https://dynamic.12306.cn/otsweb/passengerAction.do?method=initUsualPassenger12306");
-		get.setHeader("Host","dynamic.12306.cn");
-		get.setHeader("Content-Type","application/x-www-form-urlencoded");
-		get.setHeader("Accept-Language","zh-CN,zh");
-		get.setHeader("Connection","keep-alive");
-		get.setHeader("Accept-Charset","GBK,utf-8;q=0.7,*;q=0.3");
+		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+		parameters.add(new BasicNameValuePair("pageIndex", pageIndex+""));
+		parameters.add(new BasicNameValuePair("pageSize", pageSize+""));
+		
+		UrlEncodedFormEntity uef = new UrlEncodedFormEntity(parameters,Consts.UTF_8);
+		
+		HttpPost httppost = new HttpPost(Constants.TOP_CONTACTS_URL);
+		httppost.setEntity(uef);
+		httppost.setHeader("Referer","https://dynamic.12306.cn/otsweb/passengerAction.do?method=initUsualPassenger12306");
+		httppost.setHeader("Host","dynamic.12306.cn");
+		httppost.setHeader("Content-Type","application/x-www-form-urlencoded");
+		httppost.setHeader("Accept-Language","zh-CN,zh");
+		httppost.setHeader("Connection","keep-alive");
+		httppost.setHeader("Accept-Charset","GBK,utf-8;q=0.7,*;q=0.3");
 		
 		String responseBody = null;
-		List<UserInfo> all = Collections.emptyList();;
+		Page<UserInfo> all = null;
 		try {
-			HttpResponse response = httpclient.execute(get);
+			HttpResponse response = httpclient.execute(httppost);
 			//log.info(response.getStatusLine().getStatusCode());
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
 			responseBody = responseHandler.handleResponse(response);
+			//log.info(responseBody);
 			if(responseBody.startsWith("-")){
 				checkIsLogin();
 			}
-			//log.info(responseBody);
 			all = Util.parserUserInfo(responseBody); 
-//			for(TrainQueryInfo tInfo : all) {
-//				System.out.println(tInfo);
-//			}
+			all.setPageSize(pageSize);
+			all.setCurrentPage(pageIndex);
 		} catch (Exception e) {
 			log.error(e);
 		}

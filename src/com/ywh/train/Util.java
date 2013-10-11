@@ -41,7 +41,7 @@ import com.ywh.train.bean.UserInfo;
  * @version 1.0
  */
 public class Util {
-	public static Dama2 dama2 = new Dama2();
+	
 	private static Map<String, String> cityName2Code = new HashMap<String, String>();
 	public static final Parser parser = new Parser();
 	static {

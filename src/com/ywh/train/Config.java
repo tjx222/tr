@@ -64,6 +64,15 @@ public class Config {
 		return getProperty("dama.username").trim();
 	}
 	
+	public static int getPageSize() {
+		int pageSize = 10;
+		try{
+			pageSize =Integer.parseInt(getProperty("pageSize"));
+		}catch (Exception e) {
+			// use default
+		}
+		return pageSize;
+	}
 
 	public static void main(String[] args) {
 		System.out.println(isUseProxy());

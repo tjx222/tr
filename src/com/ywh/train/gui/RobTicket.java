@@ -4,6 +4,7 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -40,7 +41,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -50,7 +50,6 @@ import javax.swing.SwingConstants;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.MaskFormatter;
 
@@ -75,6 +74,7 @@ import com.ywh.train.ResManager;
 import com.ywh.train.Util;
 import com.ywh.train.bean.LoginInfo;
 import com.ywh.train.bean.UserInfo;
+import com.ywh.train.logic.LoadContactsThread;
 import com.ywh.train.logic.LogicThread;
 import com.ywh.train.logic.LoginThread;
 import com.ywh.train.logic.TrainClient;
@@ -149,7 +149,7 @@ public class RobTicket {
 	 */
 	private JButton btnLOGIN;
 	
-	private JButton exitBtn;
+	private JButton btnExit;
 	
 	/**
 	 * 打开ie
@@ -159,7 +159,19 @@ public class RobTicket {
 	/**
 	 * 清空
 	 */
-	private JButton clearBtn;
+	private JButton btnClear;
+	
+	/**
+	 * 加载
+	 */
+	private JButton btnLoad;
+	
+	/**
+	 * 全部删除
+	 */
+	
+	private JButton btnDelAll;
+	
 	private CardLayout card;
 	
 	private HttpClient httpClient = null;
@@ -189,6 +201,8 @@ public class RobTicket {
 	private JComboBox boxoCardType; //证件类型
 	private JPanel panel;//登陆信息面板
 	private JLabel labLoginInfo;
+	private JLabel labUserList;//乘车人列表信息
+	
 	
 	private LoginInfo li;
 	
@@ -224,6 +238,21 @@ public class RobTicket {
 	}
 
 	
+	public void clearUserList(){
+		if(dlm.size() > 0){
+			int rs = JOptionPane.showConfirmDialog(frame, ResManager.getString("RobTicket.msg.sure")+
+					ResManager.getString("RobTicket.btnDelAll.tip"),
+					ResManager.getString("RobTicket.msg.tip"),JOptionPane.YES_NO_OPTION);
+			if(rs == JOptionPane.YES_OPTION){
+				labUserList.setText("");
+				this.dlm.clear();
+				list.setToolTipText("");
+			}
+		}
+	}
+	/**
+	 * 清空控制台
+	 */
 	public void clearMsg(){
 		this.textArea.setText("");
 	}
@@ -358,10 +387,10 @@ public class RobTicket {
 		p2.add(labLoginInfo);
 		label.setHorizontalAlignment(SwingConstants.RIGHT);
 		
-		exitBtn = new JButton(ResManager.getString("RobTicket.miExit")); //$NON-NLS-1$
-		exitBtn.setBounds(430, 2, 56, 23);
-		p2.add(exitBtn);
-		exitBtn.addActionListener(new LoginOutAction());
+		btnExit = new JButton(ResManager.getString("RobTicket.miExit")); //$NON-NLS-1$
+		btnExit.setBounds(430, 2, 56, 23);
+		p2.add(btnExit);
+		btnExit.addActionListener(new LoginOutAction());
 		
 		panel.add(p2,LOGIN_SUCC); //登陆界面
 		
@@ -593,10 +622,18 @@ public class RobTicket {
 	}
 	
 	private void addConsoleFace(){
-		JLabel label_11 = new JLabel(ResManager.getString("RobTicket.label_11.text")); //$NON-NLS-1$
-		label_11.setBounds(20, 383, 73, 15);
-		frame.getContentPane().add(label_11);
+		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT,0,0));
+		panel.setBounds(15, 383, 150, 15);
 		
+		JLabel label_11 = new JLabel(ResManager.getString("RobTicket.label_11.text"));
+		labUserList = new JLabel();
+		labUserList.setForeground(Color.blue);
+		
+		panel.add(label_11);
+		panel.add(labUserList);
+		frame.getContentPane().add(panel);
+		
+		JScrollPane spl = new JScrollPane();
 		dlm = new DefaultListModel();
 		list = new JList(dlm);
 		list.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -615,16 +652,21 @@ public class RobTicket {
 			}
 
 		});
-	//	list.setToolTipText(ResManager.getString("RobTicket.userListTip")); //$NON-NLS-1$
-		list.setBounds(10, 406, 130, 136);
-		frame.getContentPane().add(list);
+		
+		spl.setBounds(10, 406, 150, 136);
+		spl.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		spl.setViewportView(list);
+		frame.getContentPane().add(spl);
+		
+		JLabel label_12 = new JLabel(ResManager.getString("RobTicket.label_12.txt")); //$NON-NLS-1$
+		label_12.setBounds(166, 383, 73, 15);
+		frame.getContentPane().add(label_12);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(146, 383, 362, 162);
+		scrollPane.setBounds(166, 406, 336, 139);
 		scrollPane.setViewportBorder(new BevelBorder(BevelBorder.LOWERED, null,
 				null, null, null));
-		scrollPane
-				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		frame.getContentPane().add(scrollPane);
 
 		textArea = new JTextArea();
@@ -632,6 +674,41 @@ public class RobTicket {
 		textArea.setEditable(false);
 		textArea.setLineWrap(true);
 		scrollPane.setViewportView(textArea);
+		
+		btnClear = new JButton(ResManager.getString("RobTicket.btnClear")+ResManager.getString("RobTicket.label_12.txt"));
+		btnClear.setBounds(400, 550, 100, 23);
+		btnClear.setToolTipText(ResManager.getString("RobTicket.btnClear.tip"));
+		frame.getContentPane().add(btnClear);
+		btnClear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clearMsg();
+			}
+		});
+		
+		btnLoad = new JButton(ResManager.getString("RobTicket.btnLoad"));
+		btnLoad.setBounds(15, 550, 70, 23);
+		btnLoad.setToolTipText(ResManager.getString("RobTicket.btnLoad.tip"));
+		btnLoad.setEnabled(false);
+		frame.getContentPane().add(btnLoad);
+		btnLoad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					JButton btn = (JButton) e.getSource();
+					if (ResManager.getString("RobTicket.btnLoad").equals(btn.getText())) {
+						load();
+					}
+			}
+		});
+		
+		
+		btnDelAll = new JButton(ResManager.getString("RobTicket.btnClear"));
+		btnDelAll.setBounds(95, 550, 60, 23);
+		btnDelAll.setToolTipText(ResManager.getString("RobTicket.btnDelAll.tip"));
+		frame.getContentPane().add(btnDelAll);
+		btnDelAll.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clearUserList();
+			}
+		});
 	}
 	
 	private void addMenu(){
@@ -675,24 +752,14 @@ public class RobTicket {
 		frame.getContentPane().add(btnSORE);
 		btnSORE.setEnabled(false);
 		
-		clearBtn = new JButton(ResManager.getString("RobTicket.btnClear"));
-		clearBtn.setBounds(200, 350, 60, 23);
-		clearBtn.setToolTipText(ResManager.getString("RobTicket.btnClear.tip"));
-		frame.getContentPane().add(clearBtn);
-
 		btnOpenIE = new JButton(ResManager.getString("RobTicket.btnOpenIE"));
-		btnOpenIE.setBounds(300, 350, 110, 23);
+		btnOpenIE.setBounds(240, 350, 110, 23);
 		btnOpenIE.setToolTipText(ResManager.getString("RobTicket.btnOpenIE.tip"));
 		btnOpenIE.setEnabled(false);
 		frame.getContentPane().add(btnOpenIE);
 		
 		btnSORE.addActionListener(new StartAction());
 		btnOpenIE.addActionListener(new OpenIeAction());
-		clearBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				clearMsg();
-			}
-		});
 	}
 	
 	/**
@@ -702,7 +769,7 @@ public class RobTicket {
 		frame = new JFrame(ResManager.getString("RobTicket.frameName")); //$NON-NLS-1$
      	ImageIcon ico = ResManager.createImageIcon("logo.jpg"); //$NON-NLS-1$
 		frame.setIconImage(ico.getImage());
-		frame.setBounds(100, 100, 524, 583);
+		frame.setBounds(100, 100, 524, 603);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null); 
@@ -748,6 +815,7 @@ public class RobTicket {
 		btnLOGIN.setEnabled(!canUse);
 		btnOpenIE.setEnabled(canUse);
 		btnSORE.setEnabled(canUse);
+		btnLoad.setEnabled(canUse);
 	}
 	/**
 	 * 复位操作
@@ -781,8 +849,14 @@ public class RobTicket {
 			reset(true);
 			return;
 		}
-		if (dlm.getSize() == 0 || getSelectUsers().size() == 0) {
+		int suSize = getSelectUsers().size();
+		if (dlm.getSize() == 0 || suSize == 0) {
 			JOptionPane.showMessageDialog(frame,ResManager.getString("RobTicket.showMessageDialog")); //$NON-NLS-1$
+			reset(true);
+			return;
+		}
+		if(suSize > 5){
+			JOptionPane.showMessageDialog(frame,ResManager.getString("RobTicket.addFive")); //$NON-NLS-1$
 			reset(true);
 			return;
 		}
@@ -807,6 +881,29 @@ public class RobTicket {
 		loginTread = new LoginThread(client, this);
 		loginTread.start();
 	}
+	
+	public void enableLoadBtn(){
+		this.btnLoad.setEnabled(true);
+		this.btnLoad.setText(ResManager.getString("RobTicket.btnLoad"));
+	}
+	
+	/**
+	 * 加载联系人方法
+	 */	
+	protected void load() {
+		clearUserList();
+		this.btnLoad.setEnabled(false);
+		this.btnLoad.setText(ResManager.getString("RobTicket.btnLoad.in"));
+		if(getUsername().isEmpty() || getPassword().isEmpty()) {
+			JOptionPane.showMessageDialog(frame,
+					ResManager.getString("RobTicket.JOptionPane")); //$NON-NLS-1$
+			return;
+		}
+				
+		Thread loadTread = new LoadContactsThread(client, this);
+		loadTread.start();
+	}
+	
 	
 	/**
 	 * 退出登陆方法
@@ -1072,13 +1169,47 @@ private void selectUser(JList list){
 		textArea.setCaretPosition(textArea.getText().length());
 	}
 
+	/**
+	 * 添加联系人
+	 * @param cs
+	 */
+	public void addContacts(List<UserInfo> cs){
+		for(UserInfo u:cs)
+			addContact(u);
+	}
+	
+	/**
+	 * 添加当个用户，屏蔽重复
+	 * @param u
+	 */
+	public void addContact(UserInfo u){
+		boolean hasRepeat = false;
+		for(int i = dlm.getSize()-1; i >= 0;i--){
+			UserInfo o = (UserInfo) dlm.get(i);
+			if(o.equals(u)){
+				hasRepeat = true;
+				break;
+			}
+		}
+		if(!hasRepeat){
+			Object[] os = new Object[2];
+			os[0] = dlm.getSize();
+			os[1] = list.getSelectedValues().length;
+			labUserList.setText(ResManager.getString("RobTicket.lbUserList.msg",os));
+			dlm.addElement(u);
+		}else{
+			console("["+u.toString()+"] was exist!");
+		}
+	}
+	
 	public JFrame getFrame() {
 		return frame;
 	}
 
 	/**
 	 * 功能描述
-	 * @author cafebabe
+	 * 添加乘车人
+	 * @author tmser
 	 * @since 2012-1-11 
 	 * @version 1.0
 	 */
@@ -1086,8 +1217,6 @@ private void selectUser(JList list){
 		public void actionPerformed(ActionEvent e) {
 			if (getUserID().isEmpty() || getName().isEmpty()) {
 				JOptionPane.showMessageDialog(frame,ResManager.getString("RobTicket.addNone")); //$NON-NLS-1$
-			} else if (dlm.getSize() >= 5) {
-				JOptionPane.showMessageDialog(frame,ResManager.getString("RobTicket.addFive")); //$NON-NLS-1$
 			} else {
 				UserInfo user = new UserInfo();
 				user.setID(getUserID());
@@ -1095,10 +1224,9 @@ private void selectUser(JList list){
 				user.setPhone(getPhone());
 				user.setCardType(getCardType());
 				user.setTickType(getTicketType());
-				dlm.addElement(user);
+				addContact(user);
 				txtName.setText(""); //$NON-NLS-1$
 				txtUserID.setText(""); //$NON-NLS-1$
-//				System.out.println(user);
 			}
 		}
 	}
@@ -1144,8 +1272,8 @@ private void selectUser(JList list){
 	/**
 	 * 开始按钮的监听
 	 * 
-	 * @author YAOWENHAO
-	 * @since 2011-12-21
+	 * @author Tmser
+	 * @since 2013-10-11
 	 * @version 1.0
 	 */
 	class LoginAction implements ActionListener {
@@ -1162,7 +1290,6 @@ private void selectUser(JList list){
 	/**
 	 * 开始按钮的监听
 	 * 
-	 * @author YAOWENHAO
 	 * @since 2011-12-21
 	 * @version 1.0
 	 */
@@ -1222,7 +1349,6 @@ private void selectUser(JList list){
 	/**
 	 * 退出线程
 	 * 
-	 * @author YAOWENHAO
 	 * @since 2011-12-21
 	 * @version 1.0
 	 */
@@ -1247,11 +1373,11 @@ private void selectUser(JList list){
 	 * 
 	 * 用户信息渲染类
 	 * 
-	 * @author jhezjkp
+	 * @author tmser
 	 * @since 2012-1-12
 	 * @version 1.0
 	 */
-	static class UserInfoCellRenderer extends JLabel implements
+	 class UserInfoCellRenderer extends JLabel implements
 			ListCellRenderer {
 
 		/**字段注释*/
@@ -1276,6 +1402,10 @@ private void selectUser(JList list){
 				setForeground(Color.BLACK);
 				list.setToolTipText(msg);
 			}
+			Object[] os = new Object[2];
+			os[0] = list.getModel().getSize();
+			os[1] = list.getSelectedValues().length;
+			labUserList.setText(ResManager.getString("RobTicket.lbUserList.msg",os));
 			return this;
 		}
 

@@ -1,12 +1,12 @@
 package com.ywh.train.logic;
 
-import java.text.MessageFormat;
-
+import java.util.ArrayList;
+import java.util.List;
 
 import com.ywh.train.Config;
 import com.ywh.train.Constants;
-import com.ywh.train.ResManager;
-import com.ywh.train.bean.Result;
+import com.ywh.train.bean.Page;
+import com.ywh.train.bean.UserInfo;
 import com.ywh.train.gui.RobTicket;
 
 /**
@@ -36,63 +36,29 @@ public class LoadContactsThread extends BaseThread {
 	public void run() {
 		Thread thisThread = Thread.currentThread();
 		try {
-				Result rs = new Result();
-				int count = 0;
-				if (!Constants.isLoginSuc) { //如果还未登录，获取登录时验证码和随机数
-					rob.console(MessageFormat.format(ResManager.getString("LogicThread.0"), rob.getUsername())); //$NON-NLS-1$
-					Constants.randCode = getRandCodeDailog(Constants.LOGIN_CODE_URL);
-					String randstr=client.getStr(Constants.RANDSTR_URL);
-					Constants.randstr=randstr.substring(14,randstr.indexOf("\","));
-				}
-				
-				while (!Constants.isLoginSuc && blinker == thisThread) {//循环登录
-					rs = client.login(rob.getUsername(), rob.getPassword(),
-							Constants.randCode,Constants.randstr);
-					if (rs.getState() == Result.SUCC) {
-						rob.console(rs.getMsg());
-						if(rob.needRemberMe())
-							rob.writeUserInfo();
-						Constants.isLoginSuc = true;
-					} else if (rs.getState() == Result.RAND_CODE_ERROR) {
-						rob.console(Constants.CODE_ERROR);
-						 Constants.randCode = getRandCodeDailog(Constants.LOGIN_CODE_URL);
-						 String randstr=client.getStr(Constants.RANDSTR_URL);
-						 Constants.randstr=randstr.substring(14,randstr.indexOf("\","));
-						
-					} else if (rs.getState() == Result.ACC_ERROR
-							|| rs.getState() == Result.PWD_ERROR) {
-						rob.console(Constants.USER_ERR);
-						return ;
-					} else {
-						rob.console(rs.getMsg());
+				List<UserInfo> ls = new ArrayList<UserInfo>();
+				int pageIndex = 0;
+				boolean hasNext = true;
+				rob.console("start load contact...");
+				while (hasNext && Constants.isLoginSuc && blinker == thisThread ){//循环加載
+					rob.console("load page "+ pageIndex);
+					Page<UserInfo> page = client.loadContacts(pageIndex, Config.getPageSize());
+					if(page!=null){
+						hasNext = page.hasNextPage();
+						pageIndex = page.getNextPage();
+						ls.addAll(page.getDatalist());
+					}else{
+						break;
 					}
-					if(count > 0)Thread.sleep(Config.getSleepTime());
-					count++;
+					
 				}
+				rob.addContacts(ls);	
+				rob.console("contacts load success.");
 				
-				if (Constants.isLoginSuc) {//登录成功
-					rob.changePanel(RobTicket.LOGIN_SUCC);
-					if (count == 0) {
-						rob.console(ResManager.getString("LogicThread.1")); //$NON-NLS-1$
-					} else if (count < 10) {
-						rob.console(MessageFormat.format(ResManager.getString("LogicThread.2"),count)); //$NON-NLS-1$
-					} else {
-						rob.console(MessageFormat.format(ResManager.getString("LogicThread.3"),count)); //$NON-NLS-1$
-					}
-				}
-		
 			} catch (Exception e) {
 				e.printStackTrace();
-			} finally {
-				rob.console(ResManager.getString("RobTicket.txtLogin.End")); //$NON-NLS-1$	
+			}finally{
+				rob.enableLoadBtn();
 			}
 		}
-
-	/**
-	 * @param isEnd
-	 *            The isEnd to set.
-	 */
-	public void setEnd(boolean isEnd) {
-		 blinker = null;
-	}
 }

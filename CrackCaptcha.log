@@ -250,3 +250,674 @@
 2013-10-08 15:11:57.803 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
 2013-10-08 15:11:57.854 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=35, cmd=253, rsp=0
 2013-10-08 15:11:57.855 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=47ms)
+2013-10-11 15:18:19.541 Level=3 class=CCrackCaptchaClient       Func=Login                     Err=0         	Enter Login
+2013-10-11 15:18:19.586 Level=2 class=CMySocket                 Func=Connect                   Err=0         	Connect server(cn.ntp.org.cn:123) success(socket=1648): connect return: 0
+2013-10-11 15:18:19.588 Level=2 class=CMySocket                 Func=Connect                   Err=0         	Connect server(asia.pool.ntp.org:123) success(socket=1676): connect return: 0
+2013-10-11 15:18:19.588 Level=2 class=CMySocket                 Func=Connect                   Err=0         	Connect server(time.nist.gov:123) success(socket=1712): connect return: 0
+2013-10-11 15:18:19.595 Level=2 class=CMySocket                 Func=Connect                   Err=0         	Connect server(open.baidu.com:80) success(socket=1720)
+2013-10-11 15:18:19.623 Level=2 class=CMySocket                 Func=Connect                   Err=0         	Connect server(time.dama2.com:123) success(socket=1640): connect return: 0
+2013-10-11 15:18:19.655 Level=2 class=TimeSync                  Func=RequestITime              Err=0         	Synchronize time success by open.baidu.com:80
+2013-10-11 15:18:19.657 Level=2 class=CCrackCaptchaClient       Func=RequestServer             Err=0         	[1]request: seq=1, cmd=144
+2013-10-11 15:18:19.740 Level=2 class=CMySocket                 Func=Connect                   Err=0         	Connect server(server1.dama2.com:9004) success(socket=1708)
+2013-10-11 15:18:19.743 Level=2 class=CMySocket                 Func=Connect                   Err=0         	Connect server(server.dama2.com:9004) success(socket=1712)
+2013-10-11 15:18:19.792 Level=2 class=CMySocket                 Func=Connect                   Err=0         	Connect server(server1.dama2.com:8255) failed(socket=1692, time=1381475899)
+2013-10-11 15:18:19.792 Level=2 class=CMySocket                 Func=Connect                   Err=0         	Connect server(server1.dama2.com:9741) failed(socket=1672, time=1381475899)
+2013-10-11 15:18:19.793 Level=2 class=CMySocket                 Func=Connect                   Err=0         	Connect server(server.dama2.com:9741) failed(socket=1676, time=1381475899)
+2013-10-11 15:18:19.793 Level=2 class=CMySocket                 Func=Connect                   Err=0         	Connect server(server.dama2.com:8255) failed(socket=1724, time=1381475899)
+2013-10-11 15:18:19.795 Level=0 class=CCrackCaptchaClient       Func=RequestServer             Err=0         	send data ok
+2013-10-11 15:18:19.863 Level=0 class=CCrackCaptchaClient       Func=RequestServer             Err=0         	recv data(len= 90)
+2013-10-11 15:18:19.863 Level=0 class=CCrackCaptchaClient       Func=RequestServer             Err=0         	recv data ok
+2013-10-11 15:18:19.864 Level=2 class=CCrackCaptchaClient       Func=RequestServer             Err=0         	RequestServer Success
+2013-10-11 15:18:22.928 Level=2 class=CMySocket                 Func=Connect                   Err=0         	Connect server(117.28.242.135:9004) success(socket=1740)
+2013-10-11 15:18:22.994 Level=2 class=CMySocket                 Func=Connect                   Err=0         	Connect server(117.28.242.135:8255) failed(socket=1644, time=1381475899)
+2013-10-11 15:18:22.995 Level=2 class=CMySocket                 Func=Connect                   Err=0         	Connect server(117.28.242.135:9741) failed(socket=1672, time=1381475899)
+2013-10-11 15:18:22.996 Level=0 class=CCrackCaptchaClient       Func=OnSocketAccepting         Err=0         	[2]connected to server(ip=117.28.242.135, port=9004)
+2013-10-11 15:18:22.997 Level=3 class=CCrackCaptchaClient       Func=InnerLogin                Err=0         	Enter InnerLogin
+2013-10-11 15:18:22.999 Level=2 class=CCrackCaptchaClient       Func=InnerLogin                Err=0         	[2]request: seq=2, cmd=48
+2013-10-11 15:18:23.000 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=186)
+2013-10-11 15:18:23.068 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=2, cmd=48, rsp=0
+2013-10-11 15:18:23.069 Level=2 class=CCrackCaptchaClient       Func=InnerLogin                Err=0         	test login(softname=test)
+2013-10-11 15:18:23.069 Level=3 class=CCrackCaptchaClient       Func=InnerLogin                Err=0         	Exit InnerLogin(used 78ms)
+2013-10-11 15:18:23.070 Level=3 class=CCrackCaptchaClient       Func=Login                     Err=0         	Exit Login(used 3526ms)
+2013-10-11 15:18:23.070 Level=2 class=CCrackCaptchaClient       Func=RequestDecode             Err=0         	start decode: datalen=3214, ext=JPG, len=0, timeout=20, type=42
+2013-10-11 15:18:23.071 Level=3 class=CCrackCaptchaClient       Func=RequestDecode             Err=0         	Exit RequestDecode(used 0ms)
+2013-10-11 15:18:23.071 Level=2 class=CCrackCaptchaClient       Func=GetDecodeResult           Err=0         	start GetResult: processID=3, uTimeout=20000
+2013-10-11 15:18:23.071 Level=0 class=CCrackCaptchaClient       Func=UploadFileThreadFunc      Err=0         	start upload file ...
+2013-10-11 15:18:23.073 Level=2 class=CCrackCaptchaClient       Func=UploadFile                Err=0         	[2]request: seq=4, cmd=59
+2013-10-11 15:18:23.074 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=3316)
+2013-10-11 15:18:23.218 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=4, cmd=59, rsp=0
+2013-10-11 15:18:23.218 Level=0 class=CCrackCaptchaClient       Func=UploadFileThreadFunc      Err=0         	end upload file ...
+2013-10-11 15:18:23.259 Level=2 class=CCrackCaptchaClient       Func=UploadFileThreadFunc      Err=0         	[2]request: seq=3, cmd=53
+2013-10-11 15:18:23.260 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=283)
+2013-10-11 15:18:23.355 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=3, cmd=53, rsp=0
+2013-10-11 15:18:23.355 Level=2 class=CCrackCaptchaClient       Func=InnerGetDecodeResult      Err=0         	[2]request: seq=5, cmd=54
+2013-10-11 15:18:23.356 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=38)
+2013-10-11 15:18:27.066 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=5, cmd=54, rsp=0
+2013-10-11 15:18:27.067 Level=2 class=CCrackCaptchaClient       Func=InnerGetDecodeResult      Err=0         	GetDecodeResult success(uProcessID=3, vcodeid=884476232, VCode=B965)
+2013-10-11 15:18:27.067 Level=0 class=CCrackCaptchaClient       Func=GetDecodeResult           Err=0         	GetResult Success: processID=3, VCode=B965, id=884476232
+2013-10-11 15:18:30.596 Level=3 class=CCrackCaptchaClient       Func=Login                     Err=0         	Enter Login
+2013-10-11 15:18:30.596 Level=3 class=CCrackCaptchaClient       Func=Login                     Err=0         	Exit Login(used 0ms)
+2013-10-11 15:18:30.597 Level=2 class=CCrackCaptchaClient       Func=RequestDecode             Err=0         	start decode: datalen=3388, ext=JPG, len=0, timeout=20, type=42
+2013-10-11 15:18:30.597 Level=3 class=CCrackCaptchaClient       Func=RequestDecode             Err=0         	Exit RequestDecode(used 0ms)
+2013-10-11 15:18:30.597 Level=2 class=CCrackCaptchaClient       Func=GetDecodeResult           Err=0         	start GetResult: processID=6, uTimeout=20000
+2013-10-11 15:18:30.597 Level=0 class=CCrackCaptchaClient       Func=UploadFileThreadFunc      Err=0         	start upload file ...
+2013-10-11 15:18:30.598 Level=2 class=CCrackCaptchaClient       Func=UploadFile                Err=0         	[2]request: seq=7, cmd=59
+2013-10-11 15:18:30.599 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=3490)
+2013-10-11 15:18:30.661 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=7, cmd=59, rsp=0
+2013-10-11 15:18:30.662 Level=0 class=CCrackCaptchaClient       Func=UploadFileThreadFunc      Err=0         	end upload file ...
+2013-10-11 15:18:30.663 Level=2 class=CCrackCaptchaClient       Func=UploadFileThreadFunc      Err=0         	[2]request: seq=6, cmd=53
+2013-10-11 15:18:30.664 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=283)
+2013-10-11 15:18:30.738 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=6, cmd=53, rsp=0
+2013-10-11 15:18:30.738 Level=2 class=CCrackCaptchaClient       Func=InnerGetDecodeResult      Err=0         	[2]request: seq=8, cmd=54
+2013-10-11 15:18:30.739 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=38)
+2013-10-11 15:18:34.917 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=8, cmd=54, rsp=0
+2013-10-11 15:18:34.917 Level=2 class=CCrackCaptchaClient       Func=InnerGetDecodeResult      Err=0         	GetDecodeResult success(uProcessID=6, vcodeid=884476602, VCode=HF85)
+2013-10-11 15:18:34.918 Level=0 class=CCrackCaptchaClient       Func=GetDecodeResult           Err=0         	GetResult Success: processID=6, VCode=HF85, id=884476602
+2013-10-11 15:19:09.922 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=9, cmd=253
+2013-10-11 15:19:09.923 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:19:10.001 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=9, cmd=253, rsp=0
+2013-10-11 15:19:10.002 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=78ms)
+2013-10-11 15:19:45.009 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=10, cmd=253
+2013-10-11 15:19:45.010 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:19:45.085 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=10, cmd=253, rsp=0
+2013-10-11 15:19:45.086 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=78ms)
+2013-10-11 15:20:20.088 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=11, cmd=253
+2013-10-11 15:20:20.088 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:20:20.157 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=11, cmd=253, rsp=0
+2013-10-11 15:20:20.157 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 15:20:55.160 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=12, cmd=253
+2013-10-11 15:20:55.161 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:20:55.228 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=12, cmd=253, rsp=0
+2013-10-11 15:20:55.228 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 15:21:25.232 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=13, cmd=253
+2013-10-11 15:21:25.233 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:21:25.296 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=13, cmd=253, rsp=0
+2013-10-11 15:21:25.296 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 15:22:00.299 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=14, cmd=253
+2013-10-11 15:22:00.300 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:22:00.376 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=14, cmd=253, rsp=0
+2013-10-11 15:22:00.376 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=78ms)
+2013-10-11 15:22:30.380 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=15, cmd=253
+2013-10-11 15:22:30.380 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:22:30.444 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=15, cmd=253, rsp=0
+2013-10-11 15:22:30.444 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 15:23:05.447 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=16, cmd=253
+2013-10-11 15:23:05.447 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:23:05.508 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=16, cmd=253, rsp=0
+2013-10-11 15:23:05.508 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 15:23:40.511 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=17, cmd=253
+2013-10-11 15:23:40.512 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:23:40.574 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=17, cmd=253, rsp=0
+2013-10-11 15:23:40.574 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 15:24:10.577 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=18, cmd=253
+2013-10-11 15:24:10.578 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:24:10.649 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=18, cmd=253, rsp=0
+2013-10-11 15:24:10.650 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 15:24:45.653 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=19, cmd=253
+2013-10-11 15:24:45.654 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:24:45.726 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=19, cmd=253, rsp=0
+2013-10-11 15:24:45.726 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=78ms)
+2013-10-11 15:25:20.729 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=20, cmd=253
+2013-10-11 15:25:20.730 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:25:20.798 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=20, cmd=253, rsp=0
+2013-10-11 15:25:20.799 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=78ms)
+2013-10-11 15:25:55.802 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=21, cmd=253
+2013-10-11 15:25:55.802 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:25:55.868 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=21, cmd=253, rsp=0
+2013-10-11 15:25:55.868 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 15:26:30.871 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=22, cmd=253
+2013-10-11 15:26:30.872 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:26:30.937 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=22, cmd=253, rsp=0
+2013-10-11 15:26:30.937 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 15:27:05.940 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=23, cmd=253
+2013-10-11 15:27:05.940 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:27:06.014 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=23, cmd=253, rsp=0
+2013-10-11 15:27:06.015 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=78ms)
+2013-10-11 15:27:36.017 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=24, cmd=253
+2013-10-11 15:27:36.018 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:27:36.097 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=24, cmd=253, rsp=0
+2013-10-11 15:27:36.098 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=78ms)
+2013-10-11 15:28:11.101 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=25, cmd=253
+2013-10-11 15:28:11.101 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:28:11.173 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=25, cmd=253, rsp=0
+2013-10-11 15:28:11.173 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 15:28:41.176 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=26, cmd=253
+2013-10-11 15:28:41.177 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:28:41.273 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=26, cmd=253, rsp=0
+2013-10-11 15:28:41.274 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=94ms)
+2013-10-11 15:29:16.277 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=27, cmd=253
+2013-10-11 15:29:16.278 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:29:16.340 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=27, cmd=253, rsp=0
+2013-10-11 15:29:16.341 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 15:29:51.345 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=28, cmd=253
+2013-10-11 15:29:51.346 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:29:51.411 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=28, cmd=253, rsp=0
+2013-10-11 15:29:51.411 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=78ms)
+2013-10-11 15:30:26.414 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=29, cmd=253
+2013-10-11 15:30:26.415 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:30:26.486 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=29, cmd=253, rsp=0
+2013-10-11 15:30:26.486 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 15:31:01.490 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=30, cmd=253
+2013-10-11 15:31:01.490 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:31:01.558 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=30, cmd=253, rsp=0
+2013-10-11 15:31:01.558 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 15:31:31.561 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=31, cmd=253
+2013-10-11 15:31:31.562 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:31:31.632 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=31, cmd=253, rsp=0
+2013-10-11 15:31:31.633 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 15:32:06.636 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=32, cmd=253
+2013-10-11 15:32:06.637 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:32:06.700 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=32, cmd=253, rsp=0
+2013-10-11 15:32:06.700 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 15:32:41.703 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=33, cmd=253
+2013-10-11 15:32:41.704 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:32:41.764 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=33, cmd=253, rsp=0
+2013-10-11 15:32:41.764 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 15:33:16.768 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=34, cmd=253
+2013-10-11 15:33:16.769 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:33:16.840 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=34, cmd=253, rsp=0
+2013-10-11 15:33:16.840 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 15:33:51.843 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=35, cmd=253
+2013-10-11 15:33:51.844 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:33:52.002 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=35, cmd=253, rsp=0
+2013-10-11 15:33:52.003 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=156ms)
+2013-10-11 15:34:27.006 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=36, cmd=253
+2013-10-11 15:34:27.007 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:34:27.073 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=36, cmd=253, rsp=0
+2013-10-11 15:34:27.073 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 15:34:57.076 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=37, cmd=253
+2013-10-11 15:34:57.077 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:34:57.143 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=37, cmd=253, rsp=0
+2013-10-11 15:34:57.143 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 15:35:32.147 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=38, cmd=253
+2013-10-11 15:35:32.147 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:35:32.223 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=38, cmd=253, rsp=0
+2013-10-11 15:35:32.224 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=78ms)
+2013-10-11 15:36:07.227 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=39, cmd=253
+2013-10-11 15:36:07.228 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:36:07.287 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=39, cmd=253, rsp=0
+2013-10-11 15:36:07.288 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 15:36:42.291 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=40, cmd=253
+2013-10-11 15:36:42.293 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:36:42.361 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=40, cmd=253, rsp=0
+2013-10-11 15:36:42.361 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=78ms)
+2013-10-11 15:37:17.364 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=41, cmd=253
+2013-10-11 15:37:17.364 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:37:17.433 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=41, cmd=253, rsp=0
+2013-10-11 15:37:17.434 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=78ms)
+2013-10-11 15:37:52.436 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=42, cmd=253
+2013-10-11 15:37:52.436 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:37:52.511 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=42, cmd=253, rsp=0
+2013-10-11 15:37:52.512 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=78ms)
+2013-10-11 15:38:22.513 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=43, cmd=253
+2013-10-11 15:38:22.514 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:38:22.601 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=43, cmd=253, rsp=0
+2013-10-11 15:38:22.601 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=78ms)
+2013-10-11 15:38:57.605 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=44, cmd=253
+2013-10-11 15:38:57.605 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:38:57.680 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=44, cmd=253, rsp=0
+2013-10-11 15:38:57.681 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=78ms)
+2013-10-11 15:39:32.684 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=45, cmd=253
+2013-10-11 15:39:32.684 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:39:32.755 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=45, cmd=253, rsp=0
+2013-10-11 15:39:32.755 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 15:40:07.760 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=46, cmd=253
+2013-10-11 15:40:07.760 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:40:07.829 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=46, cmd=253, rsp=0
+2013-10-11 15:40:07.829 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=78ms)
+2013-10-11 15:40:42.833 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=47, cmd=253
+2013-10-11 15:40:42.833 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:40:42.906 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=47, cmd=253, rsp=0
+2013-10-11 15:40:42.907 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=78ms)
+2013-10-11 15:41:17.910 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=48, cmd=253
+2013-10-11 15:41:17.910 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:41:17.982 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=48, cmd=253, rsp=0
+2013-10-11 15:41:17.982 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=78ms)
+2013-10-11 15:41:47.986 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=49, cmd=253
+2013-10-11 15:41:47.986 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:41:48.164 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=49, cmd=253, rsp=0
+2013-10-11 15:41:48.165 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=171ms)
+2013-10-11 15:42:23.167 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=50, cmd=253
+2013-10-11 15:42:23.167 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:42:23.231 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=50, cmd=253, rsp=0
+2013-10-11 15:42:23.231 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 15:42:58.235 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=51, cmd=253
+2013-10-11 15:42:58.236 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:42:58.307 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=51, cmd=253, rsp=0
+2013-10-11 15:42:58.308 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=78ms)
+2013-10-11 15:43:33.311 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=52, cmd=253
+2013-10-11 15:43:33.312 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:43:33.376 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=52, cmd=253, rsp=0
+2013-10-11 15:43:33.377 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=78ms)
+2013-10-11 15:44:08.381 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=53, cmd=253
+2013-10-11 15:44:08.382 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:44:08.439 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=53, cmd=253, rsp=0
+2013-10-11 15:44:08.440 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 15:44:43.443 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=54, cmd=253
+2013-10-11 15:44:43.444 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:44:43.505 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=54, cmd=253, rsp=0
+2013-10-11 15:44:43.505 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 15:45:18.510 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=55, cmd=253
+2013-10-11 15:45:18.510 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:45:18.571 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=55, cmd=253, rsp=0
+2013-10-11 15:45:18.571 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 15:45:53.574 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=56, cmd=253
+2013-10-11 15:45:53.574 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:45:53.647 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=56, cmd=253, rsp=0
+2013-10-11 15:45:53.648 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=78ms)
+2013-10-11 15:46:28.652 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=57, cmd=253
+2013-10-11 15:46:28.652 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:46:28.719 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=57, cmd=253, rsp=0
+2013-10-11 15:46:28.720 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 15:46:58.723 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=58, cmd=253
+2013-10-11 15:46:58.723 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:46:58.789 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=58, cmd=253, rsp=0
+2013-10-11 15:46:58.789 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 15:47:33.792 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=59, cmd=253
+2013-10-11 15:47:33.793 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:47:33.856 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=59, cmd=253, rsp=0
+2013-10-11 15:47:33.856 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 15:48:08.860 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=60, cmd=253
+2013-10-11 15:48:08.860 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:48:08.918 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=60, cmd=253, rsp=0
+2013-10-11 15:48:08.918 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=47ms)
+2013-10-11 15:48:38.936 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=61, cmd=253
+2013-10-11 15:48:38.937 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:48:39.002 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=61, cmd=253, rsp=0
+2013-10-11 15:48:39.002 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 15:49:14.006 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=62, cmd=253
+2013-10-11 15:49:14.007 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:49:14.066 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=62, cmd=253, rsp=0
+2013-10-11 15:49:14.066 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=47ms)
+2013-10-11 15:49:44.068 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=63, cmd=253
+2013-10-11 15:49:44.068 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:49:44.132 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=63, cmd=253, rsp=0
+2013-10-11 15:49:44.132 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 15:50:19.135 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=64, cmd=253
+2013-10-11 15:50:19.135 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:50:19.204 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=64, cmd=253, rsp=0
+2013-10-11 15:50:19.204 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 15:50:54.210 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=65, cmd=253
+2013-10-11 15:50:54.211 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:50:54.284 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=65, cmd=253, rsp=0
+2013-10-11 15:50:54.285 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=78ms)
+2013-10-11 15:51:29.287 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=66, cmd=253
+2013-10-11 15:51:29.287 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:51:29.346 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=66, cmd=253, rsp=0
+2013-10-11 15:51:29.347 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 15:51:59.349 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=67, cmd=253
+2013-10-11 15:51:59.350 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:51:59.419 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=67, cmd=253, rsp=0
+2013-10-11 15:51:59.419 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 15:52:34.425 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=68, cmd=253
+2013-10-11 15:52:34.426 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:52:34.482 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=68, cmd=253, rsp=0
+2013-10-11 15:52:34.483 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 15:53:09.486 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=69, cmd=253
+2013-10-11 15:53:09.486 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:53:09.549 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=69, cmd=253, rsp=0
+2013-10-11 15:53:09.550 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 15:53:39.553 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=70, cmd=253
+2013-10-11 15:53:39.553 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:53:39.615 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=70, cmd=253, rsp=0
+2013-10-11 15:53:39.616 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 15:54:14.620 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=71, cmd=253
+2013-10-11 15:54:14.620 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:54:14.678 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=71, cmd=253, rsp=0
+2013-10-11 15:54:14.678 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=47ms)
+2013-10-11 15:54:44.681 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=72, cmd=253
+2013-10-11 15:54:44.682 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:54:44.747 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=72, cmd=253, rsp=0
+2013-10-11 15:54:44.748 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 15:55:19.751 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=73, cmd=253
+2013-10-11 15:55:19.752 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:55:19.809 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=73, cmd=253, rsp=0
+2013-10-11 15:55:19.809 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=47ms)
+2013-10-11 15:55:49.813 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=74, cmd=253
+2013-10-11 15:55:49.814 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:55:49.877 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=74, cmd=253, rsp=0
+2013-10-11 15:55:49.877 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 15:56:24.880 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=75, cmd=253
+2013-10-11 15:56:24.881 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:56:24.947 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=75, cmd=253, rsp=0
+2013-10-11 15:56:24.948 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 15:56:59.951 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=76, cmd=253
+2013-10-11 15:56:59.952 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:57:00.018 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=76, cmd=253, rsp=0
+2013-10-11 15:57:00.018 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 15:57:35.022 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=77, cmd=253
+2013-10-11 15:57:35.022 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:57:35.085 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=77, cmd=253, rsp=0
+2013-10-11 15:57:35.086 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 15:58:10.089 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=78, cmd=253
+2013-10-11 15:58:10.094 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:58:10.168 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=78, cmd=253, rsp=0
+2013-10-11 15:58:10.169 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=78ms)
+2013-10-11 15:58:45.173 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=79, cmd=253
+2013-10-11 15:58:45.174 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:58:45.239 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=79, cmd=253, rsp=0
+2013-10-11 15:58:45.239 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 15:59:20.243 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=80, cmd=253
+2013-10-11 15:59:20.243 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:59:20.305 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=80, cmd=253, rsp=0
+2013-10-11 15:59:20.306 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 15:59:55.309 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=81, cmd=253
+2013-10-11 15:59:55.310 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 15:59:55.473 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=81, cmd=253, rsp=0
+2013-10-11 15:59:55.473 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=156ms)
+2013-10-11 16:00:30.476 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=82, cmd=253
+2013-10-11 16:00:30.477 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:00:30.541 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=82, cmd=253, rsp=0
+2013-10-11 16:00:30.542 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 16:01:05.544 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=83, cmd=253
+2013-10-11 16:01:05.545 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:01:05.613 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=83, cmd=253, rsp=0
+2013-10-11 16:01:05.614 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 16:01:40.617 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=84, cmd=253
+2013-10-11 16:01:40.617 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:01:40.681 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=84, cmd=253, rsp=0
+2013-10-11 16:01:40.681 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 16:02:15.684 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=85, cmd=253
+2013-10-11 16:02:15.685 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:02:15.740 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=85, cmd=253, rsp=0
+2013-10-11 16:02:15.741 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 16:02:50.745 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=86, cmd=253
+2013-10-11 16:02:50.745 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:02:50.806 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=86, cmd=253, rsp=0
+2013-10-11 16:02:50.806 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 16:03:20.809 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=87, cmd=253
+2013-10-11 16:03:20.810 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:03:20.872 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=87, cmd=253, rsp=0
+2013-10-11 16:03:20.872 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 16:03:55.875 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=88, cmd=253
+2013-10-11 16:03:55.876 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:03:55.932 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=88, cmd=253, rsp=0
+2013-10-11 16:03:55.933 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 16:04:30.936 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=89, cmd=253
+2013-10-11 16:04:30.937 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:04:30.999 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=89, cmd=253, rsp=0
+2013-10-11 16:04:31.000 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 16:05:06.004 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=90, cmd=253
+2013-10-11 16:05:06.004 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:05:06.069 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=90, cmd=253, rsp=0
+2013-10-11 16:05:06.069 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 16:05:41.073 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=91, cmd=253
+2013-10-11 16:05:41.073 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:05:41.138 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=91, cmd=253, rsp=0
+2013-10-11 16:05:41.139 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 16:06:16.142 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=92, cmd=253
+2013-10-11 16:06:16.143 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:06:16.205 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=92, cmd=253, rsp=0
+2013-10-11 16:06:16.205 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 16:06:51.209 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=93, cmd=253
+2013-10-11 16:06:51.209 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:06:51.272 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=93, cmd=253, rsp=0
+2013-10-11 16:06:51.272 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 16:07:26.281 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=94, cmd=253
+2013-10-11 16:07:26.282 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:07:26.354 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=94, cmd=253, rsp=0
+2013-10-11 16:07:26.354 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=93ms)
+2013-10-11 16:07:56.357 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=95, cmd=253
+2013-10-11 16:07:56.358 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:07:56.426 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=95, cmd=253, rsp=0
+2013-10-11 16:07:56.427 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 16:08:31.430 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=96, cmd=253
+2013-10-11 16:08:31.430 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:08:31.499 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=96, cmd=253, rsp=0
+2013-10-11 16:08:31.499 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 16:09:01.502 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=97, cmd=253
+2013-10-11 16:09:01.502 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:09:01.567 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=97, cmd=253, rsp=0
+2013-10-11 16:09:01.567 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 16:09:36.571 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=98, cmd=253
+2013-10-11 16:09:36.571 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:09:36.628 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=98, cmd=253, rsp=0
+2013-10-11 16:09:36.628 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=47ms)
+2013-10-11 16:10:06.632 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=99, cmd=253
+2013-10-11 16:10:06.632 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:10:06.700 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=99, cmd=253, rsp=0
+2013-10-11 16:10:06.700 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 16:10:41.704 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=100, cmd=253
+2013-10-11 16:10:41.704 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:10:41.776 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=100, cmd=253, rsp=0
+2013-10-11 16:10:41.776 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=78ms)
+2013-10-11 16:11:16.781 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=101, cmd=253
+2013-10-11 16:11:16.781 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:11:16.862 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=101, cmd=253, rsp=0
+2013-10-11 16:11:16.862 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=93ms)
+2013-10-11 16:11:51.866 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=102, cmd=253
+2013-10-11 16:11:51.867 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:11:51.940 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=102, cmd=253, rsp=0
+2013-10-11 16:11:51.940 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=78ms)
+2013-10-11 16:12:26.943 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=103, cmd=253
+2013-10-11 16:12:26.944 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:12:27.021 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=103, cmd=253, rsp=0
+2013-10-11 16:12:27.021 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=78ms)
+2013-10-11 16:13:02.024 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=104, cmd=253
+2013-10-11 16:13:02.025 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:13:02.096 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=104, cmd=253, rsp=0
+2013-10-11 16:13:02.097 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 16:13:32.100 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=105, cmd=253
+2013-10-11 16:13:32.100 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:13:32.163 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=105, cmd=253, rsp=0
+2013-10-11 16:13:32.163 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 16:14:07.167 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=106, cmd=253
+2013-10-11 16:14:07.167 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:14:07.232 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=106, cmd=253, rsp=0
+2013-10-11 16:14:07.232 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=78ms)
+2013-10-11 16:14:42.236 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=107, cmd=253
+2013-10-11 16:14:42.236 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:14:42.298 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=107, cmd=253, rsp=0
+2013-10-11 16:14:42.299 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 16:15:12.301 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=108, cmd=253
+2013-10-11 16:15:12.302 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:15:12.359 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=108, cmd=253, rsp=0
+2013-10-11 16:15:12.360 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=47ms)
+2013-10-11 16:15:42.362 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=109, cmd=253
+2013-10-11 16:15:42.362 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:15:42.416 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=109, cmd=253, rsp=0
+2013-10-11 16:15:42.416 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=47ms)
+2013-10-11 16:16:17.419 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=110, cmd=253
+2013-10-11 16:16:17.420 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:16:17.485 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=110, cmd=253, rsp=0
+2013-10-11 16:16:17.485 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 16:16:52.489 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=111, cmd=253
+2013-10-11 16:16:52.490 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:16:52.554 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=111, cmd=253, rsp=0
+2013-10-11 16:16:52.554 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 16:17:27.557 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=112, cmd=253
+2013-10-11 16:17:27.558 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:17:27.627 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=112, cmd=253, rsp=0
+2013-10-11 16:17:27.627 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 16:17:57.631 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=113, cmd=253
+2013-10-11 16:17:57.632 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:17:57.690 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=113, cmd=253, rsp=0
+2013-10-11 16:17:57.691 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 16:18:27.693 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=114, cmd=253
+2013-10-11 16:18:27.694 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:18:27.754 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=114, cmd=253, rsp=0
+2013-10-11 16:18:27.755 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 16:19:02.759 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=115, cmd=253
+2013-10-11 16:19:02.760 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:19:02.815 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=115, cmd=253, rsp=0
+2013-10-11 16:19:02.816 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 16:19:37.819 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=116, cmd=253
+2013-10-11 16:19:37.820 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:19:37.879 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=116, cmd=253, rsp=0
+2013-10-11 16:19:37.879 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 16:20:12.883 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=117, cmd=253
+2013-10-11 16:20:12.884 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:20:12.955 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=117, cmd=253, rsp=0
+2013-10-11 16:20:12.956 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 16:20:47.958 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=118, cmd=253
+2013-10-11 16:20:47.959 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:20:48.017 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=118, cmd=253, rsp=0
+2013-10-11 16:20:48.018 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 16:21:23.021 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=119, cmd=253
+2013-10-11 16:21:23.021 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:21:23.184 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=119, cmd=253, rsp=0
+2013-10-11 16:21:23.185 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=156ms)
+2013-10-11 16:21:58.188 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=120, cmd=253
+2013-10-11 16:21:58.189 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:21:58.257 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=120, cmd=253, rsp=0
+2013-10-11 16:21:58.258 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 16:22:28.261 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=121, cmd=253
+2013-10-11 16:22:28.262 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:22:28.322 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=121, cmd=253, rsp=0
+2013-10-11 16:22:28.322 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 16:23:03.326 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=122, cmd=253
+2013-10-11 16:23:03.326 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:23:03.385 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=122, cmd=253, rsp=0
+2013-10-11 16:23:03.386 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 16:23:38.389 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=123, cmd=253
+2013-10-11 16:23:38.390 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:23:38.457 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=123, cmd=253, rsp=0
+2013-10-11 16:23:38.457 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 16:24:08.459 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=124, cmd=253
+2013-10-11 16:24:08.460 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:24:08.518 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=124, cmd=253, rsp=0
+2013-10-11 16:24:08.518 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=47ms)
+2013-10-11 16:24:38.521 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=125, cmd=253
+2013-10-11 16:24:38.521 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:24:38.589 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=125, cmd=253, rsp=0
+2013-10-11 16:24:38.590 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 16:25:13.593 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=126, cmd=253
+2013-10-11 16:25:13.593 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:25:13.650 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=126, cmd=253, rsp=0
+2013-10-11 16:25:13.651 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 16:25:48.655 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=127, cmd=253
+2013-10-11 16:25:48.655 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:25:48.718 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=127, cmd=253, rsp=0
+2013-10-11 16:25:48.719 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=78ms)
+2013-10-11 16:26:18.723 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=128, cmd=253
+2013-10-11 16:26:18.723 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:26:18.786 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=128, cmd=253, rsp=0
+2013-10-11 16:26:18.787 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 16:26:53.793 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=129, cmd=253
+2013-10-11 16:26:53.794 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:26:53.849 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=129, cmd=253, rsp=0
+2013-10-11 16:26:53.850 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 16:27:23.851 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=130, cmd=253
+2013-10-11 16:27:23.852 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:27:23.915 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=130, cmd=253, rsp=0
+2013-10-11 16:27:23.915 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 16:27:58.919 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=131, cmd=253
+2013-10-11 16:27:58.920 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:27:58.979 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=131, cmd=253, rsp=0
+2013-10-11 16:27:58.980 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=47ms)
+2013-10-11 16:28:28.983 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=132, cmd=253
+2013-10-11 16:28:28.984 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:28:29.135 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=132, cmd=253, rsp=0
+2013-10-11 16:28:29.135 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=156ms)
+2013-10-11 16:28:59.138 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=133, cmd=253
+2013-10-11 16:28:59.139 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:28:59.196 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=133, cmd=253, rsp=0
+2013-10-11 16:28:59.197 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 16:29:29.201 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=134, cmd=253
+2013-10-11 16:29:29.201 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:29:29.257 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=134, cmd=253, rsp=0
+2013-10-11 16:29:29.258 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 16:29:59.261 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=135, cmd=253
+2013-10-11 16:29:59.262 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:29:59.317 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=135, cmd=253, rsp=0
+2013-10-11 16:29:59.318 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=47ms)
+2013-10-11 16:30:29.320 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=136, cmd=253
+2013-10-11 16:30:29.320 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:30:29.377 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=136, cmd=253, rsp=0
+2013-10-11 16:30:29.378 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=47ms)
+2013-10-11 16:31:04.380 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=137, cmd=253
+2013-10-11 16:31:04.381 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:31:04.445 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=137, cmd=253, rsp=0
+2013-10-11 16:31:04.445 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 16:31:39.449 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=138, cmd=253
+2013-10-11 16:31:39.449 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:31:39.515 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=138, cmd=253, rsp=0
+2013-10-11 16:31:39.516 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 16:32:09.519 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=139, cmd=253
+2013-10-11 16:32:09.520 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:32:09.576 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=139, cmd=253, rsp=0
+2013-10-11 16:32:09.576 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=47ms)
+2013-10-11 16:32:44.579 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=140, cmd=253
+2013-10-11 16:32:44.580 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:32:44.634 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=140, cmd=253, rsp=0
+2013-10-11 16:32:44.634 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 16:33:14.637 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=141, cmd=253
+2013-10-11 16:33:14.638 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:33:14.692 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=141, cmd=253, rsp=0
+2013-10-11 16:33:14.692 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=47ms)
+2013-10-11 16:33:49.696 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=142, cmd=253
+2013-10-11 16:33:49.697 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:33:49.750 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=142, cmd=253, rsp=0
+2013-10-11 16:33:49.751 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 16:34:24.761 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=143, cmd=253
+2013-10-11 16:34:24.762 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:34:24.815 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=143, cmd=253, rsp=0
+2013-10-11 16:34:24.815 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 16:34:54.818 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=144, cmd=253
+2013-10-11 16:34:54.819 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:34:54.877 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=144, cmd=253, rsp=0
+2013-10-11 16:34:54.877 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=47ms)
+2013-10-11 16:35:24.880 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=145, cmd=253
+2013-10-11 16:35:24.880 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:35:24.937 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=145, cmd=253, rsp=0
+2013-10-11 16:35:24.937 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=47ms)
+2013-10-11 16:35:59.940 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=146, cmd=253
+2013-10-11 16:35:59.940 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:36:00.119 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=146, cmd=253, rsp=0
+2013-10-11 16:36:00.119 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=187ms)
+2013-10-11 16:36:35.122 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=147, cmd=253
+2013-10-11 16:36:35.123 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:36:35.182 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=147, cmd=253, rsp=0
+2013-10-11 16:36:35.182 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 16:37:10.185 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=148, cmd=253
+2013-10-11 16:37:10.186 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:37:10.242 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=148, cmd=253, rsp=0
+2013-10-11 16:37:10.243 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 16:37:45.246 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=149, cmd=253
+2013-10-11 16:37:45.247 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:37:45.315 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=149, cmd=253, rsp=0
+2013-10-11 16:37:45.316 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=78ms)
+2013-10-11 16:38:20.319 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=150, cmd=253
+2013-10-11 16:38:20.319 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:38:20.377 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=150, cmd=253, rsp=0
+2013-10-11 16:38:20.378 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=47ms)
+2013-10-11 16:38:50.380 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=151, cmd=253
+2013-10-11 16:38:50.381 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:38:50.435 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=151, cmd=253, rsp=0
+2013-10-11 16:38:50.436 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=47ms)
+2013-10-11 16:39:25.439 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=152, cmd=253
+2013-10-11 16:39:25.440 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:39:25.495 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=152, cmd=253, rsp=0
+2013-10-11 16:39:25.495 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 16:40:00.498 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=153, cmd=253
+2013-10-11 16:40:00.499 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:40:00.553 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=153, cmd=253, rsp=0
+2013-10-11 16:40:00.554 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 16:40:35.556 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=154, cmd=253
+2013-10-11 16:40:35.557 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:40:35.622 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=154, cmd=253, rsp=0
+2013-10-11 16:40:35.623 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 16:41:10.626 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=155, cmd=253
+2013-10-11 16:41:10.627 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:41:10.700 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=155, cmd=253, rsp=0
+2013-10-11 16:41:10.701 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 16:41:40.702 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=156, cmd=253
+2013-10-11 16:41:40.704 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:41:40.777 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=156, cmd=253, rsp=0
+2013-10-11 16:41:40.778 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=78ms)
+2013-10-11 16:42:10.779 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=157, cmd=253
+2013-10-11 16:42:10.780 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:42:10.839 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=157, cmd=253, rsp=0
+2013-10-11 16:42:10.839 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=63ms)
+2013-10-11 16:42:40.844 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=158, cmd=253
+2013-10-11 16:42:40.845 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:42:40.907 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=158, cmd=253, rsp=0
+2013-10-11 16:42:40.907 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
+2013-10-11 16:43:15.911 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=159, cmd=253
+2013-10-11 16:43:15.912 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:43:15.985 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=159, cmd=253, rsp=0
+2013-10-11 16:43:15.985 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=78ms)
+2013-10-11 16:43:45.988 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	[2]request: seq=160, cmd=253
+2013-10-11 16:43:45.988 Level=2 class=CCrackCaptchaClient       Func=OnSocketDataSent          Err=0         	[2]Data sent(len=52)
+2013-10-11 16:43:46.061 Level=2 class=CCrackCaptchaClient       Func=HandleReceivedData        Err=0         	[2]received: seq=160, cmd=253, rsp=0
+2013-10-11 16:43:46.062 Level=2 class=CCrackCaptchaClient       Func=HeartBeatPacketSendThreadFunc Err=0         	Send HeatBeat success(seq=0, usedtime=62ms)
