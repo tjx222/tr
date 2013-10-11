@@ -39,13 +39,18 @@ public class LoginThread extends BaseThread {
 				Result rs = new Result();
 				int count = 0;
 				if (!Constants.isLoginSuc) { //如果还未登录，获取登录时验证码和随机数
-					rob.console(MessageFormat.format(ResManager.getString("LogicThread.0"), rob.getUsername())); //$NON-NLS-1$
+					rob.console(ResManager.getString("LoginThread.0", new String[]{rob.getUsername()})); //$NON-NLS-1$
 					Constants.randCode = getRandCodeDailog(Constants.LOGIN_CODE_URL);
 					String randstr=client.getStr(Constants.RANDSTR_URL);
 					Constants.randstr=randstr.substring(14,randstr.indexOf("\","));
 				}
 				
 				while (!Constants.isLoginSuc && blinker == thisThread) {//循环登录
+					if(Constants.randCode == null){
+						rob.console(ResManager.getString("LoginThread.5"));
+						rob.changePanel(RobTicket.LOGIN_BEGIN);
+						break;
+					}
 					rs = client.login(rob.getUsername(), rob.getPassword(),
 							Constants.randCode,Constants.randstr);
 					if (rs.getState() == Result.SUCC) {
@@ -54,10 +59,10 @@ public class LoginThread extends BaseThread {
 							rob.writeUserInfo();
 						Constants.isLoginSuc = true;
 					} else if (rs.getState() == Result.RAND_CODE_ERROR) {
-						rob.console(Constants.CODE_ERROR);
+						 rob.console(Constants.CODE_ERROR);
 						 Constants.randCode = getRandCodeDailog(Constants.LOGIN_CODE_URL);
-						 String randstr=client.getStr(Constants.RANDSTR_URL);
-						 Constants.randstr=randstr.substring(14,randstr.indexOf("\","));
+						 String randstr = client.getStr(Constants.RANDSTR_URL);
+						 Constants.randstr = randstr.substring(14,randstr.indexOf("\","));
 						
 					} else if (rs.getState() == Result.ACC_ERROR
 							|| rs.getState() == Result.PWD_ERROR) {
@@ -73,11 +78,11 @@ public class LoginThread extends BaseThread {
 				if (Constants.isLoginSuc) {//登录成功
 					rob.changePanel(RobTicket.LOGIN_SUCC);
 					if (count == 0) {
-						rob.console(ResManager.getString("LogicThread.1")); //$NON-NLS-1$
+						rob.console(ResManager.getString("LoginThread.1")); //$NON-NLS-1$
 					} else if (count < 10) {
-						rob.console(MessageFormat.format(ResManager.getString("LogicThread.2"),count)); //$NON-NLS-1$
+						rob.console(MessageFormat.format(ResManager.getString("LoginThread.2"),count)); //$NON-NLS-1$
 					} else {
-						rob.console(MessageFormat.format(ResManager.getString("LogicThread.3"),count)); //$NON-NLS-1$
+						rob.console(MessageFormat.format(ResManager.getString("LoginThread.3"),count)); //$NON-NLS-1$
 					}
 				}
 		

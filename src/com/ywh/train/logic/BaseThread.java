@@ -42,10 +42,10 @@ public abstract class BaseThread extends Thread {
 			CodeMouseAdapter cma = new CodeMouseAdapter(randCodeByRob,url);
 			label.addMouseListener(cma);
 			String input = JOptionPane.showInputDialog(rob.getFrame(), label,
-					ResManager.getString("LogicThread.25"), JOptionPane.DEFAULT_OPTION); //$NON-NLS-1$
+					ResManager.getString("LogicThread.25"), JOptionPane.DEFAULT_OPTION);
 				//randCodeByRob = cma.getRandCodeByRob();
 			//} else {
-		   randCodeByRob = input;
+		    randCodeByRob = input;
 		}
 		return randCodeByRob;
 	}

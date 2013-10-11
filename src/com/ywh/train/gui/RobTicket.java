@@ -239,16 +239,9 @@ public class RobTicket {
 
 	
 	public void clearUserList(){
-		if(dlm.size() > 0){
-			int rs = JOptionPane.showConfirmDialog(frame, ResManager.getString("RobTicket.msg.sure")+
-					ResManager.getString("RobTicket.btnDelAll.tip"),
-					ResManager.getString("RobTicket.msg.tip"),JOptionPane.YES_NO_OPTION);
-			if(rs == JOptionPane.YES_OPTION){
-				labUserList.setText("");
-				this.dlm.clear();
-				list.setToolTipText("");
-			}
-		}
+			labUserList.setText("");
+			dlm.clear();
+			list.setToolTipText("");
 	}
 	/**
 	 * 清空控制台
@@ -706,7 +699,14 @@ public class RobTicket {
 		frame.getContentPane().add(btnDelAll);
 		btnDelAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				clearUserList();
+				if(dlm.size() > 0){
+					int rs = JOptionPane.showConfirmDialog(frame, ResManager.getString("RobTicket.msg.sure")+
+							ResManager.getString("RobTicket.btnDelAll.tip"),
+							ResManager.getString("RobTicket.msg.tip"),JOptionPane.YES_NO_OPTION);
+					if(rs == JOptionPane.YES_OPTION){
+						clearUserList();
+					}
+				}
 			}
 		});
 	}
@@ -891,15 +891,9 @@ public class RobTicket {
 	 * 加载联系人方法
 	 */	
 	protected void load() {
-		clearUserList();
 		this.btnLoad.setEnabled(false);
 		this.btnLoad.setText(ResManager.getString("RobTicket.btnLoad.in"));
-		if(getUsername().isEmpty() || getPassword().isEmpty()) {
-			JOptionPane.showMessageDialog(frame,
-					ResManager.getString("RobTicket.JOptionPane")); //$NON-NLS-1$
-			return;
-		}
-				
+		clearUserList();
 		Thread loadTread = new LoadContactsThread(client, this);
 		loadTread.start();
 	}
@@ -1017,6 +1011,7 @@ public class RobTicket {
 			card.show(panel,state);
 			setBtnEnable(true);
 		}else{
+			setBtnEnable(false);
 			card.show(panel,LOGIN_BEGIN);
 		}
 	}

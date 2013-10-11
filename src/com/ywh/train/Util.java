@@ -27,7 +27,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import cn.smy.dama2.Dama2;
 
 import com.ywh.train.bean.Page;
 import com.ywh.train.bean.TrainQueryInfo;

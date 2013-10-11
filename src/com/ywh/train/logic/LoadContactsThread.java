@@ -3,6 +3,8 @@ package com.ywh.train.logic;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.SwingUtilities;
+
 import com.ywh.train.Config;
 import com.ywh.train.Constants;
 import com.ywh.train.bean.Page;
@@ -28,6 +30,15 @@ public class LoadContactsThread extends BaseThread {
 		super(client,rob);
 	}
 
+	private List<UserInfo> ls;
+	
+	Runnable setUsers = new Runnable(){
+		public void run() {
+			rob.addContacts(ls);
+			
+		}
+	};
+	
 	/**
 	 * override 方法<p>
 	 * 登陆线程，登陆成功后才进行购票。
@@ -36,11 +47,11 @@ public class LoadContactsThread extends BaseThread {
 	public void run() {
 		Thread thisThread = Thread.currentThread();
 		try {
-				List<UserInfo> ls = new ArrayList<UserInfo>();
-				int pageIndex = 0;
-				boolean hasNext = true;
-				rob.console("start load contact...");
-				while (hasNext && Constants.isLoginSuc && blinker == thisThread ){//循环加載
+			rob.console("contacts load success.");	
+			ls = new ArrayList<UserInfo>();
+			int pageIndex = 0;
+			boolean hasNext = true;
+			while (hasNext && Constants.isLoginSuc && blinker == thisThread ){//循环加載
 					rob.console("load page "+ pageIndex);
 					Page<UserInfo> page = client.loadContacts(pageIndex, Config.getPageSize());
 					if(page!=null){
@@ -50,10 +61,9 @@ public class LoadContactsThread extends BaseThread {
 					}else{
 						break;
 					}
-					
 				}
-				rob.addContacts(ls);	
-				rob.console("contacts load success.");
+				
+				SwingUtilities.invokeLater(setUsers);	
 				
 			} catch (Exception e) {
 				e.printStackTrace();
