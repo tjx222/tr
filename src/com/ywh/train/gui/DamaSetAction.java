@@ -5,6 +5,7 @@ import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.AbstractAction;
 import javax.swing.Box;
@@ -13,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
@@ -49,7 +51,7 @@ class DamaSetAction extends AbstractAction{
 		Box vBox = Box.createVerticalBox();
 		vBox.setBorder(new TitledBorder(ResManager
 				.getString("RobTicket.panelDama"))); 
-		ButtonGroup group = new ButtonGroup();
+		final ButtonGroup group = new ButtonGroup();
 		
 		rbEnableDama = new JRadioButton(ResManager
 				.getString("RobTicket.rbEnableProxy"),Config.isUseProxy());
@@ -72,14 +74,14 @@ class DamaSetAction extends AbstractAction{
 	
 		Box hBox = Box.createHorizontalBox();
 		JLabel lbDamaUsername = new JLabel(ResManager.getString("RobTicket.txtUsername"));
-		JTextField txtDamaUsername = new JTextField(Config.getUsername(),16);
+		final JTextField txtDamaUsername = new JTextField(Config.getUsername(),16);
 		hBox.add(lbDamaUsername);
 		hBox.add(Box.createHorizontalStrut(14));
 		hBox.add(txtDamaUsername);
 		
 		Box hBoxport = Box.createHorizontalBox();
 		JLabel lbDamaPass = new JLabel(ResManager.getString("RobTicket.txtPassword"));
-		JPasswordField txtDamaPass = new JPasswordField(Config.getPassword(),16);
+		final JPasswordField txtDamaPass = new JPasswordField(Config.getPassword(),16);
 		hBoxport.add(lbDamaPass);
 		hBoxport.add(Box.createHorizontalStrut(20));
 		hBoxport.add(txtDamaPass);
@@ -116,11 +118,26 @@ class DamaSetAction extends AbstractAction{
 		
 		panel.add(vBox1,LOGIN_PANEL);
 		panel.add(vBox2,SUCC_PANEL);
-		card.show(panel,SUCC_PANEL);
 		
 		JPanel plApply = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		btnApply = new JButton(ResManager.getString("RobTicket.btnApply"));
 		plApply.add(btnApply);
+		
+		btnApply.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Config.setUseDama(group.isSelected(rbEnableDama.getModel()));
+				Config.setPassword(new String(txtDamaPass.getPassword()).trim());
+				Config.setUsername(txtDamaUsername.getText().trim());
+				if(Config.saveConfig()){
+					dialog.setVisible(false);
+				}else{
+					JOptionPane.showConfirmDialog(dialog, ResManager.getString("RobTicket.msg.failture"),
+							ResManager.getString("RobTicket.msg.tip"),JOptionPane.OK_OPTION);
+				}
+			}
+		}
+		);
 		
 		panelProxy.setBorder(new EmptyBorder(10, 10, 10, 10));
 		panelProxy.add(vBox,BorderLayout.NORTH);
