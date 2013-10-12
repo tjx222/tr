@@ -16,7 +16,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -494,13 +496,7 @@ public class RobTicket {
 		panel_1.add(label_6);
 		label_6.setHorizontalAlignment(SwingConstants.RIGHT);
 
-		MaskFormatter mf = null;
-		try {
-			mf = new MaskFormatter("####-##-##"); //$NON-NLS-1$
-		} catch (ParseException e1) {
-			e1.printStackTrace();
-		}
-		
+		DateFormat mf = new SimpleDateFormat("yyyy-MM-dd");
 		txtStartDate = new JFormattedTextField(mf);
 		txtStartDate.setToolTipText(ResManager
 				.getString("RobTicket.txtStartDateTip")); //$NON-NLS-1$

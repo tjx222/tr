@@ -72,7 +72,7 @@ class DamaSetAction extends AbstractAction{
 	
 		Box hBox = Box.createHorizontalBox();
 		JLabel lbDamaUsername = new JLabel(ResManager.getString("RobTicket.txtUsername"));
-		JTextField txtDamaUsername = new JTextField(Config.getUserName(),16);
+		JTextField txtDamaUsername = new JTextField(Config.getUsername(),16);
 		hBox.add(lbDamaUsername);
 		hBox.add(Box.createHorizontalStrut(14));
 		hBox.add(txtDamaUsername);
