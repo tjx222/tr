@@ -49,7 +49,8 @@ public class Config {
 	}
 	
 	public static boolean isUseDama() {
-		return "true".equals(getProperty("dama.set"));
+		return "true".equals(getProperty("dama.set")) 
+				&& !Util.isBlank(getUsername())	&& !Util.isBlank(getPassword());
 	}
 	
 	public static void setUseDama(Boolean isUseDama){

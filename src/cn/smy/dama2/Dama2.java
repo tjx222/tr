@@ -239,104 +239,104 @@ public class Dama2 {
 	
 //error code definition	
 	//success code
-	static final int ERR_CC_SUCCESS					= 0;
+	public static final int ERR_CC_SUCCESS					= 0;
 		//parameter error
-	static final int ERR_CC_SOFTWARE_NAME_ERR		=-1;
-	static final int ERR_CC_SOFTWARE_ID_ERR			=-2;
-	static final int ERR_CC_FILE_URL_ERR			=-3;
-	static final int ERR_CC_COOKIE_ERR				=-4;
-	static final int ERR_CC_REFERER_ERR				=-5;
-	static final int ERR_CC_VCODE_LEN_ERR			=-6;
-	static final int ERR_CC_VCODE_TYPE_ID_ERR		=-7;
-	static final int ERR_CC_POINTER_ERROR			=-8;
-	static final int ERR_CC_TIMEOUT_ERR				=-9;
-	static final int ERR_CC_INVALID_SOFTWARE		=-10;
-	static final int ERR_CC_COOKIE_BUFFER_TOO_SMALL	=-11;
-	static final int ERR_CC_PARAMETER_ERROR			=-12;
+	public static final int ERR_CC_SOFTWARE_NAME_ERR		=-1;
+	public static final int ERR_CC_SOFTWARE_ID_ERR			=-2;
+	public static final int ERR_CC_FILE_URL_ERR			=-3;
+	public static final int ERR_CC_COOKIE_ERR				=-4;
+	public static final int ERR_CC_REFERER_ERR				=-5;
+	public static final int ERR_CC_VCODE_LEN_ERR			=-6;
+	public static final int ERR_CC_VCODE_TYPE_ID_ERR		=-7;
+	public static final int ERR_CC_POINTER_ERROR			=-8;
+	public static final int ERR_CC_TIMEOUT_ERR				=-9;
+	public static final int ERR_CC_INVALID_SOFTWARE		=-10;
+	public static final int ERR_CC_COOKIE_BUFFER_TOO_SMALL	=-11;
+	public static final int ERR_CC_PARAMETER_ERROR			=-12;
 		//user error
-	static final int ERR_CC_USER_ALREADY_EXIST		=-100;
-	static final int ERR_CC_BALANCE_NOT_ENOUGH		=-101;
+	public static final int ERR_CC_USER_ALREADY_EXIST		=-100;
+	public static final int ERR_CC_BALANCE_NOT_ENOUGH		=-101;
 	/**
 	 * 用户名不存在
 	 */
-	static final int ERR_CC_USER_NAME_ERR			=-102;
+	public static final int ERR_CC_USER_NAME_ERR			=-102;
 	/**
 	 * 密码错误
 	 */
-	static final int ERR_CC_USER_PASSWORD_ERR		=-103;
-	static final int ERR_CC_QQ_NO_ERR				=-104;
-	static final int ERR_CC_EMAIL_ERR				=-105;
-	static final int ERR_CC_TELNO_ERR				=-106;
-	static final int ERR_CC_DYNC_VCODE_SEND_MODE_ERR=-107;
+	public static final int ERR_CC_USER_PASSWORD_ERR		=-103;
+	public static final int ERR_CC_QQ_NO_ERR				=-104;
+	public static final int ERR_CC_EMAIL_ERR				=-105;
+	public static final int ERR_CC_TELNO_ERR				=-106;
+	public static final int ERR_CC_DYNC_VCODE_SEND_MODE_ERR=-107;
 	
 	/**
 	 * 无效充值卡卡号
 	 */
-	static final int ERR_CC_INVALID_CARDNO			=-108;
-	static final int ERR_CC_DYNC_VCODE_OVERFLOW		=-109;
-	static final int ERR_CC_DYNC_VCODE_TIMEOUT		=-110;
+	public static final int ERR_CC_INVALID_CARDNO			=-108;
+	public static final int ERR_CC_DYNC_VCODE_OVERFLOW		=-109;
+	public static final int ERR_CC_DYNC_VCODE_TIMEOUT		=-110;
 	
 	/**
 	 * 用户被禁止使用该软件
 	 */
-	static final int ERR_CC_USER_SOFTWARE_NOT_MATCH	=-111;
-	static final int ERR_CC_NEED_DYNC_VCODE			=-112;
+	public static final int ERR_CC_USER_SOFTWARE_NOT_MATCH	=-111;
+	public static final int ERR_CC_NEED_DYNC_VCODE			=-112;
 		//logic error
 	/**
 	 * 用户未登录
 	 */
-	static final int ERR_CC_NOT_LOGIN				=-201;
+	public static final int ERR_CC_NOT_LOGIN				=-201;
 	
 	/**
 	 * 用户已登录
 	 */
-	static final int ERR_CC_ALREADY_LOGIN			=-202;
+	public static final int ERR_CC_ALREADY_LOGIN			=-202;
 	
 	/**
 	 * invalid request id, perhaps request is timeout
 	 */
-	static final int ERR_CC_INVALID_REQUEST_ID		=-203;	
+	public static final int ERR_CC_INVALID_REQUEST_ID		=-203;	
 	
 	/**
 	 * invalid captcha id, perhaps request is timeout
 	 */
-	static final int ERR_CC_INVALID_VCODE_ID		=-204;	
-	static final int ERR_CC_NO_RESULT				=-205;
+	public static final int ERR_CC_INVALID_VCODE_ID		=-204;	
+	public static final int ERR_CC_NO_RESULT				=-205;
 	
 	/**
 	 * 未初始化，请调用Init方法
 	 */
-	static final int ERR_CC_NOT_INIT_PARAM			=-206;
+	public static final int ERR_CC_NOT_INIT_PARAM			=-206;
 	/**
 	 * 
 	 */
-	static final int ERR_CC_ALREADY_INIT_PARAM		=-207;
+	public static final int ERR_CC_ALREADY_INIT_PARAM		=-207;
 	
 	/**
 	 * 软件无效
 	 */
-	static final int ERR_CC_SOFTWARE_DISABLED		=-208;
+	public static final int ERR_CC_SOFTWARE_DISABLED		=-208;
 	
 	/**
 	 * 需要重新登录
 	 */
-	static final int ERR_CC_NEED_RELOGIN			=-209;
-	static final int EER_CC_ILLEGAL_USER			=-210;
+	public static final int ERR_CC_NEED_RELOGIN			=-209;
+	public static final int EER_CC_ILLEGAL_USER			=-210;
 	
 	/**
 	 * concurrent request is too much
 	 */
-	static final int EER_CC_REQUEST_TOO_MUCH		=-211;
+	public static final int EER_CC_REQUEST_TOO_MUCH		=-211;
 
 	//system error
-	static final int ERR_CC_CONFIG_ERROR			=-301;
-	static final int ERR_CC_NETWORK_ERROR			=-302;
-	static final int ERR_CC_DOWNLOAD_FILE_ERR		=-303;
-	static final int ERR_CC_CONNECT_SERVER_FAIL		=-304;
-	static final int ERR_CC_MEMORY_OVERFLOW			=-305;
-	static final int ERR_CC_SYSTEM_ERR				=-306;
-	static final int ERR_CC_SERVER_ERR				=-307;
-	static final int ERR_CC_VERSION_ERROR			=-308;
-	static final int ERR_CC_READ_FILE				=-309;
+	public static final int ERR_CC_CONFIG_ERROR			=-301;
+	public static final int ERR_CC_NETWORK_ERROR			=-302;
+	public static final int ERR_CC_DOWNLOAD_FILE_ERR		=-303;
+	public static final int ERR_CC_CONNECT_SERVER_FAIL		=-304;
+	public static final int ERR_CC_MEMORY_OVERFLOW			=-305;
+	public static final int ERR_CC_SYSTEM_ERR				=-306;
+	public static final int ERR_CC_SERVER_ERR				=-307;
+	public static final int ERR_CC_VERSION_ERROR			=-308;
+	public static final int ERR_CC_READ_FILE				=-309;
 	
 }

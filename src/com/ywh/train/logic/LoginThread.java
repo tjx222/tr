@@ -100,4 +100,9 @@ public class LoginThread extends BaseThread {
 	public void setEnd(boolean isEnd) {
 		 blinker = null;
 	}
+	
+	@Override
+	public boolean getIsAuto() {
+		return Config.isUseDama();
+	}
 }

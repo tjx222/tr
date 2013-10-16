@@ -24,6 +24,13 @@ public abstract class BaseThread extends Thread {
 		this.rob = rob;
 	}
 	
+	/**
+	 * 是否自动验证
+	 * @return
+	 */
+	public boolean getIsAuto() {
+		return false;
+	}
 
 	/**
 	 * 获得自动识别的验证or用户输入
@@ -58,9 +65,12 @@ public abstract class BaseThread extends Thread {
 	private String getCode(byte[] image){
 		String randCodeByRob = "";
   	    String[] vcode = new String[1];
-		int ret = DamaUtil.dama2.d2Buf("694f40021a34f601b069a415cabf4d5d", "test", "test", image, (short)20, (long)42, vcode);
+		int ret = DamaUtil.d2Buf(image, vcode);
 		if(ret > 0){
 			randCodeByRob = vcode[0];
+		}else if(ret == DamaUtil.ERR_NOT_INIT){
+			JOptionPane.showConfirmDialog(rob.getFrame(), ResManager.getString("RobTicket.msg.damaUserFailture"),
+					ResManager.getString("RobTicket.msg.tip"),JOptionPane.OK_OPTION);
 		}else{
 			rob.console(ResManager.getString("dama2 error:"+ ret));
 		}

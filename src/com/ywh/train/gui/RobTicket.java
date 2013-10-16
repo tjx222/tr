@@ -184,6 +184,8 @@ public class RobTicket {
 	
 	private LoginThread loginTread; //订票逻辑线程
 	
+	private JMenuItem miDama;
+	
 	private JTextField txtTrainNo;
 	private JList list;//订票人列表
 	private DefaultListModel dlm;
@@ -550,11 +552,26 @@ public class RobTicket {
 		boxkStrinStation.setBounds(50, 100, 73, 23);
 		panel_1.add(boxkStrinStation);
 
-		boxkIsAuto = new JCheckBox(ResManager.getString("RobTicket.boxkIsAuto")); //$NON-NLS-1$
+		boxkIsAuto = new JCheckBox(ResManager.getString("RobTicket.boxkIsAuto"));
 		boxkIsAuto.setBounds(342, 100, 109, 23);
 		boxkIsAuto.setToolTipText(ResManager
-				.getString("RobTicket.boxkIsAutoTip")); //$NON-NLS-1$
+				.getString("RobTicket.boxkIsAutoTip"));
 		panel_1.add(boxkIsAuto);
+		
+		boxkIsAuto.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(((JCheckBox)e.getSource()).isSelected()){
+					if(Util.isBlank(Config.getUsername()) || 
+							Util.isBlank(Config.getPassword())){
+						JOptionPane.showMessageDialog(getFrame(), ResManager.getString("RobTicket.msg.damaNotSet"),
+								ResManager.getString("RobTicket.msg.tip"),JOptionPane.ERROR_MESSAGE);
+						miDama.doClick();
+						boxkIsAuto.setSelected(false);
+					}
+				}
+			}
+		});
 		
 		boxkOneSeat = new JCheckBox(ResManager.getString("RobTicket.boxkOneSeat")); //$NON-NLS-1$
 		boxkOneSeat.setBounds(30, 127, 63, 23);
@@ -720,10 +737,10 @@ public class RobTicket {
 		mnOpt.add(miProxy);
 		miProxy.addActionListener(new ProxySetAction(frame));
 		
-		JMenuItem miDama = new JMenuItem(
+		miDama = new JMenuItem(
 				ResManager.getString("RobTicket.miDama"));
 		mnOpt.add(miDama);
-		miDama.addActionListener(new DamaSetAction(frame));
+		miDama.addActionListener(new DamaSetAction(this));
 		
 		JMenu mnHelp = new JMenu(ResManager.getString("RobTicket.mnHelp")); //$NON-NLS-1$
 		menuBar.add(mnHelp);
@@ -894,6 +911,12 @@ public class RobTicket {
 		loadTread.start();
 	}
 	
+	/**
+	 * 设置是否启动自动验证
+	 */	
+	public void setAuto(boolean isUseDama) {
+		boxkIsAuto.setSelected(isUseDama);
+	}
 	
 	/**
 	 * 退出登陆方法

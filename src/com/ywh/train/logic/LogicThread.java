@@ -211,4 +211,9 @@ public class LogicThread extends BaseThread {
 	public void setEnd(boolean isEnd) {
 		 blinker = null;
 	}
+
+	@Override
+	public boolean getIsAuto() {
+		return rob.isAutocode();
+	}
 }

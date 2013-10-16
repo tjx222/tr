@@ -355,6 +355,17 @@ public class Util {
 		return MessageFormat.format(pattern, argumentStr);
 	}
 
+    public static boolean isBlank(String str)
+    {
+        int strLen;
+        if(str == null || (strLen = str.length()) == 0)
+            return true;
+        for(int i = 0; i < strLen; i++)
+            if(!Character.isWhitespace(str.charAt(i)))
+                return false;
+
+        return true;
+    }
 
 	public static void main(String[] args) throws Exception {
 		//String html="0,<span id='id_240000T14500' class='base_txtdiv' onmouseover=javascript:onStopHover('240000T14500#BJP#PXG') onmouseout='onStopOut()'>T145</span>,<img src='/otsweb/images/tips/first.gif'>北京<br>12:09,萍乡<br>06:51,18:42,--,--,--,--,--,<font color='darkgray'>无</font>,<font color='darkgray'>无</font>,--,<font color='#008800'>有</font>,<font color='#008800'>有</font>,--,<input type='button' class='yuding_u' onmousemove=this.className='yuding_u_over' onmousedown=this.className='yuding_u_down' onmouseout=this.className='yuding_u' onclick=javascript:getSelected('T145#18:42#12:09#240000T14500#BJP#PXG#06:51#北京#萍乡#1*****30754*****00001*****04293*****0000#8950D43445E29A496A7F868A209DD2295FAFE47A61734FCF8D3B98E1') value='预订'></input>";
