@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.AbstractAction;
 import javax.swing.Box;
@@ -124,6 +125,17 @@ class DamaSetAction extends AbstractAction{
 				}
 			});
 			
+			btnReg.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					try {
+						Runtime.getRuntime().exec("explorer \"" + Config.getProperty("dama.regurl") + "\"");
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}
+			});
+			
 			vBox1.add(hBox);
 			vBox1.add(Box.createVerticalStrut(5));
 			vBox1.add(hBoxport);
@@ -167,6 +179,21 @@ class DamaSetAction extends AbstractAction{
 				}
 			});
 			
+			btnBuyCard.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+				    StringBuilder msg = new StringBuilder();
+					msg.append("<html><body><strong>")
+						.append("</strong><br/>")
+						.append(ResManager.getString("RobTicket.dama.buycardmessage"))
+						.append("</body></html>");
+						
+					JOptionPane.showMessageDialog(
+						dialog,
+						msg.toString(),ResManager.getString("RobTicket.dama.buycardtitle"),
+						JOptionPane.DEFAULT_OPTION);
+				}
+			});
 			
 			JPanel btnPanel1 = new JPanel(new FlowLayout(FlowLayout.CENTER,10,2));
 			btnPanel1.add(btnCharge);

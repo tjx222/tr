@@ -8,9 +8,11 @@ import javax.swing.JOptionPane;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.log4j.Logger;
 
 import com.ywh.train.Config;
 import com.ywh.train.Constants;
+import com.ywh.train.NetConnectException;
 import com.ywh.train.ResManager;
 import com.ywh.train.bean.Result;
 import com.ywh.train.bean.TokenAndTicket;
@@ -26,7 +28,7 @@ import com.ywh.train.gui.RobTicket;
  * @version 1.0
  */
 public class LogicThread extends BaseThread {
-
+	private static final Logger log = Logger.getLogger(LogicThread.class);
 	private volatile Thread blinker = this;
 	/**
 	 * 构造函数
@@ -53,7 +55,7 @@ public class LogicThread extends BaseThread {
 				
 				while (Constants.isLoginSuc && blinker == thisThread) {//订票
 					String randCode = null;
-					rob.console(ResManager.getString("LogicThread.4")); //$NON-NLS-1$
+					rob.console(ResManager.getString("LogicThread.4")); 
 					List<TrainQueryInfo> allTrain = client.queryTrain(
 							rob.getFromCity(), rob.getToCity(), rob.getStartDate(),
 							rob.getRangDate());
@@ -61,13 +63,13 @@ public class LogicThread extends BaseThread {
 					AutoTrainAI ai = new AutoTrainAI(allTrain, rob.getTrainSet(),//查询出所有票
 							rob.getTrainNo(), rob.getFromCity(), rob.getToCity());
 					if (ai.getAllTrains().size() == 0) {
-						rob.console(MessageFormat.format(ResManager.getString("LogicThread.5") ,rob.getStartDate(),rob.getRangDate(),rob.getFromCity(), rob.getToCity())); //$NON-NLS-1$
+						rob.console(MessageFormat.format(ResManager.getString("LogicThread.5") ,rob.getStartDate(),rob.getRangDate(),rob.getFromCity(), rob.getToCity())); 
 						if (rob.getTrainSet()[Constants.isLockTrain]) {
 							Thread.sleep(5000);
 							continue;
 						}
 					} else {
-						rob.console(MessageFormat.format(ResManager.getString("LogicThread.6"),rob.getStartDate(),rob.getRangDate(),rob.getFromCity(),rob.getToCity(),ai.getTrainNoView(ai.getCandidateTrains()))); //$NON-NLS-1$
+						rob.console(MessageFormat.format(ResManager.getString("LogicThread.6"),rob.getStartDate(),rob.getRangDate(),rob.getFromCity(),rob.getToCity(),ai.getTrainNoView(ai.getCandidateTrains()))); 
 					}
 					
 					TrainQueryInfo goHomeTrain = null;//选中的车次
@@ -75,9 +77,9 @@ public class LogicThread extends BaseThread {
 					for (String trainNo : rob.getTrainNo()) {//获取指定车次中的一辆
 						TrainQueryInfo spTrain = spTrains.get(trainNo);
 						if (spTrain == null) {
-							rob.console(MessageFormat.format(ResManager.getString("LogicThread.7"), trainNo)); //$NON-NLS-1$
+							rob.console(MessageFormat.format(ResManager.getString("LogicThread.7"), trainNo)); 
 						} else if (Constants.getTrainSeatName(ai.getSpecificSeatAI(spTrain)) == null) {
-							rob.console(MessageFormat.format(ResManager.getString("LogicThread.8"),spTrain.getTrainNo(), ai.getTrainSeatView(spTrain))); //$NON-NLS-1$
+							rob.console(MessageFormat.format(ResManager.getString("LogicThread.8"),spTrain.getTrainNo(), ai.getTrainSeatView(spTrain))); 
 						} else {
 							goHomeTrain = spTrain;
 							break;
@@ -88,27 +90,27 @@ public class LogicThread extends BaseThread {
 						Thread.sleep(Config.getSleepTime());
 						continue;
 					}  else if(!rob.getTrainSet()[Constants.isLockTrain] && goHomeTrain == null){//没锁定指定车次，从其他有票车中选择
-						rob.console(ResManager.getString("LogicThread.9")); //$NON-NLS-1$
+						rob.console(ResManager.getString("LogicThread.9")); 
 						Map<String, TrainQueryInfo> caTrains = ai.getCandidateTrains();
 						for (TrainQueryInfo train : caTrains.values()) {
 							if(ai.getSpecificSeatTrains().containsKey(train.getTrainNo())) {//其他车次中找有指定票的车
 								goHomeTrain = train;
 								break;
 							} else {
-								rob.console(MessageFormat.format(ResManager.getString("LogicThread.10"),train.getTrainNo(),ai.getTrainSeatView(train))); //$NON-NLS-1$
+								rob.console(MessageFormat.format(ResManager.getString("LogicThread.10"),train.getTrainNo(),ai.getTrainSeatView(train))); 
 							}
 						}
 					}
 					
 					if (goHomeTrain == null) {
-						rob.console(ResManager.getString("LogicThread.11")); //$NON-NLS-1$
+						rob.console(ResManager.getString("LogicThread.11")); 
 						Thread.sleep(5000);
 						continue;
 					}
 					
-					rob.console(MessageFormat.format(ResManager.getString("LogicThread.12"),goHomeTrain.getTrainNo(),goHomeTrain.getFromStation(), goHomeTrain.getStartTime(),goHomeTrain.getToStation(), goHomeTrain.getEndTime(),goHomeTrain.getTakeTime())); //$NON-NLS-1$
+					rob.console(MessageFormat.format(ResManager.getString("LogicThread.12"),goHomeTrain.getTrainNo(),goHomeTrain.getFromStation(), goHomeTrain.getStartTime(),goHomeTrain.getToStation(), goHomeTrain.getEndTime(),goHomeTrain.getTakeTime())); 
 					String seat = ai.getSpecificSeatAI(goHomeTrain);
-					rob.console(MessageFormat.format(ResManager.getString("LogicThread.13"),Constants.getTrainSeatName(seat))); //$NON-NLS-1$
+					rob.console(MessageFormat.format(ResManager.getString("LogicThread.13"),Constants.getTrainSeatName(seat))); 
 					if (seat.equals(Constants.NONE_SEAT)) {//用户车票座位
 						for (UserInfo ui : rob.getSelectUsers()) {
 							ui.setSeatType(Constants.HARD_SEAT);
@@ -183,26 +185,24 @@ public class LogicThread extends BaseThread {
 						rob.console(rs.getMsg());
 						if (rs.getState() == Result.HAVE_NO_PAY_TICKET) {
 							JOptionPane.showMessageDialog(rob.getFrame(),
-								ResManager.getString("LogicThread.20")); //$NON-NLS-1$
+								ResManager.getString("LogicThread.20")); 
 							rob.reset(true);
 							break;
 						} else {
-							rob.console(ResManager.getString("LogicThread.21")); //$NON-NLS-1$
+							rob.console(ResManager.getString("LogicThread.21")); 
 						}
 					}
 				}
 			}
-		} catch (Exception e) {
+		}catch(NetConnectException e) {
+			rob.console(ResManager.getString("RobTicket.err.net"));
+		} catch(Exception e){
+			log.error(e);
 			e.printStackTrace();
-			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-			}
+			rob.console(ResManager.getString("RobTicket.err.unkwnow"));
 		} finally {
-			rob.console(ResManager.getString("LogicThread.22")); //$NON-NLS-1$	
+			rob.console(ResManager.getString("LogicThread.22")); 
 		}
-
 	}
 	/**
 	 * @param isEnd

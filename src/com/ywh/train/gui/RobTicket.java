@@ -7,6 +7,8 @@ import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -72,6 +74,7 @@ import com.ice.jni.registry.RegistryKey;
 import com.ice.jni.registry.RegistryValue;
 import com.ywh.train.Config;
 import com.ywh.train.Constants;
+import com.ywh.train.DamaUtil;
 import com.ywh.train.ResManager;
 import com.ywh.train.Util;
 import com.ywh.train.bean.LoginInfo;
@@ -235,7 +238,7 @@ public class RobTicket {
 	 */
 	public RobTicket() {
 		initNetwork();
-		installCert();
+	//	installCert();
 	//	initProxy();
 		initialize();
 		Runtime.getRuntime().addShutdownHook(new ExitThread());
@@ -324,6 +327,7 @@ public class RobTicket {
 		});
 		proxyThread.setDaemon(true);
 		proxyThread.start();
+		Constants.isProxyServerLive = true;
 	}
 	
 	/**
@@ -370,6 +374,15 @@ public class RobTicket {
 		boxNeedRember = new JCheckBox(ResManager.getString("RobTicket.boxNeedRember")); //$NON-NLS-1$
 		boxNeedRember.setBounds(355, 2, 69, 23);
 		boxNeedRember.setToolTipText(ResManager.getString("RobTicket.boxNeedRember.Tip")); //$NON-NLS-1$
+
+		boxNeedRember.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() != ItemEvent.SELECTED) {
+                	deleteRememberedUser();
+                }
+			}
+		});
 		p1.add(boxNeedRember);
 		
 		btnLOGIN = new JButton(ResManager.getString("RobTicket.btnLogin")); //$NON-NLS-1$
@@ -558,10 +571,11 @@ public class RobTicket {
 				.getString("RobTicket.boxkIsAutoTip"));
 		panel_1.add(boxkIsAuto);
 		
-		boxkIsAuto.addActionListener(new ActionListener() {
+		boxkIsAuto.addItemListener(new ItemListener() {
+			
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(((JCheckBox)e.getSource()).isSelected()){
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange() == ItemEvent.SELECTED){
 					if(Util.isBlank(Config.getUsername()) || 
 							Util.isBlank(Config.getPassword())){
 						JOptionPane.showMessageDialog(getFrame(), ResManager.getString("RobTicket.msg.damaNotSet"),
@@ -825,7 +839,6 @@ public class RobTicket {
 	}
 
 	private void setBtnEnable(boolean canUse){
-		btnLOGIN.setEnabled(!canUse);
 		btnOpenIE.setEnabled(canUse);
 		btnSORE.setEnabled(canUse);
 		btnLoad.setEnabled(canUse);
@@ -883,14 +896,18 @@ public class RobTicket {
 	 * 登陆方法
 	 */	
 	protected void login() {
-		this.btnLOGIN.setEnabled(false);
+		this.btnLOGIN.setText(ResManager.getString("RobTicket.btnSORE.end"));
 		textArea.setText(""); //$NON-NLS-1$
 		if (getUsername().isEmpty() || getPassword().isEmpty()) {
 			JOptionPane.showMessageDialog(frame,
 					ResManager.getString("RobTicket.JOptionPane")); //$NON-NLS-1$
 			return;
 		}
-				
+		if(li == null){
+			li = new LoginInfo();
+			li.setLoginName(getUsername());
+			li.setPassword(getPassword());
+		}		
 		loginTread = new LoginThread(client, this);
 		loginTread.start();
 	}
@@ -1163,6 +1180,7 @@ private void selectUser(JList list){
 				if (loginInfo != null) {
 					txtUsername.setText(loginInfo.getLoginName());
 					txtPassword.setText(loginInfo.getPassword());
+					boxNeedRember.setSelected(true);
 				}
 			}
 			
@@ -1176,6 +1194,12 @@ private void selectUser(JList list){
 					//cann't do anything;
 			}
 		}
+	}
+	
+	private void deleteRememberedUser(){
+		File loginFile =  new File("li");
+		if(loginFile.exists() && loginFile.isFile())
+			loginFile.delete();
 	}
 
 	public void console(String content) {
@@ -1248,12 +1272,13 @@ private void selectUser(JList list){
 	/**
 	 * 功能描述
 	 * 
-	 * @author YAOWENHAO
+	 * @author Tmser
 	 * @since 2011-12-21
 	 * @version 1.0
 	 */
 	static class ExitAction implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			DamaUtil.uninit();
 			System.exit(0);
 		}
 	}
@@ -1262,20 +1287,14 @@ private void selectUser(JList list){
 	/**
 	 * 开始按钮的监听
 	 * 
-	 * @author YAOWENHAO
+	 * @author Tmser
 	 * @since 2011-12-21
 	 * @version 1.0
 	 */
 	class StartAction implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			
 			JButton btn = (JButton) e.getSource();
 			if (ResManager.getString("RobTicket.btnSORE").equals(btn.getText())) {
-				if(li == null){
-					li = new LoginInfo();
-					li.setLoginName(getUsername());
-					li.setPassword(getPassword());
-				}
 				action();
 			} else {
 				reset(true);
@@ -1297,6 +1316,7 @@ private void selectUser(JList list){
 				login();
 			} else {
 				loginTread.setEnd(true);
+				btnLOGIN.setText(ResManager.getString("RobTicket.btnLogin"));
 			}
 		}
 	}
@@ -1325,7 +1345,10 @@ private void selectUser(JList list){
 				JOptionPane.showMessageDialog(frame, ResManager.getString("RobTicket.btnOpenIE.wait"));
 				return;
 			}
-
+			if(!Constants.isProxyServerLive){
+				installCert();
+				initProxy();
+			}
 			JButton btn = (JButton) event.getSource();
 			if (ResManager.getString("RobTicket.btnOpenIE").equals(btn.getText())) {
 				btn.setText(ResManager.getString("RobTicket.btnOpenIE.close"));

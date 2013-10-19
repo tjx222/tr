@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -47,6 +48,8 @@ import org.json.JSONObject;
 
 import com.ywh.train.Config;
 import com.ywh.train.Constants;
+import com.ywh.train.NetConnectException;
+import com.ywh.train.UnRepairException;
 import com.ywh.train.Util;
 import com.ywh.train.bean.Page;
 import com.ywh.train.bean.Result;
@@ -60,7 +63,7 @@ import com.ywh.train.bean.UserInfo;
 public class TrainClient {
 	public static String JSESSIONID = null;
 	public static String BIGipServerotsweb = null;
-	Logger log = Logger.getLogger(getClass());
+	private final static Logger log = Logger.getLogger(TrainClient.class);
 	private HttpClient httpclient = null;
 	
 	/**
@@ -69,7 +72,7 @@ public class TrainClient {
 	public TrainClient(HttpClient client) {
 		this.httpclient = client;
 		client.getParams().setParameter(HTTP.USER_AGENT,
-		"Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.4 (KHTML, like Gecko) Chrome/22.0.1229.94 Safari/537.4"); //$NON-NLS-1$
+		"Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.4 (KHTML, like Gecko) Chrome/22.0.1229.94 Safari/537.4"); 
 
 	}
 
@@ -99,8 +102,8 @@ public class TrainClient {
 			leftTicket = Util.parserTagValue(content.toString(),"input","leftTicketStr");
 			log.info("LeftTicket: "+ leftTicket);
 		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
+			throw new UnRepairException(e);
+		}finally {
 			try {
 				if (br != null) {
 					br.close();
@@ -241,8 +244,10 @@ public class TrainClient {
 			}*/
 			rs.setMsg(getTokenAndLeftTicket(entity));
 			rs.setState(Result.SUCC);
-		} catch (Exception e) {
-			log.error(e.getStackTrace());
+		}catch(UnknownHostException e){
+			throw new NetConnectException(e);
+		}catch (Exception e) {
+			throw new UnRepairException(e);
 		} 
 		log.debug("-------------------book end-------------------");
 		return rs;
@@ -407,10 +412,11 @@ public class TrainClient {
 				}
 			}*/
 		//	log.debug(ans);		
-		} catch (Exception e) {
-			e.printStackTrace();
-			log.error(e);
-		} 
+		}catch(UnknownHostException e){
+			throw new NetConnectException(e);
+		}catch (Exception e) {
+			throw new UnRepairException(e);
+		}
 		return rs;
 	}
 
@@ -433,8 +439,10 @@ public class TrainClient {
 			if(response !=  null && !response.contains(Constants.CHENPIAO_YUDING)){
 				Constants.isLoginSuc = false;
 			}
+		}catch(UnknownHostException e){
+			throw new NetConnectException(e);
 		}catch (Exception e) {
-			e.printStackTrace();
+			throw new UnRepairException(e);
 		}
 	}
 	
@@ -454,8 +462,10 @@ public class TrainClient {
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
 			response = httpclient.execute(get, responseHandler);
 			log.debug(response);
+		}catch(UnknownHostException e){
+			throw new NetConnectException(e);
 		}catch (Exception e) {
-			e.printStackTrace();
+			throw new UnRepairException(e);
 		}
 	}
 	
@@ -509,9 +519,10 @@ public class TrainClient {
 			}else{
 				rs.setMsg("Empty Content");
 			}
-		} catch (Exception e) {
-			rs.setMsg("Empty Content");
-			log.error(e);
+		}catch(UnknownHostException e){
+			throw new NetConnectException(e);
+		}catch (Exception e) {
+			throw new UnRepairException(e);
 		} 
 		return rs;
 	}
@@ -557,10 +568,11 @@ public class TrainClient {
 			}else{
 				rs.setMsg("Empty Content");
 			}
-		} catch (Exception e) {
-			rs.setMsg("Empty Content");
-			log.error(e);
-		} 
+		}catch(UnknownHostException e){
+			throw new NetConnectException(e);
+		}catch (Exception e) {
+			throw new UnRepairException(e);
+		}
 		return rs;
 	}
 	
@@ -608,10 +620,11 @@ public class TrainClient {
 			}else{
 				rs.setMsg("Empty Content");
 			}
-		} catch (Exception e) {
-			rs.setMsg("Empty Content");
-			log.error(e);
-		} 
+		} catch(UnknownHostException e){
+			throw new NetConnectException(e);
+		}catch (Exception e) {
+			throw new UnRepairException(e);
+		}
 		return rs;
 	}
 	
@@ -674,10 +687,11 @@ public class TrainClient {
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
 			response = httpclient.execute(post, responseHandler);
 			//log.info(response);
-		} catch (Exception e) {
-			e.printStackTrace();
-			log.error(e);
-		} 
+		}catch(UnknownHostException e){
+			throw new NetConnectException(e);
+		}catch (Exception e) {
+			throw new UnRepairException(e);
+		}
 		return rs;
 	}
 	
@@ -729,8 +743,10 @@ public class TrainClient {
 //			for(TrainQueryInfo tInfo : all) {
 //				System.out.println(tInfo);
 //			}
-		} catch (Exception e) {
-			log.error(e);
+		}catch(UnknownHostException e){
+			throw new NetConnectException(e);
+		}catch (Exception e) {
+			throw new UnRepairException(e);
 		}
 		log.debug("-------------------query train end-------------------");
 		return all;
@@ -773,8 +789,10 @@ public class TrainClient {
 			all = Util.parserUserInfo(responseBody); 
 			all.setPageSize(pageSize);
 			all.setCurrentPage(pageIndex);
-		} catch (Exception e) {
-			log.error(e);
+		}catch(UnknownHostException e){
+			throw new NetConnectException(e);
+		}catch (Exception e) {
+			throw new UnRepairException(e);
 		}
 		log.debug("-------------------query train end-------------------");
 		return all;
@@ -881,8 +899,10 @@ public class TrainClient {
 				rs.setMsg(Constants.UNKNOW_ERROR);
 				System.out.println(responseBody);
 			}
-		} catch (Exception e) {
-			log.error(e);
+		}catch(UnknownHostException e){
+			throw new NetConnectException(e);
+		}catch (Exception e) {
+			throw new UnRepairException(e);
 		}
 		log.debug("-------------------login end---------------------");
 		return rs;
@@ -941,9 +961,11 @@ public class TrainClient {
 			} else {
 				rs.setMsg(msg);
 			}
-		} catch (Exception e) {
-			log.error(e);
-		} finally {
+		}catch(UnknownHostException e){
+			throw new NetConnectException(e);
+		}catch (Exception e) {
+			throw new UnRepairException(e);
+		}finally {
 			try {
 				if (br != null) {
 					br.close();
@@ -1014,8 +1036,10 @@ public class TrainClient {
 			}
 			content = baos.toByteArray();
 		//	writeToFolder(content);
-		} catch (Exception e) {
-			log.error(e);
+		}catch(UnknownHostException e){
+			throw new NetConnectException(e);
+		}catch (Exception e) {
+			throw new UnRepairException(e);
 		}
 		log.debug("-------------------get randcode end-------------------");
 		return content;
@@ -1076,8 +1100,10 @@ public class TrainClient {
 					baos.write(buf, 0, len);
 				}
 			}
-		} catch (Exception e) {
-			log.error(e);
+		}catch(UnknownHostException e){
+			throw new NetConnectException(e);
+		}catch (Exception e) {
+			throw new UnRepairException(e);
 		}
 		s = baos.toString();
 		
@@ -1095,7 +1121,7 @@ public class TrainClient {
 			PoolingClientConnectionManager tcm = new PoolingClientConnectionManager();
 			tcm.setMaxTotal(10);
 			//**
-			SSLContext ctx = SSLContext.getInstance("TLS"); //$NON-NLS-1$
+			SSLContext ctx = SSLContext.getInstance("TLS"); 
 			X509TrustManager tm = new X509TrustManager() {
 				
 				public java.security.cert.X509Certificate[] getAcceptedIssuers() {
@@ -1118,7 +1144,7 @@ public class TrainClient {
 			ctx.init(null, new TrustManager[] { tm }, null);
 			SSLSocketFactory ssf = new SSLSocketFactory(ctx,
 					SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-			Scheme sch = new Scheme("https", 443, ssf); //$NON-NLS-1$
+			Scheme sch = new Scheme("https", 443, ssf); 
 			tcm.getSchemeRegistry().register(sch);
 			// */
 			HttpClient httpClient = new DefaultHttpClient(tcm);
@@ -1129,7 +1155,7 @@ public class TrainClient {
 						ConnRoutePNames.DEFAULT_PROXY, proxy);
 			}
 			//this.httpClient.getParams().setParameter(HTTP.USER_AGENT,
-			//		"Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; Trident/5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; TEN)"); //$NON-NLS-1$
+			//		"Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; Trident/5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; TEN)"); 
 			TrainClient client = new TrainClient(httpClient);
 			client.queryTrain("BJP","PXG","2013-10-08","00:00--24:00");
 			
@@ -1145,12 +1171,4 @@ public class TrainClient {
 				return "";
 			}
 		}
-	
-	private boolean getBoolean(JSONObject json, String key){
-		try {
-			return json.getBoolean(key);
-		} catch (JSONException e) {
-			return false;
-		}
-	}
 }

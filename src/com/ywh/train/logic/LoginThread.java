@@ -2,9 +2,11 @@ package com.ywh.train.logic;
 
 import java.text.MessageFormat;
 
+import org.apache.log4j.Logger;
 
 import com.ywh.train.Config;
 import com.ywh.train.Constants;
+import com.ywh.train.NetConnectException;
 import com.ywh.train.ResManager;
 import com.ywh.train.bean.Result;
 import com.ywh.train.gui.RobTicket;
@@ -17,7 +19,7 @@ import com.ywh.train.gui.RobTicket;
  * @version 1.0
  */
 public class LoginThread extends BaseThread {
-
+	private static final Logger log = Logger.getLogger(LoginThread.class);
 	private volatile Thread blinker = this;
 	/**
 	 * 构造函数
@@ -39,7 +41,7 @@ public class LoginThread extends BaseThread {
 				Result rs = new Result();
 				int count = 0;
 				if (!Constants.isLoginSuc) { //如果还未登录，获取登录时验证码和随机数
-					rob.console(ResManager.getString("LoginThread.0", new String[]{rob.getUsername()})); //$NON-NLS-1$
+					rob.console(ResManager.getString("LoginThread.0", new String[]{rob.getUsername()})); 
 					Constants.randCode = getRandCodeDailog(Constants.LOGIN_CODE_URL);
 					String randstr=client.getStr(Constants.RANDSTR_URL);
 					Constants.randstr=randstr.substring(14,randstr.indexOf("\","));
@@ -78,18 +80,22 @@ public class LoginThread extends BaseThread {
 				if (Constants.isLoginSuc) {//登录成功
 					rob.changePanel(RobTicket.LOGIN_SUCC);
 					if (count == 0) {
-						rob.console(ResManager.getString("LoginThread.1")); //$NON-NLS-1$
+						rob.console(ResManager.getString("LoginThread.1")); 
 					} else if (count < 10) {
-						rob.console(MessageFormat.format(ResManager.getString("LoginThread.2"),count)); //$NON-NLS-1$
+						rob.console(MessageFormat.format(ResManager.getString("LoginThread.2"),count)); 
 					} else {
-						rob.console(MessageFormat.format(ResManager.getString("LoginThread.3"),count)); //$NON-NLS-1$
+						rob.console(MessageFormat.format(ResManager.getString("LoginThread.3"),count)); 
 					}
 				}
 		
-			} catch (Exception e) {
+			} catch(NetConnectException e) {
+				rob.console(ResManager.getString("RobTicket.err.net"));
+			} catch(Exception e){
+				log.error(e);
 				e.printStackTrace();
-			} finally {
-				rob.console(ResManager.getString("RobTicket.txtLogin.End")); //$NON-NLS-1$	
+				rob.console(ResManager.getString("RobTicket.err.unkwnow"));
+			}finally {
+				rob.console(ResManager.getString("RobTicket.txtLogin.End")); 	
 			}
 		}
 

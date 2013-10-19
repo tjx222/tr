@@ -86,6 +86,11 @@ public class Constants {
 	public static boolean isLoginSuc = false;
 	
 	/**
+	 * 代理是否已启动
+	 */
+	public static boolean isProxyServerLive = false;
+	
+	/**
 	 * 验证码
 	 */
 	public static String randCode;

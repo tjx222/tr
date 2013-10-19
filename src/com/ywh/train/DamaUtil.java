@@ -4,7 +4,7 @@ import cn.smy.dama2.Dama2;
 
 public abstract class DamaUtil {
 
-	public static Dama2 dama2 = new Dama2();
+	private static Dama2 dama2 = new Dama2();
 	
 	protected static String softName = Config.getProperty("softname");
 	
@@ -36,6 +36,17 @@ public abstract class DamaUtil {
 		int ret = dama2.init(softName, softID);
 		if(ret == SUCC || ret == Dama2.ERR_CC_ALREADY_INIT_PARAM){
 			notInit = false;
+		}
+		return ret;
+	}
+	
+	public static int uninit(){
+		int ret = SUCC;
+		if(!DamaUtil.notInit){
+			ret = dama2.uninit();
+			if(ret == SUCC){
+				notInit = true;
+			}
 		}
 		return ret;
 	}
