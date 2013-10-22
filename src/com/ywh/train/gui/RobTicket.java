@@ -264,7 +264,7 @@ public class RobTicket {
 			PoolingClientConnectionManager tcm = new PoolingClientConnectionManager();
 			tcm.setMaxTotal(10);
 			//**
-			SSLContext ctx = SSLContext.getInstance("TLS"); //$NON-NLS-1$
+			SSLContext ctx = SSLContext.getInstance("TLS"); 
 			X509TrustManager tm = new X509TrustManager() {
 				
 				public java.security.cert.X509Certificate[] getAcceptedIssuers() {
@@ -287,7 +287,7 @@ public class RobTicket {
 			ctx.init(null, new TrustManager[] { tm }, null);
 			SSLSocketFactory ssf = new SSLSocketFactory(ctx,
 					SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-			Scheme sch = new Scheme("https", 443, ssf); //$NON-NLS-1$
+			Scheme sch = new Scheme("https", 443, ssf); 
 			tcm.getSchemeRegistry().register(sch);
 			// */
 			this.httpClient = new DefaultHttpClient(tcm);
@@ -298,7 +298,7 @@ public class RobTicket {
 						ConnRoutePNames.DEFAULT_PROXY, proxy);
 			}
 			//this.httpClient.getParams().setParameter(HTTP.USER_AGENT,
-			//		"Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; Trident/5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; TEN)"); //$NON-NLS-1$
+			//		"Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; Trident/5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; TEN)"); 
 			this.client = new TrainClient(this.httpClient);
 			
 		} catch (Exception ex) {
@@ -353,27 +353,27 @@ public class RobTicket {
 
 		txtUsername = new JTextField();
 		txtUsername.setToolTipText(ResManager
-				.getString("RobTicket.txtUsernameTip")); //$NON-NLS-1$
+				.getString("RobTicket.txtUsernameTip")); 
 		txtUsername.setBounds(59, 2, 91, 21);
 		p1.add(txtUsername);
 		txtUsername.setColumns(10);
 
 		JLabel label_1 = new JLabel(
-				ResManager.getString("RobTicket.txtPassword")); //$NON-NLS-1$
+				ResManager.getString("RobTicket.txtPassword")); 
 		label_1.setBounds(174, 4, 43, 15);
 		p1.add(label_1);
 		label_1.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		txtPassword = new JPasswordField(Config.getPassword());
 		txtPassword.setToolTipText(ResManager
-				.getString("RobTicket.txtPasswordTip")); //$NON-NLS-1$
+				.getString("RobTicket.txtPasswordTip")); 
 		txtPassword.setBounds(225, 2, 84, 21);
 		p1.add(txtPassword);
 		txtPassword.setColumns(10);
 		
-		boxNeedRember = new JCheckBox(ResManager.getString("RobTicket.boxNeedRember")); //$NON-NLS-1$
+		boxNeedRember = new JCheckBox(ResManager.getString("RobTicket.boxNeedRember")); 
 		boxNeedRember.setBounds(355, 2, 69, 23);
-		boxNeedRember.setToolTipText(ResManager.getString("RobTicket.boxNeedRember.Tip")); //$NON-NLS-1$
+		boxNeedRember.setToolTipText(ResManager.getString("RobTicket.boxNeedRember.Tip")); 
 
 		boxNeedRember.addItemListener(new ItemListener() {
 			@Override
@@ -385,7 +385,7 @@ public class RobTicket {
 		});
 		p1.add(boxNeedRember);
 		
-		btnLOGIN = new JButton(ResManager.getString("RobTicket.btnLogin")); //$NON-NLS-1$
+		btnLOGIN = new JButton(ResManager.getString("RobTicket.btnLogin")); 
 		btnLOGIN.setBounds(430, 2, 56, 23);
 		p1.add(btnLOGIN);
 		btnLOGIN.addActionListener(new LoginAction());
@@ -397,7 +397,7 @@ public class RobTicket {
 		p2.add(labLoginInfo);
 		label.setHorizontalAlignment(SwingConstants.RIGHT);
 		
-		btnExit = new JButton(ResManager.getString("RobTicket.miExit")); //$NON-NLS-1$
+		btnExit = new JButton(ResManager.getString("RobTicket.miExit")); 
 		btnExit.setBounds(430, 2, 56, 23);
 		p2.add(btnExit);
 		btnExit.addActionListener(new LoginOutAction());
@@ -414,39 +414,39 @@ public class RobTicket {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(10, 81, 498, 82);
 		panel_1.setBorder(new TitledBorder(
-				UIManager.getBorder("TitledBorder.border"), ResManager.getString("RobTicket.panel_1BorderTitle"), TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0))); //$NON-NLS-1$ //$NON-NLS-2$
+				UIManager.getBorder("TitledBorder.border"), ResManager.getString("RobTicket.panel_1BorderTitle"), TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));  
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 
-		JLabel label_5 = new JLabel(ResManager.getString("RobTicket.txtName")); //$NON-NLS-1$
+		JLabel label_5 = new JLabel(ResManager.getString("RobTicket.txtName")); 
 		label_5.setBounds(20, 20, 36, 15);
 		panel_1.add(label_5);
 		label_5.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		txtName = new JTextField();
-		txtName.setToolTipText(ResManager.getString("RobTicket.txtNameTip")); //$NON-NLS-1$
+		txtName.setToolTipText(ResManager.getString("RobTicket.txtNameTip")); 
 		txtName.setBounds(78, 19, 84, 21);
 		panel_1.add(txtName);
 		txtName.setColumns(10);
 		
-		JLabel label_8 = new JLabel(ResManager.getString("RobTicket.txtPhone")); //$NON-NLS-1$
+		JLabel label_8 = new JLabel(ResManager.getString("RobTicket.txtPhone")); 
 		label_8.setBounds(182, 20, 61, 15);
 		panel_1.add(label_8);
 		label_8.setHorizontalAlignment(SwingConstants.RIGHT);
 		MaskFormatter mf = null;
 		try {
-			mf = new MaskFormatter("###########"); //$NON-NLS-1$
+			mf = new MaskFormatter("###########"); 
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
 		txtPhone = new JFormattedTextField(mf);
-		txtPhone.setToolTipText(ResManager.getString("RobTicket.txtPhoneTip")); //$NON-NLS-1$
+		txtPhone.setToolTipText(ResManager.getString("RobTicket.txtPhoneTip")); 
 		txtPhone.setBounds(244, 20, 92, 21);
 		panel_1.add(txtPhone);
 		txtPhone.setColumns(10);
 		
 		JLabel label_12 = new JLabel(		//乘车人行
-				ResManager.getString("RobTicket.ticketType")); //$NON-NLS-1$
+				ResManager.getString("RobTicket.ticketType")); 
 		label_12.setBounds(345, 20, 54, 15);
 		label_12.setHorizontalAlignment(SwingConstants.RIGHT);
 		panel_1.add(label_12);
@@ -456,31 +456,31 @@ public class RobTicket {
 		panel_1.add(ticketRang);
 		
 		
-		JLabel label_2 = new JLabel(ResManager.getString("RobTicket.label_2")); //$NON-NLS-1$
+		JLabel label_2 = new JLabel(ResManager.getString("RobTicket.label_2")); 
 		label_2.setHorizontalAlignment(SwingConstants.RIGHT);
 		label_2.setBounds(0, 49, 73, 15);
 		panel_1.add(label_2);
 		
 		boxoCardType = new JComboBox(Constants.getCardType());
-		boxoCardType.setToolTipText(ResManager.getString("RobTicket.comboBoxTip")); //$NON-NLS-1$
+		boxoCardType.setToolTipText(ResManager.getString("RobTicket.comboBoxTip")); 
 		boxoCardType.setBounds(79, 49, 90, 21);
 		panel_1.add(boxoCardType);
 		
-		JLabel label_3 = new JLabel(ResManager.getString("RobTicket.txtUserID")); //$NON-NLS-1$
+		JLabel label_3 = new JLabel(ResManager.getString("RobTicket.txtUserID")); 
 		label_3.setBounds(170, 49, 73, 15);
 		panel_1.add(label_3);
 		label_3.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		txtUserID = new JTextField();
 		txtUserID
-				.setToolTipText(ResManager.getString("RobTicket.txtUserIDTip")); //$NON-NLS-1$
+				.setToolTipText(ResManager.getString("RobTicket.txtUserIDTip")); 
 		txtUserID.setBounds(245, 49, 127, 21);
 		panel_1.add(txtUserID);
 		txtUserID.setColumns(10);
 		
-		JButton button = new JButton(ResManager.getString("RobTicket.addBtn")); //$NON-NLS-1$
+		JButton button = new JButton(ResManager.getString("RobTicket.addBtn")); 
 		button.addActionListener(new AddAction());
-		button.setToolTipText(ResManager.getString("RobTicket.addBtnTip")); //$NON-NLS-1$
+		button.setToolTipText(ResManager.getString("RobTicket.addBtnTip")); 
 		button.setBounds(415, 49, 73, 23);
 		panel_1.add(button);
 	}
@@ -492,21 +492,21 @@ public class RobTicket {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(10, 163, 498, 180);
 		panel_1.setBorder(new TitledBorder(
-				UIManager.getBorder("TitledBorder.border"), ResManager.getString("RobTicket.panelTrainAndTicket"), TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0))); //$NON-NLS-1$ //$NON-NLS-2$
+				UIManager.getBorder("TitledBorder.border"), ResManager.getString("RobTicket.panelTrainAndTicket"), TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));  
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 		
-		JLabel label_9 = new JLabel(ResManager.getString("RobTicket.boxoRang")); //$NON-NLS-1$
+		JLabel label_9 = new JLabel(ResManager.getString("RobTicket.boxoRang")); 
 		label_9.setBounds(0, 24, 73, 15);
 		panel_1.add(label_9);
 		label_9.setHorizontalAlignment(SwingConstants.RIGHT);
 		boxoRang = new JComboBox(Constants.getRangTime());
-		boxoRang.setToolTipText(ResManager.getString("RobTicket.boxoRangTip")); //$NON-NLS-1$
+		boxoRang.setToolTipText(ResManager.getString("RobTicket.boxoRangTip")); 
 		boxoRang.setBounds(79, 21, 92, 21);
 		panel_1.add(boxoRang);
 		
 		JLabel label_6 = new JLabel(
-				ResManager.getString("RobTicket.txtStartDate")); //$NON-NLS-1$
+				ResManager.getString("RobTicket.txtStartDate")); 
 		label_6.setBounds(273, 24, 61, 15);
 		panel_1.add(label_6);
 		label_6.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -514,54 +514,54 @@ public class RobTicket {
 		DateFormat mf = new SimpleDateFormat("yyyy-MM-dd");
 		txtStartDate = new JFormattedTextField(mf);
 		txtStartDate.setToolTipText(ResManager
-				.getString("RobTicket.txtStartDateTip")); //$NON-NLS-1$
+				.getString("RobTicket.txtStartDateTip")); 
 		txtStartDate.setBounds(342, 21, 84, 21);
 		panel_1.add(txtStartDate);
 		txtStartDate.setColumns(10);
 
 		JLabel label_4 = new JLabel(
-				ResManager.getString("RobTicket.txtFromStation")); //$NON-NLS-1$
+				ResManager.getString("RobTicket.txtFromStation")); 
 		label_4.setBounds(32, 49, 43, 15);
 		panel_1.add(label_4);
 		label_4.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		txtFromStation = new JTextField();
 		txtFromStation.setToolTipText(ResManager
-				.getString("RobTicket.txtFromStationTip")); //$NON-NLS-1$
+				.getString("RobTicket.txtFromStationTip")); 
 		txtFromStation.setBounds(79, 46, 92, 21);
 		panel_1.add(txtFromStation);
 		txtFromStation.setColumns(10);
 
 		JLabel label_7 = new JLabel(
-				ResManager.getString("RobTicket.txtToStation")); //$NON-NLS-1$
+				ResManager.getString("RobTicket.txtToStation")); 
 		label_7.setBounds(298, 49, 36, 15);
 		panel_1.add(label_7);
 		label_7.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		txtToStation = new JTextField();
 		txtToStation.setToolTipText(ResManager
-				.getString("RobTicket.txtToStationTip")); //$NON-NLS-1$
+				.getString("RobTicket.txtToStationTip")); 
 		txtToStation.setBounds(342, 46, 84, 21);
 		panel_1.add(txtToStation);
 		txtToStation.setColumns(10);
 		
-		JLabel label_10 = new JLabel(ResManager.getString("RobTicket.label_10")); //$NON-NLS-1$
+		JLabel label_10 = new JLabel(ResManager.getString("RobTicket.label_10")); 
 		label_10.setBounds(10, 73, 63, 15);
 		label_10.setHorizontalAlignment(SwingConstants.RIGHT);
 		panel_1.add(label_10);
 		
 		txtTrainNo = new JTextField();
 		txtTrainNo.setBounds(79, 73, 84, 21);
-		txtTrainNo.setToolTipText(ResManager.getString("RobTicket.txtTrainNoTip")); //$NON-NLS-1$
+		txtTrainNo.setToolTipText(ResManager.getString("RobTicket.txtTrainNoTip")); 
 		panel_1.add(txtTrainNo);
 		
-		boxkLockTrain = new JCheckBox(ResManager.getString("RobTicket.boxkLockTrain")); //$NON-NLS-1$
+		boxkLockTrain = new JCheckBox(ResManager.getString("RobTicket.boxkLockTrain")); 
 		boxkLockTrain.setBounds(342, 73, 73, 23);
-		boxkLockTrain.setToolTipText(ResManager.getString("RobTicket.boxkLockTrainTip")); //$NON-NLS-1$
+		boxkLockTrain.setToolTipText(ResManager.getString("RobTicket.boxkLockTrainTip")); 
 		panel_1.add(boxkLockTrain);
 		
-		boxkStrinStation = new JCheckBox(ResManager.getString("RobTicket.boxkStrinStation")); //$NON-NLS-1$
-		boxkStrinStation.setToolTipText(ResManager.getString("RobTicket.boxkStrinStationTip")); //$NON-NLS-1$
+		boxkStrinStation = new JCheckBox(ResManager.getString("RobTicket.boxkStrinStation")); 
+		boxkStrinStation.setToolTipText(ResManager.getString("RobTicket.boxkStrinStationTip")); 
 		boxkStrinStation.setBounds(50, 100, 73, 23);
 		panel_1.add(boxkStrinStation);
 
@@ -587,57 +587,57 @@ public class RobTicket {
 			}
 		});
 		
-		boxkOneSeat = new JCheckBox(ResManager.getString("RobTicket.boxkOneSeat")); //$NON-NLS-1$
+		boxkOneSeat = new JCheckBox(ResManager.getString("RobTicket.boxkOneSeat")); 
 		boxkOneSeat.setBounds(30, 127, 63, 23);
-		boxkOneSeat.setToolTipText(ResManager.getString("RobTicket.boxkOneSeatTip")); //$NON-NLS-1$
+		boxkOneSeat.setToolTipText(ResManager.getString("RobTicket.boxkOneSeatTip")); 
 		panel_1.add(boxkOneSeat);
 		
-		boxkTwoSeat = new JCheckBox(ResManager.getString("RobTicket.boxkTwoSeat")); //$NON-NLS-1$
+		boxkTwoSeat = new JCheckBox(ResManager.getString("RobTicket.boxkTwoSeat")); 
 		boxkTwoSeat.setSelected(true);
 		boxkTwoSeat.setBounds(120, 127, 63, 23);
-		boxkTwoSeat.setToolTipText(ResManager.getString("RobTicket.boxkTwoSeatTip")); //$NON-NLS-1$
+		boxkTwoSeat.setToolTipText(ResManager.getString("RobTicket.boxkTwoSeatTip")); 
 		panel_1.add(boxkTwoSeat);
 		
-		boxkHardSleeper = new JCheckBox(ResManager.getString("RobTicket.boxkHardSleeper")); //$NON-NLS-1$
+		boxkHardSleeper = new JCheckBox(ResManager.getString("RobTicket.boxkHardSleeper")); 
 		boxkHardSleeper.setSelected(true);
 		boxkHardSleeper.setBounds(210, 127, 49, 23);
-		boxkHardSleeper.setToolTipText(ResManager.getString("RobTicket.boxkHardSleeperTip")); //$NON-NLS-1$
+		boxkHardSleeper.setToolTipText(ResManager.getString("RobTicket.boxkHardSleeperTip")); 
 		panel_1.add(boxkHardSleeper);
 		
-		boxkHardSeat = new JCheckBox(ResManager.getString("RobTicket.boxkHardSeat")); //$NON-NLS-1$
+		boxkHardSeat = new JCheckBox(ResManager.getString("RobTicket.boxkHardSeat")); 
 		boxkHardSeat.setSelected(true);
 		boxkHardSeat.setBounds(300, 127, 49, 23);
-		boxkHardSeat.setToolTipText(ResManager.getString("RobTicket.boxkHardSeatTip")); //$NON-NLS-1$
+		boxkHardSeat.setToolTipText(ResManager.getString("RobTicket.boxkHardSeatTip")); 
 		panel_1.add(boxkHardSeat);
 		
-		boxkSoftSleeper = new JCheckBox(ResManager.getString("RobTicket.boxkSoftSleeper")); //$NON-NLS-1$
+		boxkSoftSleeper = new JCheckBox(ResManager.getString("RobTicket.boxkSoftSleeper")); 
 		boxkSoftSleeper.setBounds(390, 127, 49, 23);
-		boxkSoftSleeper.setToolTipText(ResManager.getString("RobTicket.boxkSoftSleeperTip")); //$NON-NLS-1$
+		boxkSoftSleeper.setToolTipText(ResManager.getString("RobTicket.boxkSoftSleeperTip")); 
 		panel_1.add(boxkSoftSleeper);
 		
-		boxkSoftSeat = new JCheckBox(ResManager.getString("RobTicket.boxkSoftSeat")); //$NON-NLS-1$
+		boxkSoftSeat = new JCheckBox(ResManager.getString("RobTicket.boxkSoftSeat")); 
 		boxkSoftSeat.setBounds(30, 154, 49, 23);
-		boxkSoftSeat.setToolTipText(ResManager.getString("RobTicket.boxkSoftSeatTip")); //$NON-NLS-1$
+		boxkSoftSeat.setToolTipText(ResManager.getString("RobTicket.boxkSoftSeatTip")); 
 		panel_1.add(boxkSoftSeat);
 		
-		boxkBussSeat = new JCheckBox(ResManager.getString("RobTicket.boxkBussSeat")); //$NON-NLS-1$
+		boxkBussSeat = new JCheckBox(ResManager.getString("RobTicket.boxkBussSeat")); 
 		boxkBussSeat.setBounds(120, 154, 63, 23);
-		boxkBussSeat.setToolTipText(ResManager.getString("RobTicket.boxkBussSeatTip")); //$NON-NLS-1$
+		boxkBussSeat.setToolTipText(ResManager.getString("RobTicket.boxkBussSeatTip")); 
 		panel_1.add(boxkBussSeat);
 		
-		boxkBestSeat = new JCheckBox(ResManager.getString("RobTicket.boxkBestSeat")); //$NON-NLS-1$
+		boxkBestSeat = new JCheckBox(ResManager.getString("RobTicket.boxkBestSeat")); 
 		boxkBestSeat.setBounds(210, 154, 63, 23);
-		boxkBestSeat.setToolTipText(ResManager.getString("RobTicket.boxkBestSeatTip")); //$NON-NLS-1$
+		boxkBestSeat.setToolTipText(ResManager.getString("RobTicket.boxkBestSeatTip")); 
 		panel_1.add(boxkBestSeat);
 		
-		boxkNoneSeat = new JCheckBox(ResManager.getString("RobTicket.boxkNoneSeat")); //$NON-NLS-1$
+		boxkNoneSeat = new JCheckBox(ResManager.getString("RobTicket.boxkNoneSeat")); 
 		boxkNoneSeat.setBounds(300, 154, 49, 23);
-		boxkNoneSeat.setToolTipText(ResManager.getString("RobTicket.boxkNoneSeatTip")); //$NON-NLS-1$
+		boxkNoneSeat.setToolTipText(ResManager.getString("RobTicket.boxkNoneSeatTip")); 
 		panel_1.add(boxkNoneSeat);
 		
-		boxkOther = new JCheckBox(ResManager.getString("RobTicket.boxkOther")); //$NON-NLS-1$
+		boxkOther = new JCheckBox(ResManager.getString("RobTicket.boxkOther")); 
 		boxkOther.setBounds(390, 154, 49, 23);
-		boxkOther.setToolTipText(ResManager.getString("RobTicket.boxkOtherTip")); //$NON-NLS-1$
+		boxkOther.setToolTipText(ResManager.getString("RobTicket.boxkOtherTip")); 
 		panel_1.add(boxkOther);
 	}
 	
@@ -678,7 +678,7 @@ public class RobTicket {
 		spl.setViewportView(list);
 		frame.getContentPane().add(spl);
 		
-		JLabel label_12 = new JLabel(ResManager.getString("RobTicket.label_12.txt")); //$NON-NLS-1$
+		JLabel label_12 = new JLabel(ResManager.getString("RobTicket.label_12.txt")); 
 		label_12.setBounds(166, 383, 73, 15);
 		frame.getContentPane().add(label_12);
 		
@@ -690,7 +690,7 @@ public class RobTicket {
 		frame.getContentPane().add(scrollPane);
 
 		textArea = new JTextArea();
-		textArea.setText(ResManager.getString("RobTicket.textAreaContent")); //$NON-NLS-1$
+		textArea.setText(ResManager.getString("RobTicket.textAreaContent")); 
 		textArea.setEditable(false);
 		textArea.setLineWrap(true);
 		scrollPane.setViewportView(textArea);
@@ -756,26 +756,26 @@ public class RobTicket {
 		mnOpt.add(miDama);
 		miDama.addActionListener(new DamaSetAction(this));
 		
-		JMenu mnHelp = new JMenu(ResManager.getString("RobTicket.mnHelp")); //$NON-NLS-1$
+		JMenu mnHelp = new JMenu(ResManager.getString("RobTicket.mnHelp")); 
 		menuBar.add(mnHelp);
 		
-		JMenuItem miOpt = new JMenuItem(ResManager.getString("RobTicket.miOpt")); //$NON-NLS-1$
+		JMenuItem miOpt = new JMenuItem(ResManager.getString("RobTicket.miOpt")); 
 		mnHelp.add(miOpt);
 		miOpt.addActionListener(new UseSkillAction(frame));
 		ImageIcon helpIco = ResManager.createImageIcon("help.gif");
 		miOpt.setIcon(helpIco);
 		
 		JMenuItem miAbout = new JMenuItem(
-				ResManager.getString("RobTicket.miAbout")); //$NON-NLS-1$
+				ResManager.getString("RobTicket.miAbout")); 
 		miAbout.addActionListener(new AboutAction(frame));
 		mnHelp.add(miAbout);
 		
 	}
 	
 	private void addButtons(){
-		btnSORE = new JButton(ResManager.getString("RobTicket.btnSORE")); //$NON-NLS-1$
+		btnSORE = new JButton(ResManager.getString("RobTicket.btnSORE")); 
 		btnSORE.setBounds(100, 350, 60, 23);
-		btnSORE.setToolTipText(ResManager.getString("RobTicket.btnSORETip")); //$NON-NLS-1$
+		btnSORE.setToolTipText(ResManager.getString("RobTicket.btnSORETip")); 
 		frame.getContentPane().add(btnSORE);
 		btnSORE.setEnabled(false);
 		
@@ -793,8 +793,8 @@ public class RobTicket {
 	 * 创建主面板
 	 */
 	private void createMainFrame(){
-		frame = new JFrame(ResManager.getString("RobTicket.frameName")); //$NON-NLS-1$
-     	ImageIcon ico = ResManager.createImageIcon("logo.jpg"); //$NON-NLS-1$
+		frame = new JFrame(ResManager.getString("RobTicket.frameName")); 
+     	ImageIcon ico = ResManager.createImageIcon("logo.jpg"); 
 		frame.setIconImage(ico.getImage());
 		frame.setBounds(100, 100, 524, 603);
 		frame.setResizable(false);
@@ -849,7 +849,7 @@ public class RobTicket {
 	 */
 	public void reset(boolean isEnd) {
 		if (isEnd) {
-			btnSORE.setText(ResManager.getString("RobTicket.btnSORE")); //$NON-NLS-1$
+			btnSORE.setText(ResManager.getString("RobTicket.btnSORE")); 
 			if (logic != null) {
 				logic.setEnd(true);
 			}
@@ -871,23 +871,23 @@ public class RobTicket {
 				|| getFromCity().isEmpty() || getToCity().isEmpty()
 				|| getStartDate().isEmpty()) {
 			JOptionPane.showMessageDialog(frame,
-					ResManager.getString("RobTicket.JOptionPane")); //$NON-NLS-1$
+					ResManager.getString("RobTicket.JOptionPane")); 
 			reset(true);
 			return;
 		}
 		int suSize = getSelectUsers().size();
 		if (dlm.getSize() == 0 || suSize == 0) {
-			JOptionPane.showMessageDialog(frame,ResManager.getString("RobTicket.showMessageDialog")); //$NON-NLS-1$
+			JOptionPane.showMessageDialog(frame,ResManager.getString("RobTicket.showMessageDialog")); 
 			reset(true);
 			return;
 		}
 		if(suSize > 5){
-			JOptionPane.showMessageDialog(frame,ResManager.getString("RobTicket.addFive")); //$NON-NLS-1$
+			JOptionPane.showMessageDialog(frame,ResManager.getString("RobTicket.addFive")); 
 			reset(true);
 			return;
 		}
-		btnSORE.setText(ResManager.getString("RobTicket.btnSORE.end")); //$NON-NLS-1$
-		textArea.setText(""); //$NON-NLS-1$
+		btnSORE.setText(ResManager.getString("RobTicket.btnSORE.end")); 
+		textArea.setText(""); 
 		logic = new LogicThread(client, this);
 		logic.start();
 	}
@@ -897,10 +897,10 @@ public class RobTicket {
 	 */	
 	protected void login() {
 		this.btnLOGIN.setText(ResManager.getString("RobTicket.btnSORE.end"));
-		textArea.setText(""); //$NON-NLS-1$
+		textArea.setText(""); 
 		if (getUsername().isEmpty() || getPassword().isEmpty()) {
 			JOptionPane.showMessageDialog(frame,
-					ResManager.getString("RobTicket.JOptionPane")); //$NON-NLS-1$
+					ResManager.getString("RobTicket.JOptionPane")); 
 			return;
 		}
 		if(li == null){
@@ -1117,7 +1117,7 @@ public class RobTicket {
 	public Set<String> getTrainNo() {
 		Set<String> ans = new HashSet<String>();
 		String trainStr  = txtTrainNo.getText().trim();
-		String[] trainNo = trainStr.split("\\|"); //$NON-NLS-1$
+		String[] trainNo = trainStr.split("\\|"); 
 		for (String str : trainNo) {
 			if (!str.trim().isEmpty()) {
 				ans.add(str.trim().toUpperCase());
@@ -1134,7 +1134,7 @@ public class RobTicket {
 	public void writeUserInfo() {
 		ObjectOutputStream oos = null;
 		try {
-			oos = new ObjectOutputStream(new FileOutputStream(new File("li"))); //$NON-NLS-1$
+			oos = new ObjectOutputStream(new FileOutputStream(new File("li"))); 
 			oos.writeObject(li);
 			oos.flush();
 		} catch (Exception e) {
@@ -1175,7 +1175,7 @@ private void selectUser(JList list){
 		try {
 			File loginFile =  new File("li");
 			if(loginFile.exists()){
-				ois = new ObjectInputStream(new FileInputStream(loginFile)); //$NON-NLS-1$
+				ois = new ObjectInputStream(new FileInputStream(loginFile)); 
 				LoginInfo loginInfo = (LoginInfo) ois.readObject();
 				if (loginInfo != null) {
 					txtUsername.setText(loginInfo.getLoginName());
@@ -1254,7 +1254,7 @@ private void selectUser(JList list){
 	private final class AddAction implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (getUserID().isEmpty() || getName().isEmpty()) {
-				JOptionPane.showMessageDialog(frame,ResManager.getString("RobTicket.addNone")); //$NON-NLS-1$
+				JOptionPane.showMessageDialog(frame,ResManager.getString("RobTicket.addNone")); 
 			} else {
 				UserInfo user = new UserInfo();
 				user.setID(getUserID());
@@ -1263,8 +1263,8 @@ private void selectUser(JList list){
 				user.setCardType(getCardType());
 				user.setTickType(getTicketType());
 				addContact(user);
-				txtName.setText(""); //$NON-NLS-1$
-				txtUserID.setText(""); //$NON-NLS-1$
+				txtName.setText(""); 
+				txtUserID.setText(""); 
 			}
 		}
 	}
@@ -1429,7 +1429,7 @@ private void selectUser(JList list){
 				int index, boolean isSelected, boolean cellHasFocus) {
 			UserInfo userInfo = (UserInfo) value;
 			String msg = userInfo.getName()+" "+userInfo.getID();
-			setText(msg); //$NON-NLS-1$
+			setText(msg); 
 			if (isSelected) {
 				setBackground(Color.BLUE);
 				setForeground(Color.WHITE);
@@ -1461,8 +1461,8 @@ private void selectUser(JList list){
 		private static final long serialVersionUID = -1097396738396411124L;
 
 		JFrame parentsFrame;
-		URL img = ResManager.getFileURL("logo.jpg"); //$NON-NLS-1$
-		String imagesrc = "<img src=" + img + " width=\"50\" height=\"50\">"; //$NON-NLS-1$ //$NON-NLS-2$
+		URL img = ResManager.getFileURL("logo.jpg"); 
+		String imagesrc = "<img src=" + img + " width=\"50\" height=\"50\">";  
 		String message = Constants.ABOUNT_CONTENT;
 
 		protected AboutAction(JFrame frame) {
@@ -1472,8 +1472,8 @@ private void selectUser(JList list){
 		public void actionPerformed(ActionEvent e) {
 			JOptionPane.showMessageDialog(
 				parentsFrame,
-				"<html><center>" + imagesrc + "</center><br><center>" + message + "</center><br></html>", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				ResManager.getString("RobTicket.AboutAction.title"), //$NON-NLS-1$
+				"<html><center>" + imagesrc + "</center><br><center>" + message + "</center><br></html>",   //$NON-NLS-3$
+				ResManager.getString("RobTicket.AboutAction.title"), 
 				JOptionPane.DEFAULT_OPTION);
 		}
 	}
@@ -1481,7 +1481,7 @@ private void selectUser(JList list){
 	/**
 	 * 使用技巧
 	 * 
-	 * @author YAOWENHAO
+	 * @author Tmser
 	 * @since 2011-12-21
 	 * @version 1.0
 	 */
@@ -1491,10 +1491,10 @@ private void selectUser(JList list){
 		private static final long serialVersionUID = -7920608352042404436L;
 
 		JFrame parentsFrame;
-		//URL img = ResManager.getFileURL("logo.jpg"); //$NON-NLS-1$
-	//	String imagesrc = "<img src=\"" + img + "\" width=\"50\" height=\"50\">"; //$NON-NLS-1$ //$NON-NLS-2$
+		//URL img = ResManager.getFileURL("logo.jpg"); 
+	//	String imagesrc = "<img src=\"" + img + "\" width=\"50\" height=\"50\">";  
 		String message = ResManager
-				.getString("RobTicket.UseSkillAction.message"); //$NON-NLS-1$
+				.getString("RobTicket.UseSkillAction.message"); 
 
 		protected UseSkillAction(JFrame frame) {
 			this.parentsFrame = frame;

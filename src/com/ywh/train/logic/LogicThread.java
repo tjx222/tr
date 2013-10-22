@@ -23,7 +23,7 @@ import com.ywh.train.gui.RobTicket;
 /**
  * 订票逻辑
  * 
- * @author cafebabe
+ * @author Tmser
  * @since 2011-11-27
  * @version 1.0
  */

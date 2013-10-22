@@ -40,6 +40,10 @@ public abstract class DamaUtil {
 		return ret;
 	}
 	
+	/**
+	 * 反初始化
+	 * @return
+	 */
 	public static int uninit(){
 		int ret = SUCC;
 		if(!DamaUtil.notInit){
@@ -146,6 +150,15 @@ public abstract class DamaUtil {
 		}
 		long codetype = Long.valueOf(Config.getProperty("dama.codetype"));
 		return dama2.d2Buf(softID, userName,userPassword, image,(short)20,codetype,retVCodeText);
+	}
+	
+	/**
+	 * 报告错误打码
+	 * @param vcodeID
+	 * @return
+	 */
+	public void reportResult(long vcodeID){
+		dama2.reportResult(vcodeID,false);
 	}
 	
 }

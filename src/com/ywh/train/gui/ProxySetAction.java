@@ -107,7 +107,7 @@ import com.ywh.train.ResManager;
 				}
 				Config.setUseProxy(group.isSelected(rbEnableProxy.getModel()));
 				Config.setProxyIp(txtProxyIp.getText().trim());
-				Config.setProxyPort(txtProxyPort.getText().trim());
+				Config.setProxyPort(txtProxyPort.getText().replaceAll(" ", ""));
 				if(Config.saveConfig()){
 					dialog.setVisible(false);
 				}else{
@@ -138,5 +138,4 @@ import com.ywh.train.ResManager;
         dialog.setLocationRelativeTo(parentsFrame);
         dialog.setVisible(true);
 	}
-
 }
