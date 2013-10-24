@@ -219,8 +219,8 @@ class DamaSetAction extends AbstractAction{
 					rob.setAuto(isUseDama);
 					Config.setPassword(new String(txtDamaPass.getPassword()).trim());
 					Config.setUsername(txtDamaUsername.getText().trim());
-					if(isUseDama && (Util.isBlank(Config.getUsername()) 
-								|| Util.isBlank(Config.getPassword()))){
+					if(isUseDama && (Util.isBlank(txtDamaUsername.getText()) 
+								|| Util.isBlank(String.valueOf(txtDamaPass.getPassword())))){
 						JOptionPane.showMessageDialog(dialog, ResManager.getString("RobTicket.msg.damaNotSet"),
 								ResManager.getString("RobTicket.msg.tip"),JOptionPane.ERROR_MESSAGE);
 						return;

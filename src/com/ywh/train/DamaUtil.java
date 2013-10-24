@@ -160,5 +160,4 @@ public abstract class DamaUtil {
 	public void reportResult(long vcodeID){
 		dama2.reportResult(vcodeID,false);
 	}
-	
 }
