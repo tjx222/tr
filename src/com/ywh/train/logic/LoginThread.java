@@ -69,7 +69,8 @@ public class LoginThread extends BaseThread {
 					} else if (rs.getState() == Result.ACC_ERROR
 							|| rs.getState() == Result.PWD_ERROR) {
 						rob.console(Constants.USER_ERR);
-						return ;
+						rob.changePanel(RobTicket.LOGIN_BEGIN);
+						break;
 					} else {
 						rob.console(rs.getMsg());
 					}

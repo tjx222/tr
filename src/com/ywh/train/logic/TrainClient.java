@@ -2,8 +2,6 @@ package com.ywh.train.logic;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -672,7 +670,6 @@ public class TrainClient {
 		log.debug("-------------------submit order start-------------------");
 		Result rs = new Result();
 		HttpPost post = new HttpPost(Constants.SUBMIT_URL+orderid);
-		String response = null;
 		try {
 			UrlEncodedFormEntity uef = new UrlEncodedFormEntity(formparams, Consts.UTF_8);
 			post.setEntity(uef);
@@ -685,8 +682,8 @@ public class TrainClient {
 			post.setHeader("Accept-Charset","utf-8");
 			
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
-			response = httpclient.execute(post, responseHandler);
-			//log.info(response);
+			String response = httpclient.execute(post, responseHandler);
+			log.debug(response);
 		}catch(UnknownHostException e){
 			throw new NetConnectException(e);
 		}catch (Exception e) {
@@ -854,13 +851,13 @@ public class TrainClient {
 			responseBody = responseHandler.handleResponse(response);
 			//int statusCode = responseHandler.;
 			String info = Util.removeTagFromHtml(responseBody);
-			//log.info(responseBody);
+			log.info(info);
 			log.debug("-----------------------------------------------------\n\n\n\n\n");
 		 if(responseBody.contains(Constants.USER_NOT_EXIST)){
 				log.error("用户:"  + username + Constants.USER_NOT_EXIST);
 				rs.setState(Result.ACC_ERROR);
 				rs.setMsg(Constants.USER_NOT_EXIST);
-			}else if(info.contains(Constants.USER_PWD_ERR)){
+			}else if(responseBody.contains(Constants.USER_PWD_ERR)){
 				log.error("用户:"  + username + Constants.USER_PWD_ERR);
 				rs.setState(Result.PWD_ERROR);
 				rs.setMsg(Constants.USER_PWD_ERR);
@@ -880,15 +877,11 @@ public class TrainClient {
 						BIGipServerotsweb = cookie.getValue();
 					}
 				}
-				System.out.println("JSESSIONID=" + TrainClient.JSESSIONID + ",BIGipServerotsweb=" + TrainClient.BIGipServerotsweb);
-			}else if(info.contains(Constants.CODE_ERROR)){
+				log.info("JSESSIONID=" + TrainClient.JSESSIONID + ",BIGipServerotsweb=" + TrainClient.BIGipServerotsweb);
+			}else if(responseBody.contains(Constants.CODE_ERROR)){
 				log.warn("用户:"  + username + Constants.CODE_ERROR);
 				rs.setState(Result.RAND_CODE_ERROR);
 				rs.setMsg(Constants.CODE_ERROR);
-			} else if(responseBody.contains(Constants.LOGIN_ERR_INFO)){
-				log.info("用户:"  + username + Constants.USER_RELOGIN);
-				rs.setState(Result.LOGIN_ERROR);	
-				rs.setMsg(Constants.USER_RELOGIN);
 			}else if(responseBody.contains(Constants.LOGIN_LOSTS_POEPLE)){
 				log.info("用户:"  + username + Constants.LOGIN_LOSTS_POEPLE);
 				rs.setState(Result.LOST_OF_PEOPLE);	
@@ -897,7 +890,7 @@ public class TrainClient {
 				log.info("用户:"  + username + Constants.UNKNOW_ERROR);
 				rs.setState(Result.OTHER);
 				rs.setMsg(Constants.UNKNOW_ERROR);
-				System.out.println(responseBody);
+				log.info(responseBody);
 			}
 		}catch(UnknownHostException e){
 			throw new NetConnectException(e);
@@ -1045,7 +1038,7 @@ public class TrainClient {
 		return content;
 	}
 	
-	private static int count = 0;
+/*	private static int count = 0;
 	private void writeToFolder(byte[] content){
 		File f = new File("D:\\builder\\"
 				+(count < 100 ? count < 10 ? "00"+count:"0"+count:count)
@@ -1075,7 +1068,7 @@ public class TrainClient {
 			}
 			
 		}
-	}
+	}*/
 	
 	/**
 	 * 获取指定url的Str字节信息

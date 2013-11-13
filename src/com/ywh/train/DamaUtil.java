@@ -1,14 +1,16 @@
 package com.ywh.train;
 
+import java.io.File;
+
 import cn.smy.dama2.Dama2;
 
 public abstract class DamaUtil {
 
 	private static Dama2 dama2 = new Dama2();
 	
-	protected static String softName = Config.getProperty("softname");
+	protected static String softName = "Tmser领卡器";
 	
-	protected static String softID = Config.getProperty("softid");
+	protected static String softID = "694f40021a34f601b069a415cabf4d5d";
 	
 	public static boolean notInit = true;
 	
@@ -159,5 +161,10 @@ public abstract class DamaUtil {
 	 */
 	public void reportResult(long vcodeID){
 		dama2.reportResult(vcodeID,false);
+	}
+	
+	public static void main(String[] args) {
+		File f = new File(DamaUtil.class.getResource("").getPath(),"FakeCA.cer");
+		System.out.println(f.getAbsolutePath());
 	}
 }

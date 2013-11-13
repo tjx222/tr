@@ -364,7 +364,7 @@ public class RobTicket {
 		p1.add(label_1);
 		label_1.setHorizontalAlignment(SwingConstants.RIGHT);
 
-		txtPassword = new JPasswordField(Config.getPassword());
+		txtPassword = new JPasswordField();
 		txtPassword.setToolTipText(ResManager
 				.getString("RobTicket.txtPasswordTip")); 
 		txtPassword.setBounds(225, 2, 84, 21);
@@ -942,7 +942,7 @@ public class RobTicket {
 		this.client.loginOut();
 		Constants.isLoginSuc = false;
 		reset(true);
-		card.show(panel, LOGIN_BEGIN);
+		changePanel(LOGIN_BEGIN);
 		setBtnEnable(false);
 		this.console(ResManager.getString("RobTicket.txtLoginout"));
 	}
@@ -1048,6 +1048,7 @@ public class RobTicket {
 			setBtnEnable(true);
 		}else{
 			setBtnEnable(false);
+			btnLOGIN.setText(ResManager.getString("RobTicket.btnLogin"));
 			card.show(panel,LOGIN_BEGIN);
 		}
 	}
@@ -1451,7 +1452,7 @@ private void selectUser(JList list){
 	/**
 	 * 菜单关于窗口
 	 * 
-	 * @author YAOWENHAO
+	 * @author TMSER
 	 * @since 2011-12-21
 	 * @version 1.0
 	 */
@@ -1507,11 +1508,16 @@ private void selectUser(JList list){
 				.append("</strong><br/>")
 				.append(ResManager.getString("RobTicket.UseSkillAction.message"))
 				.append("</body></html>");
-				
-			JOptionPane.showMessageDialog(
-				parentsFrame,
+			Object[] options ={ResManager.getString("RobTicket.option.view"), ResManager.getString("RobTicket.option.close")};
+			int rs = JOptionPane.showOptionDialog(parentsFrame,
 				msg.toString(),ResManager.getString("RobTicket.UseSkillAction.title"),
-				JOptionPane.DEFAULT_OPTION);
+				JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+			if(rs == JOptionPane.YES_OPTION){
+				try {
+					Runtime.getRuntime().exec("explorer \"" + Config.getProperty("rob.help.url") + "\"");
+				} catch (IOException e1) {
+				}
+			}
 		}
 	}
 }

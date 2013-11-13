@@ -43,9 +43,8 @@ public abstract class BaseThread extends Thread {
 			randCodeByRob = getCode(image);
 		}
 		if (!rob.isAutocode()) {//手动输入验证码
-			JLabel label = new JLabel(ResManager.getString("LogicThread.23"), JLabel.CENTER); //$NON-NLS-1$
+			JLabel label = new JLabel(ResManager.getString("LogicThread.23"), JLabel.CENTER);
 			label.setIcon(new ImageIcon(image));
-			label.setText(ResManager.getString("LogicThread.24") + randCodeByRob); //$NON-NLS-1$
 			CodeMouseAdapter cma = new CodeMouseAdapter(randCodeByRob,url);
 			label.addMouseListener(cma);
 			String input = JOptionPane.showInputDialog(rob.getFrame(), label,
@@ -99,7 +98,6 @@ public abstract class BaseThread extends Thread {
 				randCodeByRob = getCode(image);
 			JLabel label = (JLabel) e.getSource();
 			label.setIcon(new ImageIcon(image));
-			label.setText(ResManager.getString("LogicThread.26") + randCodeByRob); //$NON-NLS-1$
 		}
 
 		public String getRandCodeByRob() {
