@@ -26,8 +26,8 @@ public class LoginThread extends BaseThread {
 	 * 
 	 * @param robTicket
 	 */
-	public LoginThread(TrainClient client, RobTicket rob) {
-		super(client,rob);
+	public LoginThread(RobTicket rob) {
+		super(rob);
 	}
 
 	/**

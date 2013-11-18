@@ -28,16 +28,12 @@ import com.ywh.train.gui.RobTicket;
  * @version 1.0
  */
 public class LogicThread extends BaseThread {
+	public LogicThread(RobTicket rob) {
+		super(rob);
+	}
+
 	private static final Logger log = Logger.getLogger(LogicThread.class);
 	private volatile Thread blinker = this;
-	/**
-	 * 构造函数
-	 * 
-	 * @param robTicket
-	 */
-	public LogicThread(TrainClient client, RobTicket rob) {
-		super(client,rob);
-	}
 
 	/**
 	 * override 方法<p>

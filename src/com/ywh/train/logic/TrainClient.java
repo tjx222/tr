@@ -735,7 +735,7 @@ public class TrainClient {
 			if(responseBody.startsWith("-")){
 				checkIsLogin();
 			}
-			//log.info(responseBody);
+	//		log.info(responseBody);
 			all = Util.parserQueryInfo(responseBody, startDate); 
 //			for(TrainQueryInfo tInfo : all) {
 //				System.out.println(tInfo);
@@ -851,7 +851,7 @@ public class TrainClient {
 			responseBody = responseHandler.handleResponse(response);
 			//int statusCode = responseHandler.;
 			String info = Util.removeTagFromHtml(responseBody);
-			log.info(info);
+			//log.info(info);
 			log.debug("-----------------------------------------------------\n\n\n\n\n");
 		 if(responseBody.contains(Constants.USER_NOT_EXIST)){
 				log.error("用户:"  + username + Constants.USER_NOT_EXIST);

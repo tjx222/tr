@@ -27,7 +27,7 @@ public class LoadContactsThread extends BaseThread {
 	 * @param robTicket
 	 */
 	public LoadContactsThread(TrainClient client, RobTicket rob) {
-		super(client,rob);
+		super(rob);
 	}
 
 	private List<UserInfo> ls;

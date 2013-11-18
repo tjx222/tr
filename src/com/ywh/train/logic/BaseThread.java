@@ -19,8 +19,8 @@ public abstract class BaseThread extends Thread {
 	 * 
 	 * @param robTicket
 	 */
-	public BaseThread(TrainClient client, RobTicket rob) {
-		this.client = client;
+	public BaseThread( RobTicket rob) {
+		this.client = rob.getClient();
 		this.rob = rob;
 	}
 	

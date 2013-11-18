@@ -22,6 +22,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -155,6 +156,8 @@ public class RobTicket {
 	private JButton btnLOGIN;
 	
 	private JButton btnExit;
+	
+	private JButton btnSearch;//查询车次
 	
 	/**
 	 * 打开ie
@@ -505,8 +508,7 @@ public class RobTicket {
 		boxoRang.setBounds(79, 21, 92, 21);
 		panel_1.add(boxoRang);
 		
-		JLabel label_6 = new JLabel(
-				ResManager.getString("RobTicket.txtStartDate")); 
+		JLabel label_6 = new JLabel(ResManager.getString("RobTicket.txtStartDate")); 
 		label_6.setBounds(273, 24, 61, 15);
 		panel_1.add(label_6);
 		label_6.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -518,7 +520,7 @@ public class RobTicket {
 		txtStartDate.setBounds(342, 21, 84, 21);
 		panel_1.add(txtStartDate);
 		txtStartDate.setColumns(10);
-
+		txtStartDate.setText(mf.format(new Date()));
 		JLabel label_4 = new JLabel(
 				ResManager.getString("RobTicket.txtFromStation")); 
 		label_4.setBounds(32, 49, 43, 15);
@@ -551,9 +553,17 @@ public class RobTicket {
 		panel_1.add(label_10);
 		
 		txtTrainNo = new JTextField();
-		txtTrainNo.setBounds(79, 73, 84, 21);
+		txtTrainNo.setBounds(79, 73, 92, 21);
 		txtTrainNo.setToolTipText(ResManager.getString("RobTicket.txtTrainNoTip")); 
 		panel_1.add(txtTrainNo);
+		
+		btnSearch = new JButton(ResManager.getString("RobTicket.btnSearch"));
+		btnSearch.setBounds(178, 73,80,21 );
+		btnSearch.setToolTipText(ResManager.getString("RobTicket.btnSearchTip")); 
+		panel_1.add(btnSearch);
+		btnSearch.setEnabled(false);
+		
+		btnSearch.addActionListener(new SearchTrainInfoAction(this));
 		
 		boxkLockTrain = new JCheckBox(ResManager.getString("RobTicket.boxkLockTrain")); 
 		boxkLockTrain.setBounds(342, 73, 73, 23);
@@ -842,6 +852,7 @@ public class RobTicket {
 		btnOpenIE.setEnabled(canUse);
 		btnSORE.setEnabled(canUse);
 		btnLoad.setEnabled(canUse);
+		btnSearch.setEnabled(canUse);
 	}
 	/**
 	 * 复位操作
@@ -888,29 +899,10 @@ public class RobTicket {
 		}
 		btnSORE.setText(ResManager.getString("RobTicket.btnSORE.end")); 
 		textArea.setText(""); 
-		logic = new LogicThread(client, this);
+		logic = new LogicThread(this);
 		logic.start();
 	}
 	
-	/**
-	 * 登陆方法
-	 */	
-	protected void login() {
-		this.btnLOGIN.setText(ResManager.getString("RobTicket.btnSORE.end"));
-		textArea.setText(""); 
-		if (getUsername().isEmpty() || getPassword().isEmpty()) {
-			JOptionPane.showMessageDialog(frame,
-					ResManager.getString("RobTicket.JOptionPane")); 
-			return;
-		}
-		if(li == null){
-			li = new LoginInfo();
-			li.setLoginName(getUsername());
-			li.setPassword(getPassword());
-		}		
-		loginTread = new LoginThread(client, this);
-		loginTread.start();
-	}
 	
 	public void enableLoadBtn(){
 		this.btnLoad.setEnabled(true);
@@ -1033,6 +1025,15 @@ public class RobTicket {
 	public String getPassword() {
 		return txtPassword.getText().trim();
 	}
+	
+	/**
+	 * 获取链接
+	 * 
+	 * @return
+	 */
+	public TrainClient getClient() {
+		return this.client;
+	}
 
 	/**
 	 * 登陆成功，切换面板
@@ -1127,6 +1128,9 @@ public class RobTicket {
 		return ans;
 	}
 	
+	void setTrainNo(String trainNo){
+		txtTrainNo.setText(trainNo);
+	}
 	/**
 	 * 保存用户信息
 	 * 
@@ -1244,7 +1248,8 @@ private void selectUser(JList list){
 	public JFrame getFrame() {
 		return frame;
 	}
-
+	
+	
 	/**
 	 * 功能描述
 	 * 添加乘车人
@@ -1311,6 +1316,26 @@ private void selectUser(JList list){
 	 * @version 1.0
 	 */
 	class LoginAction implements ActionListener {
+		/**
+		 * 登陆方法
+		 */	
+		protected void login() {
+			btnLOGIN.setText(ResManager.getString("RobTicket.btnSORE.end"));
+			textArea.setText(""); 
+			if (getUsername().isEmpty() || getPassword().isEmpty()) {
+				JOptionPane.showMessageDialog(frame,
+						ResManager.getString("RobTicket.JOptionPane")); 
+				return;
+			}
+			if(li == null){
+				li = new LoginInfo();
+				li.setLoginName(getUsername());
+				li.setPassword(getPassword());
+			}		
+			loginTread = new LoginThread(RobTicket.this);
+			loginTread.start();
+		}
+		
 		public void actionPerformed(ActionEvent e) {
 			JButton btn = (JButton) e.getSource();
 			if (ResManager.getString("RobTicket.btnLogin").equals(btn.getText())) {
@@ -1321,6 +1346,7 @@ private void selectUser(JList list){
 			}
 		}
 	}
+	
 	
 	/**
 	 * 开始按钮的监听

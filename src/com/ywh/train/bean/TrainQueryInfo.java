@@ -47,8 +47,15 @@ public class TrainQueryInfo {
 	private String none_seat;// 无座(余票)
 	private String other_seat;// 其他
 	
+	private String rangeDate;//乘车时间段
 	
 	
+	public String getRangeDate() {
+		return rangeDate;
+	}
+	public void setRangeDate(String rangeDate) {
+		this.rangeDate = rangeDate;
+	}
 	public String getTrainCode() {
 		return trainCode;
 	}
