@@ -1,4 +1,4 @@
-package com.ywh.train.logic;
+package com.tmser.train.logic;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -7,9 +7,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import com.ywh.train.DamaUtil;
-import com.ywh.train.ResManager;
-import com.ywh.train.gui.RobTicket;
+import com.tmser.train.DamaUtil;
+import com.tmser.train.ResManager;
+import com.tmser.train.gui.RobTicket;
 
 public abstract class BaseThread extends Thread {
 	protected TrainClient client;

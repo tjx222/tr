@@ -1,15 +1,15 @@
-package com.ywh.train.logic;
+package com.tmser.train.logic;
 
 import java.text.MessageFormat;
 
 import org.apache.log4j.Logger;
 
-import com.ywh.train.Config;
-import com.ywh.train.Constants;
-import com.ywh.train.NetConnectException;
-import com.ywh.train.ResManager;
-import com.ywh.train.bean.Result;
-import com.ywh.train.gui.RobTicket;
+import com.tmser.train.Config;
+import com.tmser.train.Constants;
+import com.tmser.train.NetConnectException;
+import com.tmser.train.ResManager;
+import com.tmser.train.bean.Result;
+import com.tmser.train.gui.RobTicket;
 
 /**
  * 登陆线程

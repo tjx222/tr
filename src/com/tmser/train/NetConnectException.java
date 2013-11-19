@@ -1,6 +1,7 @@
-package com.ywh.train;
+package com.tmser.train;
 
-public class UnRepairException extends RuntimeException{
+public class NetConnectException extends RuntimeException{
+	
 	 /**
 	 * 
 	 */
@@ -10,7 +11,7 @@ public class UnRepairException extends RuntimeException{
      * detail message.  The cause is not initialized, and may subsequently be
      * initialized by a call to {@link #initCause}.
      */
-    public UnRepairException() {
+    public NetConnectException() {
 	super();
     }
 
@@ -21,7 +22,7 @@ public class UnRepairException extends RuntimeException{
      * @param   message   the detail message. The detail message is saved for 
      *          later retrieval by the {@link #getMessage()} method.
      */
-    public UnRepairException(String message) {
+    public NetConnectException(String message) {
 	super(message);
     }
 
@@ -39,7 +40,7 @@ public class UnRepairException extends RuntimeException{
      *         unknown.)
      * @since  1.4
      */
-    public UnRepairException(String message, Throwable cause) {
+    public NetConnectException(String message, Throwable cause) {
         super(message, cause);
     }
 
@@ -55,7 +56,8 @@ public class UnRepairException extends RuntimeException{
      *         unknown.)
      * @since  1.4
      */
-    public UnRepairException(Throwable cause) {
+    public NetConnectException(Throwable cause) {
         super(cause);
     }
+
 }

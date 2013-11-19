@@ -1,4 +1,4 @@
-package com.ywh.train.gui;
+package com.tmser.train.gui;
 
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -73,17 +73,17 @@ import com.ice.jni.registry.RegStringValue;
 import com.ice.jni.registry.Registry;
 import com.ice.jni.registry.RegistryKey;
 import com.ice.jni.registry.RegistryValue;
-import com.ywh.train.Config;
-import com.ywh.train.Constants;
-import com.ywh.train.DamaUtil;
-import com.ywh.train.ResManager;
-import com.ywh.train.Util;
-import com.ywh.train.bean.LoginInfo;
-import com.ywh.train.bean.UserInfo;
-import com.ywh.train.logic.LoadContactsThread;
-import com.ywh.train.logic.LogicThread;
-import com.ywh.train.logic.LoginThread;
-import com.ywh.train.logic.TrainClient;
+import com.tmser.train.Config;
+import com.tmser.train.Constants;
+import com.tmser.train.DamaUtil;
+import com.tmser.train.ResManager;
+import com.tmser.train.Util;
+import com.tmser.train.bean.LoginInfo;
+import com.tmser.train.bean.UserInfo;
+import com.tmser.train.logic.LoadContactsThread;
+import com.tmser.train.logic.LogicThread;
+import com.tmser.train.logic.LoginThread;
+import com.tmser.train.logic.TrainClient;
 
 /**
  * 订票机器人
@@ -215,6 +215,8 @@ public class RobTicket {
 	
 	
 	private LoginInfo li;
+	
+	private volatile boolean isIeOpen = false;
 	
 	//<option value="1" selected="">成人票</option><option value="2">儿童票</option><option value="3">学生票</option><option value="4">残军票</option>
 	/**
@@ -1387,6 +1389,7 @@ private void selectUser(JList list){
 					ieSettings.setValue(proxyEnable);
 					ieSettings.setValue(proxyServer);
 					ieSettings.flushKey();
+					isIeOpen = true;
 					ieProcess = Runtime.getRuntime().exec("explorer \"" + Constants.QUERY_ORDER_URL + "\"");
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -1402,6 +1405,7 @@ private void selectUser(JList list){
 					RegistryValue proxyEnable = new RegDWordValue(ieSettings, "ProxyEnable", RegistryValue.REG_DWORD, 0);
 					ieSettings.setValue(proxyEnable);
 					ieSettings.flushKey();
+					isIeOpen = false;
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -1419,7 +1423,10 @@ private void selectUser(JList list){
 	protected class ExitThread extends Thread {
 		public void run() {
 			httpClient.getConnectionManager().shutdown();
-
+			if(!isIeOpen){
+				return;
+			}
+			
 			// 清除代理设置
 			try {
 				RegistryKey ieSettings = Registry.HKEY_CURRENT_USER.openSubKey(

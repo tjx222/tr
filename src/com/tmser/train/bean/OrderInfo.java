@@ -1,4 +1,4 @@
-package com.ywh.train.bean;
+package com.tmser.train.bean;
 
 /**
  * 功能描述

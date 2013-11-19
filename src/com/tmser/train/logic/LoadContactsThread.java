@@ -1,15 +1,15 @@
-package com.ywh.train.logic;
+package com.tmser.train.logic;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.SwingUtilities;
 
-import com.ywh.train.Config;
-import com.ywh.train.Constants;
-import com.ywh.train.bean.Page;
-import com.ywh.train.bean.UserInfo;
-import com.ywh.train.gui.RobTicket;
+import com.tmser.train.Config;
+import com.tmser.train.Constants;
+import com.tmser.train.bean.Page;
+import com.tmser.train.bean.UserInfo;
+import com.tmser.train.gui.RobTicket;
 
 /**
  * 登陆线程

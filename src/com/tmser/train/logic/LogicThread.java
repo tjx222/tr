@@ -1,4 +1,4 @@
-package com.ywh.train.logic;
+package com.tmser.train.logic;
 
 import java.text.MessageFormat;
 import java.util.List;
@@ -10,15 +10,15 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.log4j.Logger;
 
-import com.ywh.train.Config;
-import com.ywh.train.Constants;
-import com.ywh.train.NetConnectException;
-import com.ywh.train.ResManager;
-import com.ywh.train.bean.Result;
-import com.ywh.train.bean.TokenAndTicket;
-import com.ywh.train.bean.TrainQueryInfo;
-import com.ywh.train.bean.UserInfo;
-import com.ywh.train.gui.RobTicket;
+import com.tmser.train.Config;
+import com.tmser.train.Constants;
+import com.tmser.train.NetConnectException;
+import com.tmser.train.ResManager;
+import com.tmser.train.bean.Result;
+import com.tmser.train.bean.TokenAndTicket;
+import com.tmser.train.bean.TrainQueryInfo;
+import com.tmser.train.bean.UserInfo;
+import com.tmser.train.gui.RobTicket;
 
 /**
  * 订票逻辑

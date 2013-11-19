@@ -1,12 +1,12 @@
-package com.ywh.train.logic;
+package com.tmser.train.logic;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.ywh.train.Constants;
-import com.ywh.train.bean.TrainQueryInfo;
+import com.tmser.train.Constants;
+import com.tmser.train.bean.TrainQueryInfo;
 
 /**
  * 选择车次及席别的AI

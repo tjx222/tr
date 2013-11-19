@@ -1,4 +1,4 @@
-package com.ywh.train;
+package com.tmser.train;
 
 import java.text.DateFormat;
 import java.text.MessageFormat;
@@ -28,9 +28,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-import com.ywh.train.bean.Page;
-import com.ywh.train.bean.TrainQueryInfo;
-import com.ywh.train.bean.UserInfo;
+import com.tmser.train.bean.Page;
+import com.tmser.train.bean.TrainQueryInfo;
+import com.tmser.train.bean.UserInfo;
 
 /**
  * 功能描述

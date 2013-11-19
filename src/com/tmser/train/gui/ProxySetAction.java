@@ -1,4 +1,4 @@
-package com.ywh.train.gui;
+package com.tmser.train.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -23,8 +23,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.MaskFormatter;
 
-import com.ywh.train.Config;
-import com.ywh.train.ResManager;
+import com.tmser.train.Config;
+import com.tmser.train.ResManager;
 
 /**
  * 代理设置菜单类

@@ -1,9 +1,8 @@
-package com.ywh.train.gui;
+package com.tmser.train.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.AbstractAction;
@@ -26,10 +25,10 @@ import javax.swing.table.TableModel;
 
 import org.apache.log4j.Logger;
 
-import com.ywh.train.Constants;
-import com.ywh.train.NetConnectException;
-import com.ywh.train.ResManager;
-import com.ywh.train.bean.TrainQueryInfo;
+import com.tmser.train.Constants;
+import com.tmser.train.NetConnectException;
+import com.tmser.train.ResManager;
+import com.tmser.train.bean.TrainQueryInfo;
 
 /**
  * 查询车次信息

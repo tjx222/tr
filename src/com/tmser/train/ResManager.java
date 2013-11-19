@@ -1,4 +1,4 @@
-package com.ywh.train;
+package com.tmser.train;
 
 import java.net.URL;
 import java.text.MessageFormat;

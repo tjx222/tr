@@ -1,4 +1,4 @@
-package com.ywh.train.bean;
+package com.tmser.train.bean;
 
 import java.io.Serializable;
 

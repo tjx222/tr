@@ -1,4 +1,4 @@
-package com.ywh.train.logic;
+package com.tmser.train.logic;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -44,16 +44,16 @@ import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.ywh.train.Config;
-import com.ywh.train.Constants;
-import com.ywh.train.NetConnectException;
-import com.ywh.train.UnRepairException;
-import com.ywh.train.Util;
-import com.ywh.train.bean.Page;
-import com.ywh.train.bean.Result;
-import com.ywh.train.bean.TokenAndTicket;
-import com.ywh.train.bean.TrainQueryInfo;
-import com.ywh.train.bean.UserInfo;
+import com.tmser.train.Config;
+import com.tmser.train.Constants;
+import com.tmser.train.NetConnectException;
+import com.tmser.train.UnRepairException;
+import com.tmser.train.Util;
+import com.tmser.train.bean.Page;
+import com.tmser.train.bean.Result;
+import com.tmser.train.bean.TokenAndTicket;
+import com.tmser.train.bean.TrainQueryInfo;
+import com.tmser.train.bean.UserInfo;
 
 /**
  * 车票订购网络处理core

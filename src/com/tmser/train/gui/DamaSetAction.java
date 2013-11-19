@@ -1,4 +1,4 @@
-package com.ywh.train.gui;
+package com.tmser.train.gui;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -22,10 +22,10 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-import com.ywh.train.Config;
-import com.ywh.train.DamaUtil;
-import com.ywh.train.ResManager;
-import com.ywh.train.Util;
+import com.tmser.train.Config;
+import com.tmser.train.DamaUtil;
+import com.tmser.train.ResManager;
+import com.tmser.train.Util;
 
 class DamaSetAction extends AbstractAction{
 	public static final String LOGIN_PANEL = "login_panel";
