@@ -67,6 +67,8 @@ import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.PoolingClientConnectionManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.ice.jni.registry.RegDWordValue;
 import com.ice.jni.registry.RegStringValue;
@@ -93,6 +95,7 @@ import com.tmser.train.logic.TrainClient;
  * @version 1.0
  */
 public class RobTicket {
+	private static final Logger logger = LoggerFactory.getLogger(RobTicket.class);
 	public static final String LOGIN_BEGIN = "f1";
 	public static final String LOGIN_SUCC = "f2";
 	
@@ -223,6 +226,7 @@ public class RobTicket {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		logger.info("购票器启动");
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {

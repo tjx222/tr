@@ -10,6 +10,8 @@ public class Result {
 	
 	public final static byte SUCC = 100;
 	public final static byte FAIL = 101;
+	public final static byte REPEAT = 102;//重复提交
+	public final static byte HASORDER = 107;
 	public final static byte OTHER = 103;
 	public final static byte RAND_CODE_ERROR = 104;	
 	public final static byte UNCERTAINTY = 105; // 不确定

@@ -561,6 +561,9 @@ public class TrainClient {
 					if("Y".equals(errMsg)){
 						rs.setState(Result.SUCC);
 						rs.setMsg("Has Ticket");
+					}else if(errMsg.contains("请不要重复提交")){
+						rs.setState(Result.REPEAT);
+						rs.setMsg("提交失败，您可能有未完成的订单");
 					}
 				}
 			}else{
@@ -606,13 +609,17 @@ public class TrainClient {
 				json = new JSONObject(responseBody);
 				int waitTime = json.getInt("waitTime");
 				String orderid = getString(json,"orderId");
+				String msg = getString(json, "msg");
 				
 				//{"tourFlag":"dc","waitTime":5,"waitCount":1,"requestId":5695012781303200743,"count":0}
 				if(!"".equals(orderid)){
 						rs.setState(Result.SUCC);
 						rs.setMsg(orderid);
+				}else if("".equals(orderid) && msg.contains("已购买") ){
+					 rs.setState(Result.HASORDER);
+					 rs.setMsg(msg);
 				}else{
-					rs.setMsg(getString(json, "msg"));
+					rs.setMsg(msg);
 				}
 				rs.setWaitTime(waitTime/60);
 			}else{
@@ -627,7 +634,6 @@ public class TrainClient {
 	}
 	
 	public static int getTicketCountDesc(String mark, String seat) {
-		String rt = "";
 		int seat_1 = -1;
 		int seat_2 = -1;
 		int i = 0;
@@ -647,13 +653,6 @@ public class TrainClient {
 				}
 			}
 			i = i + 10;
-		}
-
-		if (seat_1 > -1) {
-			rt += "<font color='red'>" + seat_1 + "</font>张";
-		}
-		if (seat_2 > -1) {
-			rt += ",无座<font color='red'>" + seat_2 + "</font>张";
 		}
 		return Math.max(seat_1,seat_2);
 	}
@@ -966,6 +965,9 @@ public class TrainClient {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}
+		if(responseBody.length() > 0){
+			log.info(responseBody);
 		}
 		log.debug("-------------------query order end---------------------");
 		return rs;

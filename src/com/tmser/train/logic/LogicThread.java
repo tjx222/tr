@@ -125,7 +125,13 @@ public class LogicThread extends BaseThread {
 						rs = client.book(rob.getRangDate(), rob.getStartDate(), goHomeTrain);
 						Thread.sleep(2000);
 						randCode = getRandCodeDailog(Constants.ORDER_CODE_URL);
-						if(randCode == null || "".equals(randCode)){
+						if(randCode == null){
+							rob.console(ResManager.getString("LogicThread.30"));
+							blinker = null;
+							break;
+						}
+						
+						if("".equals(randCode)){
 							rob.console("RandCode: "+randCode);
 							rs.setState(Result.FAIL);
 							Thread.sleep(4000);
@@ -162,13 +168,22 @@ public class LogicThread extends BaseThread {
 							rob.clearMsg();
 							continue;
 						}
+						if(Result.REPEAT == rs.getState()){//有未完成订单，直接结束
+							rob.console(rs.getMsg());
+							break;
+						}
 						//ajax 步骤 排队拿号
 						rs = client.queryWaitTime(); 
 						while(rs.getState() == Result.FAIL && blinker == thisThread){
 							 rob.console(MessageFormat.format(ResManager.getString("LogicThread.29"),String.valueOf(rs.getWaitTime())));
 							 rob.console(rs.getMsg());
-							 Thread.sleep(5000);
+							 Thread.sleep(4000);
 							 rs = client.queryWaitTime();
+						}
+						
+						if(Result.HASORDER == rs.getState()){
+							 rob.console(rs.getMsg());
+							 break;
 						}
 						
 						//拿到订单号正式提交
@@ -198,6 +213,7 @@ public class LogicThread extends BaseThread {
 			rob.console(ResManager.getString("RobTicket.err.unkwnow"));
 		} finally {
 			rob.console(ResManager.getString("LogicThread.22")); 
+			rob.reset(true);
 		}
 	}
 	/**
