@@ -43,20 +43,18 @@ public class LoginThread extends BaseThread {
 				if (!Constants.isLoginSuc) { //如果还未登录，获取登录时验证码和随机数
 					rob.console(ResManager.getString("LoginThread.0", new String[]{rob.getUsername()})); 
 					Constants.randCode = getRandCodeDailog(Constants.LOGIN_CODE_URL);
-					String randstr=client.getStr(Constants.RANDSTR_URL);
-					Constants.randstr=randstr.substring(14,randstr.indexOf("\","));
+					//String randstr=client.getStr(Constants.RANDSTR_URL);
+					//Constants.randstr=randstr.substring(14,randstr.indexOf("\","));
 				}
 				
 				while (!Constants.isLoginSuc && blinker == thisThread) {//循环登录
 					if(Constants.randCode == null){
 						rob.console(ResManager.getString("LoginThread.5"));
-						rob.changePanel(RobTicket.LOGIN_BEGIN);
 						break;
 					}
-					rs = client.login(rob.getUsername(), rob.getPassword(),
-							Constants.randCode,Constants.randstr);
+					rs = client.login(rob.getUsername(), rob.getPassword(),	Constants.randCode);
 					if (rs.getState() == Result.SUCC) {
-						rob.console(rs.getMsg());
+						rob.console("");
 						if(rob.needRemberMe())
 							rob.writeUserInfo();
 						Constants.isLoginSuc = true;
@@ -69,7 +67,6 @@ public class LoginThread extends BaseThread {
 					} else if (rs.getState() == Result.ACC_ERROR
 							|| rs.getState() == Result.PWD_ERROR) {
 						rob.console(Constants.USER_ERR);
-						rob.changePanel(RobTicket.LOGIN_BEGIN);
 						break;
 					} else {
 						rob.console(rs.getMsg());
@@ -97,6 +94,7 @@ public class LoginThread extends BaseThread {
 				rob.console(ResManager.getString("RobTicket.err.unkwnow"));
 			}finally {
 				rob.console(ResManager.getString("RobTicket.txtLogin.End")); 	
+				rob.changePanel(RobTicket.LOGIN_BEGIN);
 			}
 		}
 

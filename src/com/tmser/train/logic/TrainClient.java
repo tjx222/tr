@@ -41,6 +41,7 @@ import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -59,8 +60,29 @@ import com.tmser.train.bean.UserInfo;
  * 车票订购网络处理core
  */
 public class TrainClient {
-	public static String JSESSIONID = null;
-	public static String BIGipServerotsweb = null;
+	public  String jSessionId = null;
+	public  String BIGipServerotn = null;
+	
+
+	public void setBIGipServerotn(String bIGipServerotn) {
+		BIGipServerotn = bIGipServerotn;
+	}
+	
+	public String getBIGipServerotn() {
+		return BIGipServerotn;
+	}
+
+	
+	public String getjSessionId() {
+		return jSessionId;
+	}
+
+
+	public void setjSessionId(String jSessionId) {
+		this.jSessionId = jSessionId;
+	}
+
+
 	private final static Logger log = Logger.getLogger(TrainClient.class);
 	private HttpClient httpclient = null;
 	
@@ -813,28 +835,25 @@ public class TrainClient {
 	user.password	saffsadfa
 	*/
 	
-	public Result login(String username, String password, String randCode,String randstr) {
-		log.debug("-----------------login start-----------------------");
+	
+	public Result login(String username, String password, String randCode){
+		log.debug("-----------------login validate-----------------------");
 		Result rs = new Result();
-		HttpPost httppost = new HttpPost(Constants.LOGIN_URL);
+		HttpPost httppost = new HttpPost(Constants.LOGIN_VALIDATE);
 		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
-		parameters.add(new BasicNameValuePair("method", "login"));
-		parameters.add(new BasicNameValuePair("loginRand", randstr));
-		parameters.add(new BasicNameValuePair("loginUser.user_name", username));
-		parameters.add(new BasicNameValuePair("nameErrorFocus", ""));
-		parameters.add(new BasicNameValuePair("passwordErrorFocus", ""));
+		parameters.add(new BasicNameValuePair("loginUserDTO.user_name", username));
 		parameters.add(new BasicNameValuePair("randCode", randCode));
-		parameters.add(new BasicNameValuePair("randErrorFocus", ""));
-		parameters.add(new BasicNameValuePair("refundFlag", "Y"));
-		parameters.add(new BasicNameValuePair("refundLogin", "N"));
-		parameters.add(new BasicNameValuePair("user.password", password));
+		parameters.add(new BasicNameValuePair("userDTO.password", password));
 		String responseBody = null;
 		HttpResponse response = null;
 		try {
 			UrlEncodedFormEntity uef = new UrlEncodedFormEntity(parameters,Consts.UTF_8);
 			httppost.setEntity(uef);
-			httppost.setHeader("Referer","https://dynamic.12306.cn/otsweb/loginAction.do?method=login");
-			httppost.setHeader("Host","dynamic.12306.cn");
+			//OLD httppost.setHeader("Referer","https://dynamic.12306.cn/otsweb/loginAction.do?method=login");
+			httppost.setHeader("Referer","https://kyfw.12306.cn/otn/login/init");
+			
+			//OLD httppost.setHeader("Host","dynamic.12306.cn");
+			httppost.setHeader("Host","kyfw.12306.cn");
 			//post.setHeader("Accept-Encoding","gzip,deflat"); 加了会乱码
 			httppost.setHeader("Accept-Language","zh-CN,zh");
 			httppost.setHeader("Connection","keep-alive");
@@ -848,58 +867,43 @@ public class TrainClient {
 			}
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
 			responseBody = responseHandler.handleResponse(response);
-			//int statusCode = responseHandler.;
-			String info = Util.removeTagFromHtml(responseBody);
-			//log.info(info);
-			log.debug("-----------------------------------------------------\n\n\n\n\n");
-		 if(responseBody.contains(Constants.USER_NOT_EXIST)){
-				log.error("用户:"  + username + Constants.USER_NOT_EXIST);
-				rs.setState(Result.ACC_ERROR);
-				rs.setMsg(Constants.USER_NOT_EXIST);
-			}else if(responseBody.contains(Constants.USER_PWD_ERR)){
-				log.error("用户:"  + username + Constants.USER_PWD_ERR);
-				rs.setState(Result.PWD_ERROR);
-				rs.setMsg(Constants.USER_PWD_ERR);
-			}else if (info.contains(Constants.USER_SUCC_INFO)) {
-				int index = responseBody.indexOf("-->");
-				log.debug(responseBody.substring(index + 4));
+			log.debug(responseBody);
+			JSONObject json = new JSONObject(responseBody);
+
+			JSONObject dataObject =json.getJSONObject("data");
+			JSONArray msgs = json.getJSONArray("messages");
+			if("Y".equals(getString(dataObject, "loginCheck"))){
 				rs.setState(Result.SUCC);
-				rs.setMsg(Constants.LOGIN_SUC);
-				
 				// 将Session信息到静态变量中，方便代理服务器获取
 				List<Cookie> cookies = ((DefaultHttpClient) httpclient).getCookieStore().getCookies();
 				for (Cookie cookie : cookies) {
 					String name = cookie.getName();
 					if ("JSESSIONID".equals(name)) {
-						JSESSIONID = cookie.getValue();
-					} else if ("BIGipServerotsweb".equals(name)) {
-						BIGipServerotsweb = cookie.getValue();
+						setjSessionId(cookie.getValue());
+					} else if ("BIGipServerotn".equals(name)) {
+						setBIGipServerotn(cookie.getValue());
 					}
 				}
-				log.info("JSESSIONID=" + TrainClient.JSESSIONID + ",BIGipServerotsweb=" + TrainClient.BIGipServerotsweb);
-			}else if(responseBody.contains(Constants.CODE_ERROR)){
-				log.warn("用户:"  + username + Constants.CODE_ERROR);
-				rs.setState(Result.RAND_CODE_ERROR);
-				rs.setMsg(Constants.CODE_ERROR);
-			}else if(responseBody.contains(Constants.LOGIN_LOSTS_POEPLE)){
-				log.info("用户:"  + username + Constants.LOGIN_LOSTS_POEPLE);
-				rs.setState(Result.LOST_OF_PEOPLE);	
-				rs.setMsg(Constants.LOGIN_LOSTS_POEPLE);
+		///	  System.out.println(BIGipServerotsweb+" sid = "+JSESSIONID);
 			}else{
-				log.info("用户:"  + username + Constants.UNKNOW_ERROR);
-				rs.setState(Result.OTHER);
-				rs.setMsg(Constants.UNKNOW_ERROR);
-				log.info(responseBody);
+				rs.setState(Result.FAIL);
+				StringBuilder sb = new StringBuilder();
+				
+				for(int i =0; i<msgs.length();i++){
+					sb.append(msgs.getString(i));
+					sb.append(",");
+				}
+				rs.setMsg(sb.toString());
 			}
+			log.debug("------------------login end-----------------------");
+
 		}catch(UnknownHostException e){
 			throw new NetConnectException(e);
 		}catch (Exception e) {
 			throw new UnRepairException(e);
 		}
-		log.debug("-------------------login end---------------------");
 		return rs;
 	}
-
 	/**
 	 * 查询预订信息
 	 * 
@@ -1006,11 +1010,11 @@ public class TrainClient {
 		log.debug("-------------------get randcode start-------------------");
 		HttpGet get = new HttpGet(url);
 		if(Constants.LOGIN_CODE_URL.equals(url)){
-			get.setHeader("Referer","https://dynamic.12306.cn/otsweb/order/confirmPassengerAction.do?method=init");
+			get.setHeader("Referer","https://kyfw.12306.cn/otn/login/init");
 		}else{
-			get.setHeader("Referer","https://dynamic.12306.cn/otsweb/order/querySingleAction.do?method=init");
+			get.setHeader("Referer","https://kyfw.12306.cn/otn/login/init");
 		}
-		get.setHeader("Host","dynamic.12306.cn");
+		get.setHeader("Host","kyfw.12306.cn");
 		get.setHeader("Accept-Language","zh-CN,zh");
 		get.setHeader("Connection","keep-alive");
 		get.setHeader("Accept-Charset","GBK,utf-8;q=0.7,*;q=0.3");

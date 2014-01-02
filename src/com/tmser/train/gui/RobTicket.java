@@ -1374,7 +1374,7 @@ private void selectUser(JList list){
 	class OpenIeAction implements ActionListener {
 		Process ieProcess = null;
 		public void actionPerformed(ActionEvent event) {
-			if (TrainClient.JSESSIONID ==null || TrainClient.BIGipServerotsweb==null) {
+			if (client.getBIGipServerotn() ==null || client.getjSessionId() ==null) {
 				JOptionPane.showMessageDialog(frame, ResManager.getString("RobTicket.btnOpenIE.wait"));
 				return;
 			}

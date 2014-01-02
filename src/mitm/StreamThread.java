@@ -28,6 +28,9 @@ public class StreamThread implements Runnable {
 	private final OutputStream m_out;
 	private final ProxyDataFilter m_filter;
 	private final PrintWriter m_outputWriter;
+	
+	private String big ="";
+	private String sid = "";
 
 	public StreamThread(ConnectionDetails connectionDetails, InputStream in, OutputStream out, ProxyDataFilter filter,
 			PrintWriter outputWriter) {

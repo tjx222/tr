@@ -41,7 +41,7 @@ public class ProxyDataFilter {
 		return m_out;
 	}
 
-	public byte[] handle(ConnectionDetails connectionDetails, byte[] buffer, int bytesRead) throws java.io.IOException {
+	public byte[] handle(ConnectionDetails connectionDetails, byte[] buffer, int bytesRead,String big,String sid) throws java.io.IOException {
 		final StringBuffer stringBuffer = new StringBuffer();
 
 		boolean inHex = false;
@@ -75,11 +75,11 @@ public class ProxyDataFilter {
 		m_out.println("------ " + connectionDetails.getDescription() + " ------");
 		m_out.println(stringBuffer);
 
-		if (connectionDetails.getRemoteHost().equals("dynamic.12306.cn")) {
+		if (connectionDetails.getRemoteHost().equals("kyfw.12306.cn")) {
 			String fake = stringBuffer.toString().replaceAll(
 					"Cookie: .*([\\r\\n]*)",
-					"Cookie: JSESSIONID=" + TrainClient.JSESSIONID + "; BIGipServerotsweb="
-							+ TrainClient.BIGipServerotsweb + "$1");
+					"Cookie: JSESSIONID=" + sid + "; BIGipServerotn="
+							+ big + "$1");
 			m_out.println("------ fake " + connectionDetails.getDescription() + " ------");
 			m_out.println(fake);
 			return fake.getBytes();

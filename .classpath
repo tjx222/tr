@@ -5,7 +5,6 @@
 	<classpathentry kind="lib" path="src/htmllexer-2.1.jar"/>
 	<classpathentry kind="lib" path="src/log4j-1.2.16.jar"/>
 	<classpathentry kind="lib" path="src/slf4j-log4j12-1.6.1.jar"/>
-	<classpathentry kind="lib" path="src/slf4j-simple-1.6.1.jar"/>
 	<classpathentry kind="lib" path="src/slf4j-api-1.6.1.jar"/>
 	<classpathentry kind="lib" path="src/commons-logging-1.0.4.jar"/>
 	<classpathentry kind="lib" path="src/iaik_jce.jar"/>
@@ -13,7 +12,10 @@
 	<classpathentry kind="lib" path="json.jar"/>
 	<classpathentry kind="lib" path="src/httpclient-4.2.jar" sourcepath="G:/TDDOWNLOAD/httpcomponents-client-4.2-src/httpcomponents-client-4.2/httpclient/src/main/java"/>
 	<classpathentry kind="lib" path="src/httpcore-4.2.jar" sourcepath="G:/TDDOWNLOAD/httpcomponents-core-4.2-src/httpcomponents-core-4.2/httpcore/src/main/java/"/>
-	<classpathentry kind="lib" path="/TestDama2/src/cn/smy/dama2"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk_1.6.0.013"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
