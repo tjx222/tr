@@ -182,7 +182,6 @@ public class LogicThread extends BaseThread {
 						rs = client.queryWaitTime(token); 
 						while(rs.getState() == Result.FAIL && blinker == thisThread){
 							 rob.console(MessageFormat.format(ResManager.getString("LogicThread.29"),String.valueOf(rs.getWaitTime())));
-							 rob.console(rs.getMsg());
 							 Thread.sleep(4000);
 							 rs = client.queryWaitTime(token);
 						}
@@ -197,8 +196,8 @@ public class LogicThread extends BaseThread {
 						if(Result.SUCC == rs.getState()){
 							JOptionPane.showMessageDialog(rob.getFrame(),
 									ResManager.getString("LogicThread.20")); 
-								rob.reset(true);
-								break;
+							rob.console(ResManager.getString("LogicThread.20"));
+							rob.reset(true);
 						}else{
 							Thread.sleep(2000);
 							rob.console(ResManager.getString("LogicThread.19")); 
@@ -208,7 +207,7 @@ public class LogicThread extends BaseThread {
 								JOptionPane.showMessageDialog(rob.getFrame(),
 									ResManager.getString("LogicThread.20")); 
 								rob.reset(true);
-								break;
+								rob.console(ResManager.getString("LogicThread.20"));
 							} else {
 								rob.console(ResManager.getString("LogicThread.21")); 
 							}
