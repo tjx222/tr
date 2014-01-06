@@ -6,10 +6,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.UnknownHostException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -714,11 +718,13 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 			post.setHeader("Accept-Charset","GBK,utf-8;q=0.7,*;q=0.3");
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
 			String response = httpclient.execute(post, responseHandler);
-			JSONObject json = new JSONObject(response);
-			if (getBoolean(json,"status")){
-				JSONObject data = json.getJSONObject("data");
-				if (getBoolean(data,"submitStatus")) {
-					rs.setState(Result.SUCC);
+			if(response != null && response.indexOf("{")>-1){
+				JSONObject json = new JSONObject(response);
+				if (getBoolean(json,"status")){
+					JSONObject data = json.getJSONObject("data");
+					if (getBoolean(data,"submitStatus")) {
+						rs.setState(Result.SUCC);
+					}
 				}
 			}
 			log.info(response);
@@ -793,7 +799,7 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 	
 	public List<TrainQueryInfo> parserQueryInfo(String response,
 			String range) throws JSONException {
-		if(response == null  || response.isEmpty()){
+		if(response == null  || response.isEmpty() || response.indexOf("{")==-1){
 			return Collections.emptyList();
 		}
 		
@@ -868,7 +874,18 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 
 	//是否超期，超过 true
 	private boolean expireRange(String range,String starttime){
-		
+		String[] ranges = range.split("--");
+		DateFormat df = new SimpleDateFormat("HH:ss");
+		try {
+			long start = df.parse(ranges[0]).getTime();
+			long end = df.parse(ranges[1]).getTime();
+			long now = df.parse(starttime).getTime();
+			if(now >= start && now <= end){
+				return true;
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		return false;
 	}
 	/**
@@ -1271,6 +1288,7 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}*/
+		//System.out.println(expireRange("00:00--12:00", "12:01"));
 	}
 	
 	public static String getString(JSONObject json, String key){
