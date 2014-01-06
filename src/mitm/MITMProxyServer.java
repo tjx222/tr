@@ -67,6 +67,8 @@ public class MITMProxyServer {
 		String localHost = "localhost";
 
 		int timeout = 0;
+		String sid = "";
+		String big = "";
 
 		try {
 			for (int i = 0; i < args.length; i++) {
@@ -84,7 +86,11 @@ public class MITMProxyServer {
 					System.setProperty(JSSEConstants.KEYSTORE_ALIAS_PROPERTY, args[++i]);
 				} else if (args[i].equals("-timeout")) {
 					timeout = Integer.parseInt(args[++i]) * 1000;
-				} else if (args[i].equals("-v")) {
+				} else if (args[i].equals("-sid")) {
+						sid = args[++i];
+				} else if (args[i].equals("-big")) {
+						big = args[++i];
+				}else if (args[i].equals("-v")) {
 					debugFlag = true;
 				} else if (args[i].equals("-outputFile")) {
 					PrintWriter pw = new PrintWriter(new FileWriter(args[++i]), true);
@@ -112,7 +118,7 @@ public class MITMProxyServer {
 
 		try {
 			m_engine = new HTTPSProxyEngine(new MITMPlainSocketFactory(), new MITMSSLSocketFactory(), requestFilter,
-					responseFilter, localHost, localPort, timeout);
+					responseFilter, localHost, localPort, timeout,big,sid);
 
 			System.err.println("Proxy initialized, listening on port " + localPort);
 		} catch (Exception e) {

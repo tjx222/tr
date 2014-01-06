@@ -11,30 +11,57 @@ package com.tmser.train.bean;
 public class TrainQueryInfo {
 	/**
 	 * 功能描述
-	 * @author cafebabe
-	 * @since 2011-11-27 
-	 * @version 1.0
+	 * @author tjx1222
+	 * @version 2.0
 	 */
-	private String trainCode;// 序号
-	private String trainNo; // 车次
-	private String trainDate; // 出发日期
-	// private String codeLink; // 车次链接
-	private String fromStation;// 发站
-	private String fromStationCode; // 发站code
-	private String startTime;// 发时
-	private String toStation;// 到站
-	private String toStationCode;// 到站code
-	private String endTime; // 到时
-	private String takeTime;// 历时
-	private String ypInfoDetail; //预定详细信息
-	private String mmStr;//加密字符串
-	private String selectedSeat;
 	
-	private String from_station_no; //起点站序号，始发站是01
-	private String to_station_no; //终点站序号
+	/**
+	 * 车次代码
+	 */
+	private String trainNo;// 序号
 	
-	private String locationCode; //到站代号
+	/**
+	 * 车次，如T145
+	 */
+	private String stationTrainCode;
+	
+	private String startStationTelecode;
+	private String startStationName;
+	private String endStationTelecode;
+	private String endStationName;
+	
+	private String fromStationTelecode;
+	private String fromStationName;
+	private String toStationTelecode;
+	private String toStationName;
+	private String dayDifference;
+	private String trainClassName;
+	private Boolean canWebBuy;
 
+	private String lishiValue;
+	private String ypInfo;
+	private String controlTrainDay;
+	private String startTrainDate; // 出发日期
+	private String seatFeature;
+	private String ypEx;
+	private String trainSeatFeature;
+	private String seatTypes;
+	private String locationCode;//到站代号
+	private String fromStationNo; //起点站序号，始发站是01
+	private String toStationNo; //终点站序号
+	private Integer controlDay;
+	private String saleTime;
+	private String isSupportCard;
+	
+	// private String codeLink; // 车次链接
+	private String startTime;// 发时
+	private String arriveTime; // 到时
+	private String lishi;// 历时
+	private String ypInfoDetail; //预定详细信息
+	private String secretStr;//加密字符串
+	private String selectedSeat;
+
+	
 	private String buss_seat; // 商务座
 	private String best_seat;// 特等座(余票)
 	private String one_seat;// 一等座(余票)
@@ -48,19 +75,137 @@ public class TrainQueryInfo {
 	private String other_seat;// 其他
 	
 	private String rangeDate;//乘车时间段
-	
-	
+	public String getStartStationTelecode() {
+		return startStationTelecode;
+	}
+	public void setStartStationTelecode(String startStationTelecode) {
+		this.startStationTelecode = startStationTelecode;
+	}
+	public String getStartStationName() {
+		return startStationName;
+	}
+	public void setStartStationName(String startStationName) {
+		this.startStationName = startStationName;
+	}
+	public String getEndStationTelecode() {
+		return endStationTelecode;
+	}
+	public void setEndStationTelecode(String endStationTelecode) {
+		this.endStationTelecode = endStationTelecode;
+	}
+	public String getEndStationName() {
+		return endStationName;
+	}
+	public void setEndStationName(String endStationName) {
+		this.endStationName = endStationName;
+	}
+	public String getFromStationTelecode() {
+		return fromStationTelecode;
+	}
+	public void setFromStationTelecode(String fromStationTelecode) {
+		this.fromStationTelecode = fromStationTelecode;
+	}
+	public String getFromStationName() {
+		return fromStationName;
+	}
+	public void setFromStationName(String fromStationName) {
+		this.fromStationName = fromStationName;
+	}
+	public String getToStationTelecode() {
+		return toStationTelecode;
+	}
+	public void setToStationTelecode(String toStationTelecode) {
+		this.toStationTelecode = toStationTelecode;
+	}
+	public String getToStationName() {
+		return toStationName;
+	}
+	public void setToStationName(String toStationName) {
+		this.toStationName = toStationName;
+	}
+	public String getDayDifference() {
+		return dayDifference;
+	}
+	public void setDayDifference(String dayDifference) {
+		this.dayDifference = dayDifference;
+	}
+	public String getTrainClassName() {
+		return trainClassName;
+	}
+	public void setTrainClassName(String trainClassName) {
+		this.trainClassName = trainClassName;
+	}
+	public Boolean getCanWebBuy() {
+		return canWebBuy;
+	}
+	public void setCanWebBuy(String canWebBuy) {
+		this.canWebBuy = "Y".equals(canWebBuy);
+	}
+	public String getLishiValue() {
+		return lishiValue;
+	}
+	public void setLishiValue(String lishiValue) {
+		this.lishiValue = lishiValue;
+	}
+	public String getYpInfo() {
+		return ypInfo;
+	}
+	public void setYpInfo(String ypInfo) {
+		this.ypInfo = ypInfo;
+	}
+	public String getControlTrainDay() {
+		return controlTrainDay;
+	}
+	public void setControlTrainDay(String controlTrainDay) {
+		this.controlTrainDay = controlTrainDay;
+	}
+	public String getStartTrainDate() {
+		return startTrainDate;
+	}
+	public void setStartTrainDate(String startTrainDate) {
+		this.startTrainDate = startTrainDate;
+	}
+	public String getSeatFeature() {
+		return seatFeature;
+	}
+	public void setSeatFeature(String seatFeature) {
+		this.seatFeature = seatFeature;
+	}
+	public String getYpEx() {
+		return ypEx;
+	}
+	public void setYpEx(String ypEx) {
+		this.ypEx = ypEx;
+	}
+	public String getTrainSeatFeature() {
+		return trainSeatFeature;
+	}
+	public void setTrainSeatFeature(String trainSeatFeature) {
+		this.trainSeatFeature = trainSeatFeature;
+	}
+	public String getSeatTypes() {
+		return seatTypes;
+	}
+	public void setSeatTypes(String seatTypes) {
+		this.seatTypes = seatTypes;
+	}
+	public String getFromStationNo() {
+		return fromStationNo;
+	}
+	public void setFromStationNo(String fromStationNo) {
+		this.fromStationNo = fromStationNo;
+	}
+	public String getToStationNo() {
+		return toStationNo;
+	}
+	public void setToStationNo(String toStationNo) {
+		this.toStationNo = toStationNo;
+	}
 	public String getRangeDate() {
 		return rangeDate;
 	}
 	public void setRangeDate(String rangeDate) {
 		this.rangeDate = rangeDate;
-	}
-	public String getTrainCode() {
-		return trainCode;
-	}
-	public void setTrainCode(String trainCode) {
-		this.trainCode = trainCode;
 	}
 	public String getTrainNo() {
 		return trainNo;
@@ -68,61 +213,12 @@ public class TrainQueryInfo {
 	public void setTrainNo(String trainNo) {
 		this.trainNo = trainNo;
 	}
-	/**
-	 * @return Returns the trainDate.
-	 */
-	public String getTrainDate() {
-		return trainDate;
-	}
-	/**
-	 * @param trainDate The trainDate to set.
-	 */
-	public void setTrainDate(String trainDate) {
-		this.trainDate = trainDate;
-	}
-	public String getFromStation() {
-		return fromStation;
-	}
-	public void setFromStation(String fromStation) {
-		this.fromStation = fromStation;
-	}
-	public String getFromStationCode() {
-		return fromStationCode;
-	}
-	public void setFromStationCode(String fromStationCode) {
-		this.fromStationCode = fromStationCode;
-	}
 	public String getStartTime() {
 		return startTime;
 	}
 	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
-	public String getToStation() {
-		return toStation;
-	}
-	public void setToStation(String toStation) {
-		this.toStation = toStation;
-	}
-	public String getToStationCode() {
-		return toStationCode;
-	}
-	public void setToStationCode(String toStationCode) {
-		this.toStationCode = toStationCode;
-	}
-	public String getEndTime() {
-		return endTime;
-	}
-	public void setEndTime(String endTime) {
-		this.endTime = endTime;
-	}
-	public String getTakeTime() {
-		return takeTime;
-	}
-	public void setTakeTime(String takeTime) {
-		this.takeTime = takeTime;
-	}
-	
 	public String getSelectedSeat() {
 		return selectedSeat;
 	}
@@ -203,52 +299,79 @@ public class TrainQueryInfo {
 	public void setYpInfoDetail(String ypInfoDetail) {
 		this.ypInfoDetail = ypInfoDetail;
 	}
-	public String getMmStr() {
-		return mmStr;
+	public String getSecretStr() {
+		return secretStr;
 	}
-	public void setMmStr(String mmStr) {
-		this.mmStr = mmStr;
+	public void setSecretStr(String secretStr) {
+		this.secretStr = secretStr;
 	}
 	
-	public String getFrom_station_no() {
-		return from_station_no;
-	}
-	public void setFrom_station_no(String fromStationNo) {
-		from_station_no = fromStationNo;
-	}
-	public String getTo_station_no() {
-		return to_station_no;
-	}
-	public void setTo_station_no(String toStationNo) {
-		to_station_no = toStationNo;
-	}
 	public String getLocationCode() {
 		return locationCode;
 	}
 	public void setLocationCode(String locationCode) {
 		this.locationCode = locationCode;
 	}
+	
+	public String getStationTrainCode() {
+		return stationTrainCode;
+	}
+	public void setStationTrainCode(String stationTrainCode) {
+		this.stationTrainCode = stationTrainCode;
+	}
+	
+	public Integer getControlDay() {
+		return controlDay;
+	}
+	public void setControlDay(Integer controlDay) {
+		this.controlDay = controlDay;
+	}
+	public String getSaleTime() {
+		return saleTime;
+	}
+	public void setSaleTime(String saleTime) {
+		this.saleTime = saleTime;
+	}
+	public String getIsSupportCard() {
+		return isSupportCard;
+	}
+	public void setIsSupportCard(String isSupportCard) {
+		this.isSupportCard = isSupportCard;
+	}
+	public String getArriveTime() {
+		return arriveTime;
+	}
+	public void setArriveTime(String arriveTime) {
+		this.arriveTime = arriveTime;
+	}
+	
+	public String getLishi() {
+		return lishi;
+	}
+	public void setLishi(String lishi) {
+		this.lishi = lishi;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder()
 				.append("TrainQueryInfo [trainCode=")
-				.append(trainCode)
+				.append(stationTrainCode)
 				.append(", trainNo=")
 				.append(trainNo)
 				.append(", fromStation=")
-				.append(fromStation)
+				.append(fromStationName)
 				.append(", fromStationCode=")
-				.append(fromStationCode)
+				.append(fromStationTelecode)
 				.append(", startTime=")
 				.append(startTime)
 				.append(", toStation=")
-				.append(toStation)
+				.append(toStationName)
 				.append(", toStationCode=")
-				.append(toStationCode)
+				.append(toStationTelecode)
 				.append(", endTime=")
-				.append(endTime)
+				.append(arriveTime)
 				.append(", takeTime=")
-				.append(takeTime)
+				.append(lishi)
 				.append(", buss_seat=")
 				.append(buss_seat)
 				.append(", best_seat=")
@@ -274,13 +397,13 @@ public class TrainQueryInfo {
 				.append(", ypInfoDetail=")
 				.append(ypInfoDetail)
 				.append(", from_station_no=")
-				.append(from_station_no)
+				.append(fromStationNo)
 				.append(", to_station_no=")
-				.append(to_station_no)
+				.append(toStationNo)
 				.append(", locationCode=")
 				.append(locationCode)
-				.append(", mmStr=")
-				.append(mmStr)				
+				.append(", secretStr=")
+				.append(secretStr)				
 				.append("]");
 		return builder.toString();
 	}

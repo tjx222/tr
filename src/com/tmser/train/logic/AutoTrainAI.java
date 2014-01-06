@@ -37,21 +37,21 @@ public class AutoTrainAI {
 		this.trainSet = trainSet;
 		for (TrainQueryInfo train : trains) {
 			if (trainSet[Constants.isStrinStation]) { //精确匹配起点和终点站站点
-				if (!train.getFromStation().equals(fromCity.trim())
-						|| !train.getToStation().equals(toCity.trim())) {
+				if (!train.getFromStationName().equals(fromCity.trim())
+						|| !train.getToStationName().equals(toCity.trim())) {
 					continue;
 				}
 			}
-			allTrains.put(train.getTrainNo(), train);
-			if (trainNos.contains(train.getTrainNo())) {//指定车次的车
-				specificTrains.put(train.getTrainNo(), train);
+			allTrains.put(train.getStationTrainCode(), train);
+			if (trainNos.contains(train.getStationTrainCode())) {//指定车次的车
+				specificTrains.put(train.getStationTrainCode(), train);
 			} else {
 				if (getSeatAI(train) != null) {//不是指定车次，但有票的车
-					candidateTrains.put(train.getTrainNo(), train);
+					candidateTrains.put(train.getStationTrainCode(), train);
 				}
 			}
 			if (getSpecificSeatAI(train) != null) {//所有指定座位票的车，包括没有指定的车次
-				specificSeatTrains.put(train.getTrainNo(), train);
+				specificSeatTrains.put(train.getStationTrainCode(), train);
 			}
 		}
 	}

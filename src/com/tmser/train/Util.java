@@ -2,6 +2,7 @@ package com.tmser.train;
 
 import java.text.DateFormat;
 import java.text.MessageFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -89,6 +90,22 @@ public class Util {
 	public static String getCurDate() {
 		return getCurDateTime(DATE_PART_FORMAT);
 	}
+	
+	/**
+	 * 时间字符串
+	 * 
+	 * @return e.g.Wed Jan 08 2014 00:00:00 GMT+0800 (中国标准时间)
+	 * @throws ParseException 
+	 */
+	public static String formatDate(String date){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyMMdd");
+		try {
+			return sdf.parse(date).toString();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
 
 	/**
 	 * 根据给定的格式返回当前日期或时间
@@ -112,57 +129,15 @@ public class Util {
 	 * @param response
 	 * @return
 	 */
-	public static List<TrainQueryInfo> parserQueryInfo(String response,
-			String startDate) {
-		List<TrainQueryInfo> tqis = new ArrayList<TrainQueryInfo>();
-		response = response.replaceAll("&nbsp;", "");
-		String st[] = response.split(",");
-		for (int i = 0; i < st.length;) {
-			if (st[i].trim().startsWith("<span")) {
-				TrainQueryInfo tqi = new TrainQueryInfo();
-				tqi.setTrainDate(startDate);
-				try {
-					i+=4;
-					tqi.setBuss_seat(parserFont(st[i++]));
-					tqi.setBest_seat(parserFont(st[i++]));
-					tqi.setOne_seat(parserFont(st[i++]));
-					tqi.setTwo_seat(parserFont(st[i++]));
-					tqi.setVag_sleeper(parserFont(st[i++]));
-					tqi.setSoft_sleeper(parserFont(st[i++]));
-					tqi.setHard_sleeper(parserFont(st[i++]));
-					tqi.setSoft_seat(parserFont(st[i++]));
-					tqi.setHard_seat(parserFont(st[i++]));
-					tqi.setNone_seat(parserFont(st[i++]));
-					tqi.setOther_seat(parserFont(st[i++]));
-					parserInput(st[i++], tqi);
-					if(tqi.getTrainNo() != null){
-						tqis.add(tqi);
-					}
-					
-				} catch (ParserException e) {
-					e.printStackTrace();
-				}
-			} else {
-				i++;
-			}
-		}
-		return tqis;
-	}
-	
-	/**
-	 * 查询返回字符对象化
-	 * 
-	 * @param response
-	 * @return
-	 */
 	public static Page<UserInfo> parserUserInfo(String response) {
 		List<UserInfo> tqis = new ArrayList<UserInfo>();
-		int total = 0;
+		int totalPage = 1;
 		if(response != null && response.startsWith("{")){
 			try {
 				JSONObject rs = new JSONObject(response);
-				total = rs.getInt("recordCount");
-				JSONArray contacts = rs.getJSONArray("rows");
+				JSONObject data = rs.getJSONObject("data");
+				totalPage = data.getInt("pageTotal");
+				JSONArray contacts = data.getJSONArray("datas");
 				for(int i= 0;i<contacts.length();i++){
 					JSONObject jo = contacts.getJSONObject(i);
 					UserInfo u = new UserInfo();
@@ -177,7 +152,7 @@ public class Util {
 				e.printStackTrace();
 			}
 		}
-		return new Page<UserInfo>(tqis,total);
+		return new Page<UserInfo>(tqis,totalPage);
 	}
 
 	/**
@@ -227,46 +202,6 @@ public class Util {
         return rs;
 	}
 
-	/**
-	 * 解析input节点
-	 * 
-	 * @param responseBody
-	 * @param tqi
-	 * @throws ParserException
-	 */
-	private static void parserInput(String responseBody, final TrainQueryInfo tqi)
-			throws ParserException {
-		parser.setInputHTML(responseBody);
-		NodeVisitor visitor = new NodeVisitor() {
-			public void visitTag(Tag tag) {
-				Vector<?> atts = tag.getAttributesEx();
-				for (int i = 0; i < atts.size(); i++) {
-					Attribute att = (Attribute) atts.get(i);
-					String name = att.getName();
-					if ("onclick".equals(name)) {
-						String temp[] = att.getValue().split("'");
-						String subTemp[] = temp[1].split("#");
-						tqi.setTrainNo(subTemp[0]);
-						tqi.setTakeTime(subTemp[1]);
-						tqi.setStartTime(subTemp[2]);
-						tqi.setTrainCode(subTemp[3]);
-						tqi.setFromStationCode(subTemp[4]);
-						tqi.setToStationCode(subTemp[5]);
-						tqi.setEndTime(subTemp[6]);
-						tqi.setFromStation(subTemp[7]);
-						tqi.setToStation(subTemp[8]);
-						tqi.setFrom_station_no(subTemp[9]);
-						tqi.setTo_station_no(subTemp[10]);
-						tqi.setYpInfoDetail(subTemp[11]);
-						tqi.setMmStr(subTemp[12]);
-						tqi.setLocationCode(subTemp[13]);
-						
-					}
-				}
-			}
-		};
-		parser.visitAllNodesWith(visitor);
-	}
 	/**
 	 * 移除html标签
 	 * 
@@ -385,6 +320,6 @@ public class Util {
 //		for(UserInfo u : ls){
 //			System.out.println(u.toString());
 //		}
-		//System.out.println(parserTagValue(sb.toString(),"input","org.apache.struts.taglib.html.TOKEN"));
+	//	System.out.println(formatDate("2014-01-08"));
 	}
 }

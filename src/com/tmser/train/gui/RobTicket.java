@@ -326,12 +326,13 @@ public class RobTicket {
 	}
 
 	/**
-	 * 初始化代理服务器
+	 * 初始化代理服务器 
 	 */
 	private void initProxy() {
 		Thread proxyThread = new Thread(new Runnable() {
 			public void run() {
-				MITMProxyServer.main(new String[] { "-keyStore", "FakeCAStore", "-keyStorePassword", "passphrase" });
+				MITMProxyServer.main(new String[] { "-keyStore", "FakeCAStore", "-keyStorePassword", "passphrase"
+						,"-big",client.getBIGipServerotn(),"-sid",client.getjSessionId()});
 			}
 		});
 		proxyThread.setDaemon(true);

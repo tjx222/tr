@@ -60,8 +60,8 @@ import com.tmser.train.bean.TrainQueryInfo;
 		createDiolag();
 		
 		TrainQueryInfo trainInfo = new TrainQueryInfo();
-		trainInfo.setFromStation(rob.getFromCity());
-		trainInfo.setToStation(rob.getToCity());
+		trainInfo.setFromStationName(rob.getFromCity());
+		trainInfo.setToStationName(rob.getToCity());
 		trainInfo.setStartTime(rob.getStartDate());
 		trainInfo.setRangeDate(rob.getRangDate());
 /*		trainInfo.setTrainNo("T145");
@@ -77,8 +77,8 @@ import com.tmser.train.bean.TrainQueryInfo;
 		model.setRowCount(0);
 		
 		for(TrainQueryInfo train : lst){
-			 model.addRow(new Object[]{train.getTrainNo(),"<html>"+train.getFromStation()+"<br/>"+train.getStartTime()+"</html>",
-					 "<html>"+train.getToStation()+"<br/>"+ train.getEndTime()+"</html>",train.getTakeTime(),Boolean.FALSE});
+			 model.addRow(new Object[]{train.getTrainNo(),"<html>"+train.getFromStationName()+"<br/>"+train.getStartTime()+"</html>",
+					 "<html>"+train.getToStationName()+"<br/>"+ train.getArriveTime()+"</html>",train.getLishi(),Boolean.FALSE});
 		}
 		
 	}
@@ -185,8 +185,8 @@ import com.tmser.train.bean.TrainQueryInfo;
 				if(Constants.isLoginSuc){
 				//	imgLabel.setVisible(true);
 					List<TrainQueryInfo> allTrain = rob.getClient().queryTrain(
-							trainInfo.getFromStation(), trainInfo.getToStation(), trainInfo.getStartTime(),
-							trainInfo.getRangeDate());
+							trainInfo.getFromStationName(), trainInfo.getToStationName(), trainInfo.getStartTime(),
+							trainInfo.getRangeDate(),rob.getTicketType());
 							
 					addTrainInfoColumn(allTrain);
 				//	imgLabel.setVisible(false);

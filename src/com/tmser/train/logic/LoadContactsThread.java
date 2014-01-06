@@ -49,7 +49,7 @@ public class LoadContactsThread extends BaseThread {
 		try {
 			rob.console("contacts load success.");	
 			ls = new ArrayList<UserInfo>();
-			int pageIndex = 0;
+			int pageIndex = 1;
 			boolean hasNext = true;
 			while (hasNext && Constants.isLoginSuc && blinker == thisThread ){//循环加載
 					rob.console("load page "+ pageIndex);

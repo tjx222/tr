@@ -37,14 +37,13 @@ public class LoginThread extends BaseThread {
 	@Override
 	public void run() {
 		Thread thisThread = Thread.currentThread();
+		int count = 0;
 		try {
 				Result rs = new Result();
-				int count = 0;
+			
 				if (!Constants.isLoginSuc) { //如果还未登录，获取登录时验证码和随机数
 					rob.console(ResManager.getString("LoginThread.0", new String[]{rob.getUsername()})); 
 					Constants.randCode = getRandCodeDailog(Constants.LOGIN_CODE_URL);
-					//String randstr=client.getStr(Constants.RANDSTR_URL);
-					//Constants.randstr=randstr.substring(14,randstr.indexOf("\","));
 				}
 				
 				while (!Constants.isLoginSuc && blinker == thisThread) {//循环登录
@@ -54,27 +53,33 @@ public class LoginThread extends BaseThread {
 					}
 					rs = client.login(rob.getUsername(), rob.getPassword(),	Constants.randCode);
 					if (rs.getState() == Result.SUCC) {
-						rob.console("");
 						if(rob.needRemberMe())
 							rob.writeUserInfo();
 						Constants.isLoginSuc = true;
 					} else if (rs.getState() == Result.RAND_CODE_ERROR) {
 						 rob.console(Constants.CODE_ERROR);
 						 Constants.randCode = getRandCodeDailog(Constants.LOGIN_CODE_URL);
-						 String randstr = client.getStr(Constants.RANDSTR_URL);
-						 Constants.randstr = randstr.substring(14,randstr.indexOf("\","));
+						// String randstr = client.getStr(Constants.RANDSTR_URL);
+						// Constants.randstr = randstr.substring(14,randstr.indexOf("\","));
 						
-					} else if (rs.getState() == Result.ACC_ERROR
-							|| rs.getState() == Result.PWD_ERROR) {
-						rob.console(Constants.USER_ERR);
-						break;
-					} else {
+					}else {
 						rob.console(rs.getMsg());
+						break;
 					}
-					if(count > 0)Thread.sleep(Config.getSleepTime());
+					
+					if(count > 0)
+						Thread.sleep(Config.getSleepTime());
 					count++;
 				}
 				
+		
+			} catch(NetConnectException e) {
+				rob.console(ResManager.getString("RobTicket.err.net"));
+			} catch(Exception e){
+				log.error(e);
+				e.printStackTrace();
+				rob.console(ResManager.getString("RobTicket.err.unkwnow"));
+			}finally {
 				if (Constants.isLoginSuc) {//登录成功
 					rob.changePanel(RobTicket.LOGIN_SUCC);
 					if (count == 0) {
@@ -84,17 +89,11 @@ public class LoginThread extends BaseThread {
 					} else {
 						rob.console(MessageFormat.format(ResManager.getString("LoginThread.3"),count)); 
 					}
+				}else{
+					rob.changePanel(RobTicket.LOGIN_BEGIN);
 				}
-		
-			} catch(NetConnectException e) {
-				rob.console(ResManager.getString("RobTicket.err.net"));
-			} catch(Exception e){
-				log.error(e);
-				e.printStackTrace();
-				rob.console(ResManager.getString("RobTicket.err.unkwnow"));
-			}finally {
 				rob.console(ResManager.getString("RobTicket.txtLogin.End")); 	
-				rob.changePanel(RobTicket.LOGIN_BEGIN);
+				
 			}
 		}
 

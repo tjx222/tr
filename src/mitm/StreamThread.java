@@ -33,7 +33,7 @@ public class StreamThread implements Runnable {
 	private String sid = "";
 
 	public StreamThread(ConnectionDetails connectionDetails, InputStream in, OutputStream out, ProxyDataFilter filter,
-			PrintWriter outputWriter) {
+			PrintWriter outputWriter,String big,String sid) {
 		m_connectionDetails = connectionDetails;
 		m_in = in;
 		m_out = out;
@@ -62,7 +62,7 @@ public class StreamThread implements Runnable {
 					break;
 				}
 
-				final byte[] newBytes = m_filter.handle(m_connectionDetails, buffer, bytesRead);
+				final byte[] newBytes = m_filter.handle(m_connectionDetails, buffer, bytesRead,big,sid);
 
 				m_outputWriter.flush();
 

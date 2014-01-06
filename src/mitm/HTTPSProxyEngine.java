@@ -59,6 +59,9 @@ public class HTTPSProxyEngine extends ProxyEngine {
 	private String m_tempRemoteHost;
 	private int m_tempRemotePort;
 
+	private String big;
+	private String sid;
+	
 	private final Pattern m_httpsConnectPattern;
 
 	private final ProxySSLEngine m_proxySSLEngine;
@@ -67,13 +70,14 @@ public class HTTPSProxyEngine extends ProxyEngine {
 	private final HashMap<String, MITMSSLSocketFactory> cnMap = new HashMap<String, MITMSSLSocketFactory>();
 
 	public HTTPSProxyEngine(MITMPlainSocketFactory plainSocketFactory, MITMSSLSocketFactory sslSocketFactory,
-			ProxyDataFilter requestFilter, ProxyDataFilter responseFilter, String localHost, int localPort, int timeout)
+			ProxyDataFilter requestFilter, ProxyDataFilter responseFilter, String localHost, int localPort, int timeout,String big,String sid)
 			throws IOException, PatternSyntaxException {
 		// We set this engine up for handling plain HTTP and delegate
 		// to a proxy for HTTPS.
 		super(plainSocketFactory, requestFilter, responseFilter, new ConnectionDetails(localHost, localPort, "", -1,
 				false), timeout);
-
+		this.big = big;
+		this.sid = sid;
 		m_httpsConnectPattern = Pattern.compile("^CONNECT[ \\t]+([^:]+):(\\d+).*\r\n\r\n", Pattern.DOTALL);
 
 		// When handling HTTPS proxies, we use our plain socket to
@@ -276,7 +280,7 @@ public class HTTPSProxyEngine extends ProxyEngine {
 							+ m_tempRemotePort);
 
 				this.launchThreadPair(localSocket, remoteSocket, localSocket.getInputStream(),
-						localSocket.getOutputStream(), m_tempRemoteHost, m_tempRemotePort);
+						localSocket.getOutputStream(), m_tempRemoteHost, m_tempRemotePort,big,sid);
 			} catch (IOException e) {
 				e.printStackTrace(System.err);
 			}

@@ -8,9 +8,9 @@ public class Page<T> implements Serializable
 
 	   private static final long serialVersionUID = -6868950745522147470L;
 	   private List<T> datalist;
-	   private int currentPage = 0;	//当前页索引
+	   private int currentPage = 1;	//当前页索引
 	   private int pageSize = 10;		//每页记录数
-	   private int totalCount = 0;    //总记录数
+	   private int pageTotal = 0;    //总页数
 	   
 
 	   /**
@@ -19,9 +19,10 @@ public class Page<T> implements Serializable
 	    * @param pageSize 每页记录条数
 	    * 起始记录数，每页记录数，总记录数使用默认值
 	    */
-	   public Page(List<T> datalist,int totalCount)
+	   public Page(List<T> datalist,int pageTotal)
 	   {
-		    this(datalist, 0, 10, totalCount);
+		    this.pageTotal = pageTotal;
+		    this.datalist = datalist;
 	   }
 	   
 	 /**
@@ -31,9 +32,9 @@ public class Page<T> implements Serializable
 	  * @param pageSize 没页记录数 ，必须大于等于0
 	  * @param totalCount 总记录数，必须大于等于0
 	  */
-	   public Page(List<T> datalist, int currentPage, int pageSize, int totalCount)
+	   public Page(List<T> datalist, int currentPage, int pageSize)
 	   {
-		   if(currentPage < 0 || pageSize < 1 || totalCount < 0 )
+		   if(currentPage < 1 || pageSize < 1 )
 			  throw new IllegalArgumentException();
 		  
 		   if(datalist == null){
@@ -42,7 +43,6 @@ public class Page<T> implements Serializable
 		   this.datalist = datalist;
 		   this.currentPage = currentPage;
 		   this.pageSize = pageSize;
-		   this.totalCount = totalCount;
 	   }
 	   
 	   public int getCurrentPage() {
@@ -77,7 +77,7 @@ public class Page<T> implements Serializable
 	  */
 	   public boolean hasNextPage()
 	   {
-	     return  currentPage*pageSize+getPageCount() < totalCount;
+	     return  currentPage < pageTotal;
 	   }
 	   
 	 /**
@@ -100,14 +100,6 @@ public class Page<T> implements Serializable
 	   }
 	 
 		 
-	   /**
-	    * 总记录数
-	    * @return
-	    */
-	   public int getTotalCount()
-	   {
-	     return totalCount;
-	   }
 	   
 	 /**
 	  * 总页数
@@ -115,8 +107,7 @@ public class Page<T> implements Serializable
 	  */
 	   public int getTotalPages()
 	   {
-	     return totalCount % pageSize == 0 ? 
-	    		 totalCount / pageSize : totalCount / pageSize + 1;
+	     return pageTotal;
 	   }
 	   
 	 /** 

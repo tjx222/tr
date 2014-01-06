@@ -68,14 +68,14 @@ public abstract class ProxyEngine implements Runnable {
 	 *
 	 */
 	protected final void launchThreadPair(Socket localSocket, Socket remoteSocket, InputStream localInputStream,
-			OutputStream localOutputStream, String remoteHost, int remotePort) throws IOException {
+			OutputStream localOutputStream, String remoteHost, int remotePort,String big,String sid) throws IOException {
 
 		new StreamThread(new ConnectionDetails(m_connectionDetails.getLocalHost(), localSocket.getPort(), remoteHost,
 				remoteSocket.getPort(), m_connectionDetails.isSecure()), localInputStream,
-				remoteSocket.getOutputStream(), m_requestFilter, m_outputWriter);
+				remoteSocket.getOutputStream(), m_requestFilter, m_outputWriter,big,sid);
 
 		new StreamThread(new ConnectionDetails(remoteHost, remoteSocket.getPort(), m_connectionDetails.getLocalHost(),
 				localSocket.getPort(), m_connectionDetails.isSecure()), remoteSocket.getInputStream(),
-				localOutputStream, m_responseFilter, m_outputWriter);
+				localOutputStream, m_responseFilter, m_outputWriter,big,sid);
 	}
 }

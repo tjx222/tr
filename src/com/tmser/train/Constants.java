@@ -29,28 +29,78 @@ public class Constants {
 		 	* 12306 随机数地址
 	*/
 	public static String  RANDSTR_URL = "https://dynamic.12306.cn/otsweb/loginAction.do?method=loginAysnSuggest";
+	
+	/**
+	 * 验证码验证
+	 */
+	public static String  CHECK_RAND  = "https://kyfw.12306.cn/otn/passcodeNew/checkRandCodeAnsyn";
 
+	/**
+	 * 登录地址
+	 */
 	//public static String LOGIN_URL = "https://dynamic.12306.cn/otsweb/loginAction.do";
 	public static String LOGIN_URL = "https://kyfw.12306.cn/otn/login/userLogin";
 	
+	/**
+	 * 登录验证
+	 */
 	public static String LOGIN_VALIDATE = "https://kyfw.12306.cn/otn/login/loginAysnSuggest";
 	//
-	public static String BOOK_URL = "https://dynamic.12306.cn/otsweb/order/querySingleAction.do?method=submutOrderRequest";
-  	public static String ORDER_CODE_URL = "https://dynamic.12306.cn/otsweb/passCodeNewAction.do?module=passenger&rand=randp";
-  	public static String SUBMIT_WAIT_URL= "https://dynamic.12306.cn/otsweb/order/myOrderAction.do?method=queryOrderWaitTime&tourFlag=dc";
-  	public static String GET_COUNT_URL = "https://dynamic.12306.cn/otsweb/order/confirmPassengerAction.do?method=getQueueCount&";
+	/**
+	 * 提交到预定页面
+	 */
+	public static String BOOK_URL = "https://kyfw.12306.cn/otn/leftTicket/submitOrderRequest";
+	//"https://dynamic.12306.cn/otsweb/order/querySingleAction.do?method=submutOrderRequest";
+	
+	/**
+	 * 订单提交验证码
+	 */
+  	public static String ORDER_CODE_URL = "https://kyfw.12306.cn/otn/passcodeNew/getPassCodeNew.do?module=passenger&rand=randp";
+  	
+  	public static String SUBMIT_WAIT_URL= "https://kyfw.12306.cn/otn/confirmPassenger/queryOrderWaitTime";
+  
+  	public static String GET_COUNT_URL = "https://kyfw.12306.cn/otn/confirmPassenger/getQueueCount";
   	
   	public static String SUBMIT_PAY_ORDER ="https://dynamic.12306.cn/otsweb/order/confirmPassengerAction.do?method=payOrder";
-	public static String QUERY_ORDER_URL = "https://dynamic.12306.cn/otsweb/order/myOrderAction.do?method=queryMyOrderNotComplete";
+  	
+	public static String QUERY_ORDER_URL = "https://kyfw.12306.cn/otn/queryOrder/queryMyOrderNoComplete";
 	//										https://dynamic.12306.cn/otsweb/order/querySingleAction.do?method=queryLeftTicket
-	public static String QUERY_TRAIN_URL = "https://dynamic.12306.cn/otsweb/order/querySingleAction.do?";
-	public static String CHECK_LOGIN_URL = "https://dynamic.12306.cn/otsweb/order/querySingleAction.do?method=init";
+	
+	/**
+	 * 查询车次信息
+	 */
+	public static String QUERY_TRAIN_URL = "https://kyfw.12306.cn/otn/leftTicket/query?";
+	//"https://dynamic.12306.cn/otsweb/order/querySingleAction.do?";
+	
+	/**
+	 * 检查用户是否登录
+	 */
+	public static String CHECK_LOGIN_URL = "https://kyfw.12306.cn/otn/login/checkUser";
+	
+	/**
+	 * 订单确认预定页，获取token
+	 */
+	public static String TOKEN_URL ="https://kyfw.12306.cn/otn/confirmPassenger/initDc";
+	
+	
 	public static String CONFIRM_ORDER_URL = "https://dynamic.12306.cn/otsweb/order/confirmPassengerAction.do?method=getQueueCount";
-	public static String QUERY_ORDER_QUEE = "https://dynamic.12306.cn/otsweb/order/confirmPassengerAction.do?method=confirmSingleForQueue";
-	public static String SUBMIT_URL = "https://dynamic.12306.cn/otsweb/order/confirmPassengerAction.do?method=payOrder&orderSequence_no=";
-	public static String CHECK_ORDER_URL = "https://dynamic.12306.cn/otsweb/order/confirmPassengerAction.do?method=checkOrderInfo&rand=";
-	public static String LOGIN_OUT_URL = "https://dynamic.12306.cn/otsweb/loginAction.do?method=logout";
-	public static String TOP_CONTACTS_URL = "https://dynamic.12306.cn/otsweb/passengerAction.do?method=getPagePassengerAll";
+	
+	public static String QUERY_ORDER_QUEE = "https://kyfw.12306.cn/otn/confirmPassenger/confirmSingleForQueue";
+	
+	public static String SUBMIT_URL = "https://kyfw.12306.cn/otn/confirmPassenger/resultOrderForDcQueue";
+	
+	/**
+	 * 检查订单
+	 */
+	public static String CHECK_ORDER_URL = "https://kyfw.12306.cn/otn/confirmPassenger/checkOrderInfo";
+	
+	public static String LOGIN_OUT_URL = "https://kyfw.12306.cn/otn/login/loginOut";
+	
+	/**
+	 * 联系人加载
+	 */
+	public static String TOP_CONTACTS_URL = "https://kyfw.12306.cn/otn/passengers/query";
+		//"https://dynamic.12306.cn/otsweb/passengerAction.do?method=getPagePassengerAll";
 	
 	public static String BUSS_SEAT = "9"; // 商务座
 	public static String BEST_SEAT = "p";// 特等座(余票)
@@ -203,7 +253,7 @@ public class Constants {
 		
 		typeCard.put("1","二代身份证");
 		typeCard.put("2","一代身份证");
-		typeCard.put( "C","港澳通行证");
+		typeCard.put("C","港澳通行证");
 		typeCard.put("G","台湾通行证");
 		typeCard.put("B","护照");
 		

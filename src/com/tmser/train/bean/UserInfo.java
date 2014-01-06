@@ -22,9 +22,9 @@ public class UserInfo implements Serializable {
 	private String cardType = "1"; // 证件类型
 	private String ID;//证件号码
 	private String name;//姓名
-	private String phone;//手机号码
+	private String phone = "";//手机号码
 	
-	private String 	tickType = "1"; // 车票类型,成人
+	private String tickType = "1"; // 车票类型,成人
 	
 	/**
 	 * 座位类型
