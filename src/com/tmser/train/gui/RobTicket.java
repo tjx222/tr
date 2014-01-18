@@ -22,7 +22,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -140,6 +140,11 @@ public class RobTicket {
 	private JComboBox boxoRang;
 	
 	/**
+	 * 到站时间段
+	 */
+	private JComboBox boxoLand;
+	
+	/**
 	 * 车票类型
 	 */
 	private JComboBox ticketRang;
@@ -200,6 +205,7 @@ public class RobTicket {
 	private DefaultListModel dlm;
 	private JCheckBox boxkLockTrain;
 	private JCheckBox boxkOneSeat;
+	private JCheckBox boxkVagSleeper;
 	private JCheckBox boxkTwoSeat;
 	private JCheckBox boxkHardSleeper;
 	private JCheckBox boxkHardSeat;
@@ -506,17 +512,26 @@ public class RobTicket {
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 		
-		JLabel label_9 = new JLabel(ResManager.getString("RobTicket.boxoRang")); 
-		label_9.setBounds(0, 24, 73, 15);
+		JLabel label_9 = new JLabel(ResManager.getString("RobTicket.start")); 
+		label_9.setBounds(32, 24, 56, 15);
 		panel_1.add(label_9);
 		label_9.setHorizontalAlignment(SwingConstants.RIGHT);
 		boxoRang = new JComboBox(Constants.getRangTime());
 		boxoRang.setToolTipText(ResManager.getString("RobTicket.boxoRangTip")); 
-		boxoRang.setBounds(79, 21, 92, 21);
+		boxoRang.setBounds(90, 21, 72, 21);
 		panel_1.add(boxoRang);
 		
+		JLabel label_11 = new JLabel(ResManager.getString("RobTicket.land")); 
+		label_11.setBounds(180, 24, 56, 15);
+		panel_1.add(label_11);
+		label_11.setHorizontalAlignment(SwingConstants.RIGHT);
+		boxoLand = new JComboBox(Constants.getRangTime());
+		boxoLand.setToolTipText(ResManager.getString("RobTicket.boxoRangTip")); 
+		boxoLand.setBounds(238, 21, 72, 21);
+		panel_1.add(boxoLand);
+		
 		JLabel label_6 = new JLabel(ResManager.getString("RobTicket.txtStartDate")); 
-		label_6.setBounds(273, 24, 61, 15);
+		label_6.setBounds(328, 24, 61, 15);
 		panel_1.add(label_6);
 		label_6.setHorizontalAlignment(SwingConstants.RIGHT);
 
@@ -524,10 +539,12 @@ public class RobTicket {
 		txtStartDate = new JFormattedTextField(mf);
 		txtStartDate.setToolTipText(ResManager
 				.getString("RobTicket.txtStartDateTip")); 
-		txtStartDate.setBounds(342, 21, 84, 21);
+		txtStartDate.setBounds(391, 21, 84, 21);
 		panel_1.add(txtStartDate);
 		txtStartDate.setColumns(10);
-		txtStartDate.setText(mf.format(new Date()));
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DAY_OF_YEAR, 19);
+		txtStartDate.setText(mf.format(cal.getTime()));
 		JLabel label_4 = new JLabel(
 				ResManager.getString("RobTicket.txtFromStation")); 
 		label_4.setBounds(32, 49, 43, 15);
@@ -611,26 +628,31 @@ public class RobTicket {
 		
 		boxkTwoSeat = new JCheckBox(ResManager.getString("RobTicket.boxkTwoSeat")); 
 		boxkTwoSeat.setSelected(true);
-		boxkTwoSeat.setBounds(120, 127, 63, 23);
+		boxkTwoSeat.setBounds(110, 127, 63, 23);
 		boxkTwoSeat.setToolTipText(ResManager.getString("RobTicket.boxkTwoSeatTip")); 
 		panel_1.add(boxkTwoSeat);
 		
 		boxkHardSleeper = new JCheckBox(ResManager.getString("RobTicket.boxkHardSleeper")); 
 		boxkHardSleeper.setSelected(true);
-		boxkHardSleeper.setBounds(210, 127, 49, 23);
+		boxkHardSleeper.setBounds(190, 127, 49, 23);
 		boxkHardSleeper.setToolTipText(ResManager.getString("RobTicket.boxkHardSleeperTip")); 
 		panel_1.add(boxkHardSleeper);
 		
 		boxkHardSeat = new JCheckBox(ResManager.getString("RobTicket.boxkHardSeat")); 
 		boxkHardSeat.setSelected(true);
-		boxkHardSeat.setBounds(300, 127, 49, 23);
+		boxkHardSeat.setBounds(260, 127, 49, 23);
 		boxkHardSeat.setToolTipText(ResManager.getString("RobTicket.boxkHardSeatTip")); 
 		panel_1.add(boxkHardSeat);
 		
+		
 		boxkSoftSleeper = new JCheckBox(ResManager.getString("RobTicket.boxkSoftSleeper")); 
-		boxkSoftSleeper.setBounds(390, 127, 49, 23);
+		boxkSoftSleeper.setBounds(330, 127, 49, 23);
 		boxkSoftSleeper.setToolTipText(ResManager.getString("RobTicket.boxkSoftSleeperTip")); 
 		panel_1.add(boxkSoftSleeper);
+		
+		boxkVagSleeper = new JCheckBox(ResManager.getString("RobTicket.boxkAgSleeper")); 
+		boxkVagSleeper.setBounds(400, 127, 89, 23);
+		panel_1.add(boxkVagSleeper);
 		
 		boxkSoftSeat = new JCheckBox(ResManager.getString("RobTicket.boxkSoftSeat")); 
 		boxkSoftSeat.setBounds(30, 154, 49, 23);
@@ -980,7 +1002,16 @@ public class RobTicket {
 	}
 	
 	/**
-	 * 获取乘车时间段
+	 * 获取到站时间段
+	 * @return 
+	 */
+	public String getLandDate() {
+		String key = (String) boxoLand.getSelectedItem();
+		return Constants.trainRang.get(key);
+	}
+	
+	/**
+	 * 获取车票类型
 	 * @return 
 	 */
 	public String getTicketType() {
@@ -1102,7 +1133,7 @@ public class RobTicket {
 	 */
 	public boolean[] getTrainSet() {
 		boolean trainSet[] = new boolean[] { false, false, false, false, false,
-				false, false, false, false, false, false, false };
+				false, false, false, false, false, false, false,false };
 		trainSet[Constants.isLockTrain] = boxkLockTrain.isSelected();
 		trainSet[Constants.isStrinStation] = boxkStrinStation.isSelected();
 		trainSet[Constants.isNeed_BEST_SEAT] = boxkBestSeat.isSelected();
@@ -1111,10 +1142,11 @@ public class RobTicket {
 		trainSet[Constants.isNeed_HARD_SLEEPER] = boxkHardSleeper.isSelected();
 		trainSet[Constants.isNeed_NONE_SEAT] = boxkNoneSeat.isSelected();
 		trainSet[Constants.isNeed_ONE_SEAT] = boxkOneSeat.isSelected();
-		trainSet[Constants.isNeed_VAG_SLEEPER] = boxkOther.isSelected();
+		trainSet[Constants.isNeed_VAG_SLEEPER] = boxkVagSleeper.isSelected();
 		trainSet[Constants.isNeed_SOFT_SEAT] = boxkSoftSeat.isSelected();
 		trainSet[Constants.isNeed_SOFT_SLEEPER] = boxkSoftSleeper.isSelected();
 		trainSet[Constants.isNeed_TWO_SEAT] = boxkTwoSeat.isSelected();
+		trainSet[Constants.isNeed_OtherSeat] = boxkOther.isSelected();
 		return trainSet;
 	}
 	
@@ -1123,7 +1155,7 @@ public class RobTicket {
 	 * 获取指定列车信息
 	 * @return 
 	 */
-	public Set<String> getTrainNo() {
+	public Set<String> getStationTrainCode() {
 		Set<String> ans = new HashSet<String>();
 		String trainStr  = txtTrainNo.getText().trim();
 		String[] trainNo = trainStr.split("\\|"); 

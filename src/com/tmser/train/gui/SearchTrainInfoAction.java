@@ -77,7 +77,7 @@ import com.tmser.train.bean.TrainQueryInfo;
 		model.setRowCount(0);
 		
 		for(TrainQueryInfo train : lst){
-			 model.addRow(new Object[]{train.getTrainNo(),"<html>"+train.getFromStationName()+"<br/>"+train.getStartTime()+"</html>",
+			 model.addRow(new Object[]{train.getStationTrainCode(),"<html>"+train.getFromStationName()+"<br/>"+train.getStartTime()+"</html>",
 					 "<html>"+train.getToStationName()+"<br/>"+ train.getArriveTime()+"</html>",train.getLishi(),Boolean.FALSE});
 		}
 		
@@ -186,7 +186,7 @@ import com.tmser.train.bean.TrainQueryInfo;
 				//	imgLabel.setVisible(true);
 					List<TrainQueryInfo> allTrain = rob.getClient().queryTrain(
 							trainInfo.getFromStationName(), trainInfo.getToStationName(), trainInfo.getStartTime(),
-							trainInfo.getRangeDate(),rob.getTicketType());
+							trainInfo.getRangeDate(),rob.getLandDate(), rob.getTicketType());
 							
 					addTrainInfoColumn(allTrain);
 				//	imgLabel.setVisible(false);

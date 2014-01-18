@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Timer;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -644,19 +643,19 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 				JSONObject data = json.getJSONObject("data");
 				int waitTime = data.getInt("waitTime");
 				String orderid = getString(data,"orderId");
-				String msg = getErrMsgString(json,"messages");
+				String msg = getString(data,"msg");
 				
 				//"data":{"queryOrderWaitTimeStatus":true,"count":0,"waitTime":4,"requestId":5824745403582708711,"waitCount":1,"tourFlag":"dc","orderId":null}
 				if(orderid != null && !"".equals(orderid)){
 						rs.setState(Result.SUCC);
 						rs.setMsg(orderid);
-				}else if("".equals(orderid) && msg.contains("已购买") ){
+				}else if("".equals(orderid) && !"".equals(msg)) {
 					 rs.setState(Result.HASORDER);
 					 rs.setMsg(msg);
 				}else{
-					rs.setMsg(msg);
+					rs.setMsg(getErrMsgString(json, "messages"));
 				}
-				rs.setWaitTime(waitTime/60);
+				rs.setWaitTime(waitTime);
 			}else{
 				rs.setMsg("Empty Content");
 			}
@@ -744,7 +743,7 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 	 * @param rangDate
 	 * @return
 	 */
-	public List<TrainQueryInfo> queryTrain(String from, String to, String startDate, String rangDate,String ticketType) {
+	public List<TrainQueryInfo> queryTrain(String from, String to, String startDate, String rangDate, String landDate,String ticketType) {
 		log.debug("-------------------query train start-------------------");
 		if (rangDate == null || rangDate.isEmpty()) {
 			rangDate = "00:00--24:00";
@@ -772,7 +771,7 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
 			responseBody = responseHandler.handleResponse(response);
 			log.info(responseBody);
-			all = parserQueryInfo(responseBody, rangDate); 
+			all = parserQueryInfo(responseBody, rangDate, landDate); 
 		}catch(UnknownHostException e){
 			throw new NetConnectException(e);
 		}catch (Exception e) {
@@ -798,7 +797,7 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 	}
 	
 	public List<TrainQueryInfo> parserQueryInfo(String response,
-			String range) throws JSONException {
+			String range,String land) throws JSONException {
 		if(response == null  || response.isEmpty() || response.indexOf("{")==-1){
 			return Collections.emptyList();
 		}
@@ -812,55 +811,58 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 			JSONObject trainInfo = data.getJSONObject(i);
 			JSONObject train = trainInfo.getJSONObject("queryLeftNewDTO");
 			tqi.setStartTime(train.getString("start_time"));
+			tqi.setArriveTime(getString(train,"arrive_time"));
 			
 			if(expireRange(range,tqi.getStartTime())){
 				continue;
 			}
 			
-			tqi.setTrainNo(train.getString("train_no"));
-			tqi.setStationTrainCode(train.getString("station_train_code"));
-			tqi.setBest_seat(train.getString("tz_num"));
-			tqi.setOne_seat(train.getString("zy_num"));
-			tqi.setTwo_seat(train.getString("ze_num"));
-			tqi.setVag_sleeper(train.getString("gr_num"));
-			tqi.setBuss_seat(train.getString("swz_num"));
-			tqi.setSoft_sleeper(train.getString("rw_num"));
-			tqi.setHard_sleeper(train.getString("yw_num"));
-			tqi.setSoft_seat(train.getString("rz_num"));
-			tqi.setHard_seat(train.getString("yz_num"));
-			tqi.setNone_seat(train.getString("wz_num"));
-			tqi.setOther_seat(train.getString("qt_num"));
+			if(expireRange(land,tqi.getArriveTime())){
+				continue;
+			}
 			
-			tqi.setStartStationTelecode(train.getString("start_station_telecode"));
-			tqi.setStartStationName(train.getString("start_station_name"));
-			tqi.setEndStationName(train.getString("end_station_name"));
-			tqi.setEndStationTelecode(train.getString("end_station_telecode"));
-			tqi.setFromStationName(train.getString("from_station_name"));
-			tqi.setFromStationTelecode(train.getString("from_station_telecode"));
-			tqi.setToStationName(train.getString("to_station_name"));
-			tqi.setToStationTelecode(train.getString("to_station_telecode"));
+			tqi.setTrainNo(getString(train,"train_no"));
+			tqi.setStationTrainCode(getString(train,"station_train_code"));
+			tqi.setBest_seat(getString(train,"tz_num","--"));
+			tqi.setOne_seat(getString(train,"zy_num","--"));
+			tqi.setTwo_seat(getString(train,"ze_num","--"));
+			tqi.setVag_sleeper(getString(train,"vag_sleeper","--"));
+			tqi.setBuss_seat(getString(train,"swz_num","--"));
+			tqi.setSoft_sleeper(getString(train,"rw_num","--"));
+			tqi.setHard_sleeper(getString(train,"yw_num","--"));
+			tqi.setSoft_seat(getString(train,"rz_num","--"));
+			tqi.setHard_seat(getString(train,"yz_num","--"));
+			tqi.setNone_seat(getString(train,"wz_num","--"));
+			tqi.setOther_seat(getString(train,"qt_num","--"));
 			
-			tqi.setArriveTime(train.getString("arrive_time"));
-			tqi.setStartTime(train.getString("start_time"));
-			tqi.setDayDifference(train.getString("day_difference"));
-			tqi.setTrainClassName(train.getString("train_class_name"));
-			tqi.setLishi(train.getString("lishi"));
-			tqi.setCanWebBuy(train.getString("canWebBuy"));
-			tqi.setLishiValue(train.getString("lishiValue"));
+			tqi.setStartStationTelecode(getString(train,"start_station_telecode"));
+			tqi.setStartStationName(getString(train,"start_station_name"));
+			tqi.setEndStationName(getString(train,"end_station_name"));
+			tqi.setEndStationTelecode(getString(train,"end_station_telecode"));
+			tqi.setFromStationName(getString(train,"from_station_name"));
+			tqi.setFromStationTelecode(getString(train,"from_station_telecode"));
+			tqi.setToStationName(getString(train,"to_station_name"));
+			tqi.setToStationTelecode(getString(train,"to_station_telecode"));
+			
+			tqi.setDayDifference(getString(train,"day_difference"));
+			tqi.setTrainClassName(getString(train,"train_class_name"));
+			tqi.setLishi(getString(train,"lishi"));
+			tqi.setCanWebBuy(getString(train,"canWebBuy"));
+			tqi.setLishiValue(getString(train,"lishiValue"));
 			tqi.setControlDay(train.getInt("control_day"));
-			tqi.setControlTrainDay(train.getString("control_train_day"));
-			tqi.setYpInfo(train.getString("yp_info"));
-			tqi.setStartTrainDate(train.getString("start_train_date"));
-			tqi.setSeatFeature(train.getString("seat_feature"));
-			tqi.setTrainSeatFeature(train.getString("train_seat_feature"));
-			tqi.setSeatTypes(train.getString("seat_types"));
-			tqi.setLocationCode(train.getString("location_code"));
-			tqi.setFromStationNo(train.getString("from_station_no"));
-			tqi.setToStationNo(train.getString("to_station_no"));
-			tqi.setSaleTime(train.getString("sale_time"));
-			tqi.setIsSupportCard(train.getString("is_support_card"));
+			tqi.setControlTrainDay(getString(train,"control_train_day"));
+			tqi.setYpInfo(getString(train,"yp_info"));
+			tqi.setStartTrainDate(getString(train,"start_train_date"));
+			tqi.setSeatFeature(getString(train,"seat_feature"));
+			tqi.setTrainSeatFeature(getString(train,"train_seat_feature"));
+			tqi.setSeatTypes(getString(train,"seat_types"));
+			tqi.setLocationCode(getString(train,"location_code"));
+			tqi.setFromStationNo(getString(train,"from_station_no"));
+			tqi.setToStationNo(getString(train,"to_station_no"));
+			tqi.setSaleTime(getString(train,"sale_time"));
+			tqi.setIsSupportCard(getString(train,"is_support_card"));
 			
-			tqi.setSecretStr(trainInfo.getString("secretStr"));
+			tqi.setSecretStr(getString(trainInfo,"secretStr"));
 			
 			
 			if(tqi.getTrainNo() != null){
@@ -881,12 +883,12 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 			long end = df.parse(ranges[1]).getTime();
 			long now = df.parse(starttime).getTime();
 			if(now >= start && now <= end){
-				return true;
+				return false;
 			}
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		return false;
+		return true;
 	}
 	/**
 	 * 查询常用联系表
@@ -1299,6 +1301,13 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 			}
 		}
 	
+	public static String getString(JSONObject json, String key,String sdefault){
+		try {
+			return json.getString(key) == null ? "" : json.getString(key);
+		} catch (JSONException e) {
+			return sdefault;
+		}
+	}
 	public static String getErrMsgString(JSONObject json, String key){
 		try {
 			JSONArray err = json.getJSONArray(key);

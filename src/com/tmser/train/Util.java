@@ -10,11 +10,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.htmlparser.Attribute;
 import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;
 import org.htmlparser.Tag;
@@ -23,14 +21,12 @@ import org.htmlparser.filters.HasAttributeFilter;
 import org.htmlparser.filters.TagNameFilter;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
-import org.htmlparser.visitors.NodeVisitor;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 
 import com.tmser.train.bean.Page;
-import com.tmser.train.bean.TrainQueryInfo;
 import com.tmser.train.bean.UserInfo;
 
 /**
@@ -153,24 +149,6 @@ public class Util {
 			}
 		}
 		return new Page<UserInfo>(tqis,totalPage);
-	}
-
-	/**
-	 * 解析font节点
-	 * 
-	 * @param font
-	 * @return
-	 * @throws ParserException
-	 */
-	private static String parserFont(String font) {
-		String ans = font;
-		if (font.startsWith("<font")) {
-			int beginIndex = font.indexOf("'>");
-			int endIndex = font.indexOf("</");
-			ans = font.substring(beginIndex + 2, endIndex);
-		}
-
-		return ans;
 	}
 
 	/**

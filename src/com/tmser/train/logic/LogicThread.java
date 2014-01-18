@@ -54,10 +54,10 @@ public class LogicThread extends BaseThread {
 					rob.console(ResManager.getString("LogicThread.4")); 
 					List<TrainQueryInfo> allTrain = client.queryTrain(
 							rob.getFromCity(), rob.getToCity(), rob.getStartDate(),
-							rob.getRangDate(),rob.getTicketType());
+							rob.getRangDate(),rob.getLandDate(),rob.getTicketType());
 					
 					AutoTrainAI ai = new AutoTrainAI(allTrain, rob.getTrainSet(),//查询出所有票
-							rob.getTrainNo(), rob.getFromCity(), rob.getToCity());
+							rob.getStationTrainCode(), rob.getFromCity(), rob.getToCity());
 					if (ai.getAllTrains().size() == 0) {
 						rob.console(MessageFormat.format(ResManager.getString("LogicThread.5") ,rob.getStartDate(),rob.getRangDate(),rob.getFromCity(), rob.getToCity())); 
 						if (rob.getTrainSet()[Constants.isLockTrain]) {
@@ -70,10 +70,10 @@ public class LogicThread extends BaseThread {
 					
 					TrainQueryInfo goHomeTrain = null;//选中的车次
 					Map<String, TrainQueryInfo> spTrains = ai.getSpecificTrains(); //指定车次
-					for (String trainNo : rob.getTrainNo()) {//获取指定车次中的一辆
-						TrainQueryInfo spTrain = spTrains.get(trainNo);
+					for (String stationTrainCode : rob.getStationTrainCode()) {//获取指定车次中的一辆
+						TrainQueryInfo spTrain = spTrains.get(stationTrainCode);
 						if (spTrain == null) {
-							rob.console(MessageFormat.format(ResManager.getString("LogicThread.7"), trainNo)); 
+							rob.console(MessageFormat.format(ResManager.getString("LogicThread.7"), stationTrainCode)); 
 						} else if (Constants.getTrainSeatName(ai.getSpecificSeatAI(spTrain)) == null) {
 							rob.console(MessageFormat.format(ResManager.getString("LogicThread.8"),spTrain.getStationTrainCode(), ai.getTrainSeatView(spTrain))); 
 						} else {
@@ -85,15 +85,16 @@ public class LogicThread extends BaseThread {
 					if (goHomeTrain == null && rob.getTrainSet()[Constants.isLockTrain]){//锁定指定车次，重新查询
 						Thread.sleep(Config.getSleepTime());
 						continue;
-					}  else if(!rob.getTrainSet()[Constants.isLockTrain] && goHomeTrain == null){//没锁定指定车次，从其他有票车中选择
+					}  
+					if(goHomeTrain == null){//没锁定指定车次，从其他有票车中选择
 						rob.console(ResManager.getString("LogicThread.9")); 
 						Map<String, TrainQueryInfo> caTrains = ai.getCandidateTrains();
 						for (TrainQueryInfo train : caTrains.values()) {
-							if(ai.getSpecificSeatTrains().containsKey(train.getTrainNo())) {//其他车次中找有指定票的车
+							if(ai.getSpecificSeatTrains().containsKey(train.getStationTrainCode())) {//其他车次中找有指定票的车
 								goHomeTrain = train;
 								break;
 							} else {
-								rob.console(MessageFormat.format(ResManager.getString("LogicThread.10"),train.getTrainNo(),ai.getTrainSeatView(train))); 
+								rob.console(MessageFormat.format(ResManager.getString("LogicThread.10"),train.getStationTrainCode(),ai.getTrainSeatView(train))); 
 							}
 						}
 					}
@@ -104,7 +105,7 @@ public class LogicThread extends BaseThread {
 						continue;
 					}
 					
-					rob.console(MessageFormat.format(ResManager.getString("LogicThread.12"),goHomeTrain.getTrainNo(),goHomeTrain.getFromStationName(), goHomeTrain.getStartTime(),goHomeTrain.getToStationName(), goHomeTrain.getArriveTime(),goHomeTrain.getLishi())); 
+					rob.console(MessageFormat.format(ResManager.getString("LogicThread.12"),goHomeTrain.getStationTrainCode(),goHomeTrain.getFromStationName(), goHomeTrain.getStartTime(),goHomeTrain.getToStationName(), goHomeTrain.getArriveTime(),goHomeTrain.getLishi())); 
 					String seat = ai.getSpecificSeatAI(goHomeTrain);
 					rob.console(MessageFormat.format(ResManager.getString("LogicThread.13"),Constants.getTrainSeatName(seat))); 
 					if (seat.equals(Constants.NONE_SEAT)) {//用户车票座位
@@ -187,7 +188,7 @@ public class LogicThread extends BaseThread {
 						
 						if(Result.HASORDER == rs.getState()){
 							 rob.console(rs.getMsg());
-							 break;
+							 continue;
 						}
 						
 						//拿到订单号正式提交

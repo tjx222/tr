@@ -112,6 +112,7 @@ public class Constants {
 	public static String SOFT_SEAT = "2";// 软座(余票)
 	public static String HARD_SEAT = "1";// 硬座(余票)
 	public static String NONE_SEAT = "-1";// 无座(余票)
+	public static String OTHER_SEAT = "11";//其他
 	
 	public static String TRAIN_D = "D";
 	public static String TRAIN_G = "G";
@@ -184,6 +185,11 @@ public class Constants {
 	 */
 	public static byte isNeed_TWO_SEAT = 11;// 二等座(余票)
 	
+	/**
+	 * 其他
+	 */
+	public static byte isNeed_OtherSeat = 12;// 其他(余票)
+	
 	
 	public final static String USER_NOT_EXIST="登录名不存在";
 	public final static String USER_PWD_ERR="密码输入错误";
@@ -220,8 +226,10 @@ public class Constants {
 		
 		trainSeatMap.put("有", 1000);
 		trainSeatMap.put("无", 0);
+		trainSeatMap.put("*", 0);
 		trainSeatMap.put("--", -1);
 		
+		trainSeatNameMap.put(OTHER_SEAT, "其他");
 		trainSeatNameMap.put(BUSS_SEAT, "商务座");
 		trainSeatNameMap.put(BEST_SEAT, "特等座");
 		trainSeatNameMap.put(ONE_SEAT, "一等座");

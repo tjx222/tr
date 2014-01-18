@@ -199,6 +199,10 @@ public class AutoTrainAI {
 			ans.append("[" + Constants.getTrainSeatName(Constants.NONE_SEAT)
 					+ "]");
 		}
+		if (getTrainSeat(train.getOther_seat()) > 0) {
+			ans.append("[" + Constants.getTrainSeatName(Constants.OTHER_SEAT)
+					+ "]");
+		}
 		return ans.toString();
 	}
 
