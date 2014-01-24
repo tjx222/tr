@@ -121,34 +121,27 @@ public class LogicThread extends BaseThread {
 					
 					List<NameValuePair> formparams = null;
 					TokenAndTicket token = null; 
-					do{			//查询出车票后点击预定按钮及输入验证码点击提交按钮两步
-						rob.console(ResManager.getString("LogicThread.15"));
+					//查询出车票后点击预定按钮及输入验证码点击提交按钮两步
+					rob.console(ResManager.getString("LogicThread.15"));
 						rs = client.book(rob.getTicketType(), rob.getStartDate(), goHomeTrain);
 						
-						if(rs.getState() == Result.FAIL){
+					if(rs.getState() == Result.FAIL){
 							SwingUtilities.invokeLater(new LoginThread(rob));	
 							blinker = null;
-							break;
-						}
-						
-						//Thread.sleep(2000);
-						if("".equals(randCode)){
-							rob.console("RandCode: "+randCode);
-							rs.setState(Result.FAIL);
-							Thread.sleep(4000);
-						}else{
-							token = new TokenAndTicket(rs.getMsg());
-							randCode = getRandCodeDailog(Constants.ORDER_CODE_URL);
-							if(randCode == null){
+						break;
+					}
+					token = new TokenAndTicket(rs.getMsg());
+					do{	//Thread.sleep(2000);
+						randCode = getRandCodeDailog(Constants.ORDER_CODE_URL);
+						if(randCode == null){
 								rob.console(ResManager.getString("LogicThread.30"));
 								blinker = null;
 								break;
-							}
+						}
 							formparams = client.setOrderForm(randCode,token, rob.getSelectUsers(), goHomeTrain);
 							rob.console("RandCode: "+randCode);
 							rs = client.checkOrder(formparams,token);
 							Thread.sleep(1000);
-						}
 					}while (rs.getState() == Result.FAIL && blinker == thisThread);
 					
 					if( blinker == thisThread){ //自动ajax 步骤，查询车票余量
