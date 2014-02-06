@@ -42,6 +42,7 @@ import org.json.JSONObject;
 
 import com.tmser.train.Constants;
 import com.tmser.train.NetConnectException;
+import com.tmser.train.ResManager;
 import com.tmser.train.UnRepairException;
 import com.tmser.train.Util;
 import com.tmser.train.bean.Page;
@@ -236,7 +237,7 @@ public class TrainClient {
 				}
 
 			}else{
-				rs.setState(Result.FAIL);
+				rs.setState(Result.UNLOGIN);
 			}
 		}catch(UnknownHostException e){
 			throw new NetConnectException(e);
@@ -518,6 +519,19 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 			log.info(responseBody);
 			json = new JSONObject(responseBody);
 			if(getBoolean(json, "status")){
+				if("Y".equals(getString(json,"isRelogin"))){
+					Constants.isLoginSuc = false;
+					rs.setMsg(ResManager.getString("LogicThread.34"));
+					rs.setState(Result.UNLOGIN);
+					return rs;
+				}
+				
+				if("true".equals(getString(json,"op_2"))){
+					rs.setMsg(ResManager.getString("LogicThread.111"));
+					rs.setState(Result.FAIL);
+					return rs;
+				}
+				
 				JSONObject ticket = json.getJSONObject("data");
 				if(ticket != null){
 					int tkcount = getTicketCountDesc(getString(ticket,"ticket"), seat);
@@ -525,7 +539,7 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 							rs.setState(Result.SUCC);
 							rs.setMsg("Has Ticket");
 							rs.setWaitTime(tkcount);
-						}
+					}
 				}
 			}else{
 				rs.setMsg(getErrMsgString(json, "messages"));
