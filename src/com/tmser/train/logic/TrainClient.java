@@ -384,7 +384,7 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
 			responseBody = httpclient.execute(post, responseHandler);
 			JSONObject json = new JSONObject(responseBody);
-			JSONObject data = json.getJSONObject("data");
+			JSONObject data = getJSONObject(json,"data");
 			log.info(responseBody);
 			if(getBoolean(data,"submitStatus")){
 				rs.setState(Result.SUCC);
@@ -424,7 +424,7 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 			responseBody = httpclient.execute(post, responseHandler);
 			log.info(responseBody);
 			JSONObject json = new JSONObject(responseBody);
-			JSONObject data = json.getJSONObject("data");
+			JSONObject data = getJSONObject(json,"data");
 			if(responseBody != null && data.getBoolean("flag")){
 				Constants.isLoginSuc = true;
 				return true;
@@ -532,7 +532,7 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 					return rs;
 				}
 				
-				JSONObject ticket = json.getJSONObject("data");
+				JSONObject ticket = getJSONObject(json,"data");
 				if(ticket != null){
 					int tkcount = getTicketCountDesc(getString(ticket,"ticket"), seat);
 					if(tkcount > 0 ){
@@ -600,7 +600,7 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 			log.info(responseBody);
 			json = new JSONObject(responseBody);
 			if(getBoolean(json, "status")){
-					JSONObject data = json.getJSONObject("data");
+					JSONObject data = getJSONObject(json,"data");
 					boolean canSubmit = getBoolean(data,"submitStatus");
 					if(canSubmit){
 							rs.setState(Result.SUCC);
@@ -654,7 +654,7 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 			if(responseBody != null){
 				log.info(responseBody);
 				json = new JSONObject(responseBody);
-				JSONObject data = json.getJSONObject("data");
+				JSONObject data = getJSONObject(json,"data");
 				int waitTime = data.getInt("waitTime");
 				String orderid = getString(data,"orderId");
 				String msg = getString(data,"msg");
@@ -734,7 +734,7 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 			if(response != null && response.indexOf("{")>-1){
 				JSONObject json = new JSONObject(response);
 				if (getBoolean(json,"status")){
-					JSONObject data = json.getJSONObject("data");
+					JSONObject data = getJSONObject(json,"data");
 					if (getBoolean(data,"submitStatus")) {
 						rs.setState(Result.SUCC);
 					}
@@ -768,7 +768,7 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 		parameters.add(new BasicNameValuePair("leftTicketDTO.to_station", Util.getCityCode(to)));
 		parameters.add(new BasicNameValuePair("purpose_codes", getSearchType(ticketType)));
 		HttpGet get = new HttpGet(Constants.QUERY_TRAIN_URL + URLEncodedUtils.format(parameters, Consts.UTF_8));
-		//log.info(Constants.QUERY_TRAIN_URL + URLEncodedUtils.format(parameters, Consts.UTF_8));
+		log.info(Constants.QUERY_TRAIN_URL + URLEncodedUtils.format(parameters, Consts.UTF_8));
 		get.setHeader("Referer","https://kyfw.12306.cn/otn/leftTicket/init");
 		get.setHeader("Host","kyfw.12306.cn");
 		get.setHeader("Content-Type","application/json;charset=UTF-8");
@@ -818,8 +818,8 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 		
 		List<TrainQueryInfo> tqis = new ArrayList<TrainQueryInfo>();
 		JSONObject rtn = new JSONObject(response);
-		JSONArray data = rtn.getJSONArray("data");
-		for (int i = 0; i < data.length(); i++) {
+		JSONArray data = getJSONArray(rtn,"data");
+		for (int i = 0; data!=null && i < data.length(); i++) {
 
 			TrainQueryInfo tqi = new TrainQueryInfo();
 			JSONObject trainInfo = data.getJSONObject(i);
@@ -1010,7 +1010,7 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 
 			JSONObject dataObject = null;
 			try {
-				dataObject = json.getJSONObject("data");
+				dataObject = getJSONObject(json,"data");
 			} catch (Exception e) {
 			}
 			JSONArray msgs = json.getJSONArray("messages");
@@ -1106,7 +1106,7 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 			if(getBoolean(json, "status")){
 				JSONObject data = null;
 				 try {
-					data = json.getJSONObject("data");
+					data = getJSONObject(json,"data");
 				} catch (Exception e) {
 				}
 				if(data != null){
@@ -1314,6 +1314,22 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 				return "";
 			}
 		}
+	
+	public static JSONObject getJSONObject(JSONObject json, String key){
+		try {
+			return json.getJSONObject(key) == null ? null : json.getJSONObject(key);
+		} catch (JSONException e) {
+			return null;
+		}
+	}
+	
+	public static JSONArray getJSONArray(JSONObject json, String key){
+		try {
+			return json.getJSONArray(key) == null ? null : json.getJSONArray(key);
+		} catch (JSONException e) {
+			return null;
+		}
+	}
 	
 	public static String getString(JSONObject json, String key,String sdefault){
 		try {
