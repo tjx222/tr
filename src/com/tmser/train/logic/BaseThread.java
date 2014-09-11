@@ -121,7 +121,10 @@ public abstract class BaseThread extends Thread {
 		while (rob.isAutocode() && randCodeByRob.length() != 4 && count-- > 0) {
 			randCodeByRob = getCode(image);
 		}
-		if (!rob.isAutocode()) {//手动输入验证码
+		if (!rob.isAutocode() || count == 0) {//手动输入验证码
+			if(count == 0){
+				rob.console(ResManager.getString("LogicThread.23"));
+			}
 			JLabel label = new JLabel(ResManager.getString("LogicThread.23"), JLabel.CENTER);
 			label.setIcon(new ImageIcon(image));
 			CodeMouseAdapter cma = new CodeMouseAdapter(randCodeByRob,url);
