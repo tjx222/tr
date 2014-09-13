@@ -20,7 +20,7 @@ import com.tmser.train.gui.RobTicket;
  */
 public class LoginThread extends BaseThread {
 	private static final Logger log = Logger.getLogger(LoginThread.class);
-	private volatile Thread blinker = this;
+	private volatile boolean blinker = true;
 	/**
 	 * 构造函数
 	 * 
@@ -36,7 +36,6 @@ public class LoginThread extends BaseThread {
 	 */
 	@Override
 	public void run() {
-		Thread thisThread = Thread.currentThread();
 		int count = 0;
 		try {
 				Result rs = new Result();
@@ -46,17 +45,20 @@ public class LoginThread extends BaseThread {
 					Constants.randCode = getRandCodeDailog(Constants.LOGIN_CODE_URL);
 				}
 				
-				while (!Constants.isLoginSuc && blinker == thisThread) {//循环登录
+				while (!Constants.isLoginSuc && blinker) {//循环登录
+					Thread.sleep(2000);
 					if(Constants.randCode == null){
 						rob.console(ResManager.getString("LoginThread.5"));
 						break;
 					}
+					
 					rs = client.login(rob.getUsername(), rob.getPassword(),	Constants.randCode);
 					if (rs.getState() == Result.SUCC) {
 						if(rob.needRemberMe())
 							rob.writeUserInfo();
 						Constants.isLoginSuc = true;
 					} else if (rs.getState() == Result.RAND_CODE_ERROR) {
+						 Thread.sleep(2000);
 						 rob.console(Constants.CODE_ERROR);
 						 Constants.randCode = getRandCodeDailog(Constants.LOGIN_CODE_URL);
 						// String randstr = client.getStr(Constants.RANDSTR_URL);
@@ -66,9 +68,6 @@ public class LoginThread extends BaseThread {
 						rob.console(rs.getMsg());
 						break;
 					}
-					
-					if(count > 0)
-						Thread.sleep(Config.getSleepTime());
 					count++;
 				}
 				
@@ -102,7 +101,7 @@ public class LoginThread extends BaseThread {
 	 *            The isEnd to set.
 	 */
 	public void setEnd(boolean isEnd) {
-		 blinker = null;
+		 blinker = false;
 	}
 	
 	@Override

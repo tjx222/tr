@@ -156,7 +156,7 @@ public class TrainClient {
 		Result rs = new Result();
 		try {
 		if(checkIsLogin()){
-			Thread.sleep(4000);
+			Thread.sleep(2000);
 			StringBuilder url = new StringBuilder(Constants.BOOK_URL);
 			url.append("?back_train_date=").append(Util.getCurDate())
 			.append("&train_date=").append(startDate)
@@ -232,8 +232,13 @@ public class TrainClient {
 					rs.setMsg(getToken());
 					rs.setState(Result.SUCC);
 				}else{
-					rs.setMsg(getErrMsgString(json, "messages"));
-					rs.setState(Result.FAIL);
+					String errmsg = getErrMsgString(json, "messages");
+					rs.setMsg(errmsg);
+					if(errmsg.contains("未处理的订单")){
+						rs.setState(Result.HAVE_NO_PAY_TICKET);
+					}else{
+						rs.setState(Result.FAIL);
+					}
 				}
 
 			}else{
@@ -975,6 +980,7 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 		Result rs = new Result();
 		if(!checkRandCode(randCode)){
 			rs.setState(Result.RAND_CODE_ERROR);
+			return rs;
 		}
 		
 		HttpPost httppost = new HttpPost(Constants.LOGIN_VALIDATE);

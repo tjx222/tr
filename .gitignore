@@ -2,3 +2,7 @@ bin/
 .settings/
 .classpath
 .classpath
+li
+*.log
+randcode.jpg
+randcode.jpg

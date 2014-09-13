@@ -11,7 +11,6 @@ import javax.swing.SwingUtilities;
 import org.apache.http.NameValuePair;
 import org.apache.log4j.Logger;
 
-import com.tmser.train.Config;
 import com.tmser.train.Constants;
 import com.tmser.train.NetConnectException;
 import com.tmser.train.ResManager;
@@ -50,20 +49,15 @@ public class LogicThread extends BaseThread {
 			Result rs = null;
 			start: 
 			while (Constants.isLoginSuc && blinker == thisThread) {//订票
+					Thread.sleep(2000);
 					String randCode = null;
 					rob.console(ResManager.getString("LogicThread.4")); 
-					List<TrainQueryInfo> allTrain = client.queryTrain(
-							rob.getFromCity(), rob.getToCity(), rob.getStartDate(),
-							rob.getRangDate(),rob.getLandDate(),rob.getTicketType());
+					boolean isLocked = rob.getTrainSet()[Constants.isLockTrain];
 					
-					AutoTrainAI ai = new AutoTrainAI(allTrain, rob.getTrainSet(),//查询出所有票
-							rob.getStationTrainCode(), rob.getFromCity(), rob.getToCity());
-					if (ai.getAllTrains().size() == 0) {
+					AutoTrainAI ai = queryTrain();//查询出所有票
+					if (ai.getAllTrains().size() == 0 ) {
 						rob.console(MessageFormat.format(ResManager.getString("LogicThread.5") ,rob.getStartDate(),rob.getRangDate(),rob.getFromCity(), rob.getToCity())); 
-						if (rob.getTrainSet()[Constants.isLockTrain]) {
-							Thread.sleep(5000);
-							continue;
-						}
+						continue;			//锁定定车次没有车票，直接返回
 					} else {
 						rob.console(MessageFormat.format(ResManager.getString("LogicThread.6"),rob.getStartDate(),rob.getRangDate(),rob.getFromCity(),rob.getToCity(),ai.getTrainNoView(ai.getCandidateTrains()))); 
 					}
@@ -71,7 +65,7 @@ public class LogicThread extends BaseThread {
 					List<TrainQueryInfo> ghs = new ArrayList<TrainQueryInfo>();
 					
 					Map<String, TrainQueryInfo> spTrains = ai.getSpecificTrains(); //指定车次
-					for (String stationTrainCode : rob.getStationTrainCode()) {//获取指定车次中的一辆
+					for (String stationTrainCode : rob.getStationTrainCode()) { //遍历用户指定车次
 						TrainQueryInfo spTrain = spTrains.get(stationTrainCode);
 						if (spTrain == null) {
 							rob.console(MessageFormat.format(ResManager.getString("LogicThread.7"), stationTrainCode)); 
@@ -82,11 +76,12 @@ public class LogicThread extends BaseThread {
 						}
 					}
 					
-					if (ghs.size() == 0 && rob.getTrainSet()[Constants.isLockTrain]){//锁定指定车次，重新查询
-						Thread.sleep(Config.getSleepTime());
+					if (ghs.size() == 0 && isLocked){//锁定指定车次，重新查询
 						continue;
-					}  
-					if(ghs.size() == 0){//没锁定指定车次，从其他有票车中选择
+					} 
+					
+					//没锁定指定车次，添加其他有票车
+					if(!isLocked){
 						rob.console(ResManager.getString("LogicThread.9")); 
 						Map<String, TrainQueryInfo> caTrains = ai.getCandidateTrains();
 						for (TrainQueryInfo train : caTrains.values()) {
@@ -98,9 +93,9 @@ public class LogicThread extends BaseThread {
 						}
 					}
 					
+					
 					if (ghs.size() == 0) {
 						rob.console(ResManager.getString("LogicThread.11")); 
-						Thread.sleep(4000);
 						continue;
 					}
 					
@@ -117,52 +112,55 @@ public class LogicThread extends BaseThread {
 								ui.setSeatType(seat);
 							}
 						}
-						Thread.sleep(1000);
-						
 						List<NameValuePair> formparams = null;
 						TokenAndTicket token = null; 
+						Thread.sleep(1500);
 						//查询出车票后点击预定按钮及输入验证码点击提交按钮两步
 						rob.console(ResManager.getString("LogicThread.15"));
 						rs = client.book(rob.getTicketType(), rob.getStartDate(), goHomeTrain);
 							
 						if(rs.getState() != Result.SUCC){
-							if(Result.UNLOGIN != rs.getState()){
-								SwingUtilities.invokeLater(new LoginThread(rob));	
+							rob.console(rs.getMsg());
+							if(Result.UNLOGIN == rs.getState()){
+								SwingUtilities.invokeAndWait(new LoginThread(rob));	
+								continue start;
+							}else if(Result.HAVE_NO_PAY_TICKET== rs.getState()){
 								blinker = null;
-								break;
+								break start;
 							}
 							continue;
 						}
 						
 						token = new TokenAndTicket(rs.getMsg());
-						do{	//Thread.sleep(2000);
+						do{
+							Thread.sleep(500);
 							randCode = getRandCodeDailog(Constants.ORDER_CODE_URL);
 							if(randCode == null){
 									rob.console(ResManager.getString("LogicThread.30"));
 									blinker = null;
 									break;
 							}
-								formparams = client.setOrderForm(randCode,token, rob.getSelectUsers(), goHomeTrain);
-								rob.console("RandCode: "+randCode);
-								rs = client.checkOrder(formparams,token);
-								Thread.sleep(1000);
+							formparams = client.setOrderForm(randCode,token, rob.getSelectUsers(), goHomeTrain);
+							Thread.sleep(500);
+							rs = client.checkOrder(formparams,token);
 						}while (rs.getState() == Result.FAIL && blinker == thisThread);
 						
 						if( blinker == thisThread){ //自动ajax 步骤，查询车票余量
+							Thread.sleep(500);
 							rob.console(ResManager.getString("LogicThread.33"));
 							String seattype = rob.getSelectUsers().get(0).getSeatType();
 							rs = client.getCount(token,seattype,rob.getTicketType(),goHomeTrain); //
-							if(rs.getState()  != Result.SUCC) {
+							if(rs.getState() != Result.SUCC) {
 								rob.console(rs.getMsg());
 								continue;
 							}else{
 								rob.console(MessageFormat.format(ResManager.getString("LogicThread.35"),rs.getWaitTime()));
 							}
 							
+							Thread.sleep(500);
 							rs = client.queryOrderQueue(formparams,token,rob.getTicketType()); //余量足够，点击确定，正式订票
 							if(rs.getState()  == Result.FAIL) {
 								rob.console(ResManager.getString("LogicThread.27"));
-								Thread.sleep(2000);
 								rob.clearMsg();
 								continue;
 							}
@@ -172,11 +170,12 @@ public class LogicThread extends BaseThread {
 								break start;
 							}
 							//ajax 步骤 排队拿号
+							Thread.sleep(500);
 							rob.console(ResManager.getString("LogicThread.28"));
 							rs = client.queryWaitTime(token); 
 							while(rs.getState() == Result.FAIL && blinker == thisThread){
 								 rob.console(MessageFormat.format(ResManager.getString("LogicThread.29"),String.valueOf(rs.getWaitTime())));
-								 Thread.sleep(1000);
+								 Thread.sleep(500);
 								 rs = client.queryWaitTime(token);
 							}
 							
@@ -190,6 +189,7 @@ public class LogicThread extends BaseThread {
 							}
 							
 							//拿到订单号正式提交
+							Thread.sleep(500);
 							rs = client.payOrder(rs.getMsg());
 							if(Result.SUCC == rs.getState()){
 								JOptionPane.showMessageDialog(rob.getFrame(),
@@ -197,7 +197,6 @@ public class LogicThread extends BaseThread {
 								rob.console(ResManager.getString("LogicThread.20"));
 								rob.reset(true);
 							}else{
-								Thread.sleep(2000);
 								rob.console(ResManager.getString("LogicThread.19")); 
 								rs = client.queryOrder(); //查询未完成订单，确定是否成功
 								rob.console(rs.getMsg());
@@ -223,6 +222,20 @@ public class LogicThread extends BaseThread {
 			rob.console(ResManager.getString("LogicThread.22")); 
 			rob.reset(true);
 		}
+	}
+	
+	/**
+	 * 查询所有车次
+	 * @return
+	 */
+	private AutoTrainAI queryTrain(){
+		List<TrainQueryInfo> allTrain = client.queryTrain(
+				rob.getFromCity(), rob.getToCity(), rob.getStartDate(),
+				rob.getRangDate(),rob.getLandDate(),rob.getTicketType());
+		
+		return new AutoTrainAI(allTrain, rob.getTrainSet(),//查询出所有票
+				rob.getStationTrainCode(), rob.getFromCity(), rob.getToCity());
+		
 	}
 	/**
 	 * @param isEnd

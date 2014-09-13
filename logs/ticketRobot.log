@@ -497,3 +497,5 @@
 2014-01-02 12:14:18,901 [Thread-4       ] ERROR LoginThread                    - com.tmser.train.UnRepairException: org.apache.http.client.HttpResponseException: Service Unavailable
 2014-01-02 13:02:25,355 [main           ] INFO  RobTicket                      - 购票器启动
 2014-01-02 13:02:59,400 [Thread-4       ] ERROR LoginThread                    - com.tmser.train.UnRepairException: org.apache.http.client.HttpResponseException: Service Unavailable
+2014-09-12 17:50:54,245 [Thread-5       ] ERROR LogicThread                    - com.tmser.train.UnRepairException: org.apache.http.client.HttpResponseException: Forbidden
+2014-09-12 17:53:51,992 [WT-EventQueue-0] ERROR chTrainInfoAction$SearchThread - com.tmser.train.UnRepairException: org.apache.http.client.HttpResponseException: Forbidden
