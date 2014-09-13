@@ -47,9 +47,14 @@ public class LogicThread extends BaseThread {
 		Thread thisThread = Thread.currentThread();
 		try {
 			Result rs = null;
+			int count = 0;
 			start: 
 			while (Constants.isLoginSuc && blinker == thisThread) {//订票
 					Thread.sleep(2000);
+					if(count > 50){
+						rob.clearMsg();
+					}
+					count++;
 					String randCode = null;
 					rob.console(ResManager.getString("LogicThread.4")); 
 					boolean isLocked = rob.getTrainSet()[Constants.isLockTrain];
