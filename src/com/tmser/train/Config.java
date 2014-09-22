@@ -40,6 +40,10 @@ public class Config {
 		return prop.getProperty(key,"");
 	}
 	
+	public static void setProperty(String key,String value) {
+		prop.setProperty(key,value);
+	}
+	
 	public static boolean isUseProxy() {
 		return "true".equals(getProperty("proxy.set"));
 	}

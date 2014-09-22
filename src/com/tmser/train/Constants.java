@@ -69,7 +69,7 @@ public class Constants {
 	/**
 	 * 查询车次信息
 	 */
-	public static String QUERY_TRAIN_URL = "https://kyfw.12306.cn/otn/leftTicket/queryT?";
+	public static String QUERY_TRAIN_URL = "https://kyfw.12306.cn/otn/leftTicket/query?";
 	
 	/**
 	 * 检查用户是否登录

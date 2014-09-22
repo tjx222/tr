@@ -103,7 +103,7 @@ public class LogicThread extends BaseThread {
 						rob.console(ResManager.getString("LogicThread.11")); 
 						continue;
 					}
-					
+				trainIt:
 					for(TrainQueryInfo goHomeTrain : ghs){
 						rob.console(MessageFormat.format(ResManager.getString("LogicThread.12"),goHomeTrain.getStationTrainCode(),goHomeTrain.getFromStationName(), goHomeTrain.getStartTime(),goHomeTrain.getToStationName(), goHomeTrain.getArriveTime(),goHomeTrain.getLishi())); 
 						String seat = ai.getSpecificSeatAI(goHomeTrain);
@@ -162,18 +162,23 @@ public class LogicThread extends BaseThread {
 								rob.console(MessageFormat.format(ResManager.getString("LogicThread.35"),rs.getWaitTime()));
 							}
 							
-							Thread.sleep(500);
-							rs = client.queryOrderQueue(formparams,token,rob.getTicketType()); //余量足够，点击确定，正式订票
-							if(rs.getState()  == Result.FAIL) {
-								rob.console(ResManager.getString("LogicThread.27"));
-								rob.clearMsg();
-								continue;
-							}
+							int qotimes = 0;
+							do{
+								Thread.sleep(500);
+								rs = client.queryOrderQueue(formparams,token,rob.getTicketType()); //余量足够，点击确定，正式订票
+								if(rs.getState()  == Result.FAIL) {
+									rob.console(ResManager.getString("LogicThread.27"));
+									rob.clearMsg();
+									continue start;
+								}
+								
+								if(Result.REPEAT == rs.getState()){//有未完成订单，直接结束
+									rob.console(rs.getMsg());
+								}
+								if(qotimes++ > 10)
+									continue trainIt;
+							}while(rs.getState() != Result.SUCC && blinker == thisThread);
 							
-							if(Result.REPEAT == rs.getState()){//有未完成订单，直接结束
-								rob.console(rs.getMsg());
-								break start;
-							}
 							//ajax 步骤 排队拿号
 							Thread.sleep(500);
 							rob.console(ResManager.getString("LogicThread.28"));

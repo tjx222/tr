@@ -548,6 +548,7 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 				}
 			}else{
 				rs.setMsg(getErrMsgString(json, "messages"));
+				rs.setState(Result.FAIL);
 			}
 		}catch(UnknownHostException e){
 			throw new NetConnectException(e);

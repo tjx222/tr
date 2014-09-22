@@ -790,6 +790,11 @@ public class RobTicket {
 		mnOpt.add(miProxy);
 		miProxy.addActionListener(new ProxySetAction(frame));
 		
+		JMenuItem miSms = new JMenuItem(
+				ResManager.getString("RobTicket.sms.setting"));
+		mnOpt.add(miSms);
+		miSms.addActionListener(new SmsSetAction(frame));
+		
 		miDama = new JMenuItem(
 				ResManager.getString("RobTicket.miDama"));
 		mnOpt.add(miDama);
