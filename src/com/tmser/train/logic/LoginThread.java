@@ -21,6 +21,7 @@ import com.tmser.train.gui.RobTicket;
 public class LoginThread extends BaseThread {
 	private static final Logger log = Logger.getLogger(LoginThread.class);
 	private volatile boolean blinker = true;
+	private TrainClient trainClient;
 	/**
 	 * 构造函数
 	 * 
@@ -28,6 +29,7 @@ public class LoginThread extends BaseThread {
 	 */
 	public LoginThread(RobTicket rob) {
 		super(rob);
+		trainClient = rob.getClient();
 	}
 
 	/**
@@ -39,7 +41,6 @@ public class LoginThread extends BaseThread {
 		int count = 0;
 		try {
 				Result rs = new Result();
-			
 				if (!Constants.isLoginSuc) { //如果还未登录，获取登录时验证码和随机数
 					rob.console(ResManager.getString("LoginThread.0", new String[]{rob.getUsername()})); 
 					Constants.randCode = getRandCodeDailog(Constants.LOGIN_CODE_URL);
@@ -52,7 +53,7 @@ public class LoginThread extends BaseThread {
 						break;
 					}
 					
-					rs = client.login(rob.getUsername(), rob.getPassword(),	Constants.randCode);
+					rs = trainClient.login(rob.getUsername(), rob.getPassword(),	Constants.randCode);
 					if (rs.getState() == Result.SUCC) {
 						if(rob.needRemberMe())
 							rob.writeUserInfo();

@@ -39,7 +39,7 @@ import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import static com.tmser.train.JSONUtil.*;
 import com.tmser.train.Constants;
 import com.tmser.train.NetConnectException;
 import com.tmser.train.ResManager;
@@ -54,7 +54,7 @@ import com.tmser.train.bean.UserInfo;
 /**
  * 车票订购网络处理core
  */
-public class TrainClient {
+public class TrainClient implements CaptchaClient{
 	public  String jSessionId = null;
 	public  String BIGipServerotn = null;
 	
@@ -1313,56 +1313,5 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 		}*/
 		//System.out.println(expireRange("00:00--12:00", "12:01"));
 	}
-	
-	public static String getString(JSONObject json, String key){
-			try {
-				return json.getString(key) == null ? "" : json.getString(key);
-			} catch (JSONException e) {
-				return "";
-			}
-		}
-	
-	public static JSONObject getJSONObject(JSONObject json, String key){
-		try {
-			return json.getJSONObject(key) == null ? null : json.getJSONObject(key);
-		} catch (JSONException e) {
-			return null;
-		}
-	}
-	
-	public static JSONArray getJSONArray(JSONObject json, String key){
-		try {
-			return json.getJSONArray(key) == null ? null : json.getJSONArray(key);
-		} catch (JSONException e) {
-			return null;
-		}
-	}
-	
-	public static String getString(JSONObject json, String key,String sdefault){
-		try {
-			return json.getString(key) == null ? "" : json.getString(key);
-		} catch (JSONException e) {
-			return sdefault;
-		}
-	}
-	public static String getErrMsgString(JSONObject json, String key){
-		try {
-			JSONArray err = json.getJSONArray(key);
-			StringBuilder errMsg = new StringBuilder();
-			for(int i=0;i<err.length();i++){
-				errMsg.append(err.getString(i)).append(",");
-				
-			}
-			return errMsg.length() == 0 ? "" : errMsg.toString();
-		} catch (JSONException e) {
-			return "";
-		}
-	}
-	private boolean getBoolean(JSONObject json, String key){
-		try {
-			return json.getBoolean(key);
-		} catch (JSONException e) {
-			return false;
-		}
-	}
+
 }

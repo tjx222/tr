@@ -19,6 +19,7 @@ import com.tmser.train.gui.RobTicket;
  * @version 1.0
  */
 public class LoadContactsThread extends BaseThread {
+	private TrainClient trainClient;
 
 	private volatile Thread blinker = this;
 	/**
@@ -26,8 +27,9 @@ public class LoadContactsThread extends BaseThread {
 	 * 
 	 * @param robTicket
 	 */
-	public LoadContactsThread(TrainClient client, RobTicket rob) {
+	public LoadContactsThread(RobTicket rob) {
 		super(rob);
+		this.trainClient = rob.getClient();
 	}
 
 	private List<UserInfo> ls;
@@ -53,7 +55,7 @@ public class LoadContactsThread extends BaseThread {
 			boolean hasNext = true;
 			while (hasNext && Constants.isLoginSuc && blinker == thisThread ){//循环加載
 					rob.console("load page "+ pageIndex);
-					Page<UserInfo> page = client.loadContacts(pageIndex, Config.getPageSize());
+					Page<UserInfo> page = trainClient.loadContacts(pageIndex, Config.getPageSize());
 					if(page!=null){
 						hasNext = page.hasNextPage();
 						pageIndex = page.getNextPage();

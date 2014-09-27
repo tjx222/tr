@@ -84,8 +84,18 @@ import com.tmser.train.ResManager;
 		hBoxport.add(Box.createHorizontalStrut(20));
 		hBoxport.add(txtProxyPort);
 		
+		Box hBox = Box.createHorizontalBox();
+		JLabel lbDamaUsername = new JLabel(ResManager.getString("RobTicket.sms.pguid"));
+		final JTextField txtSmsPgUid = new JTextField(Config.getProperty("sms.pguid"),16);
+		txtSmsPgUid.setToolTipText(ResManager.getString("RobTicket.sms.pglabel"));
+		hBox.add(lbDamaUsername);
+		hBox.add(Box.createHorizontalStrut(14));
+		hBox.add(txtSmsPgUid);
+		
 		vBox1.add(Box.createVerticalStrut(5));
 		vBox1.add(hBoxport);
+		vBox1.add(Box.createVerticalStrut(5));
+		vBox1.add(hBox);
 		
 		JPanel plApply = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		btnApply = new JButton(ResManager.getString("RobTicket.btnApply"));
@@ -100,6 +110,7 @@ import com.tmser.train.ResManager;
 				}
 				Config.setProperty("sms.enable",String.valueOf(group.isSelected(rbEnableProxy.getModel())));
 				Config.setProperty("sms.phone",txtProxyPort.getText().trim());
+				Config.setProperty("sms.pguid",txtSmsPgUid.getText().trim());
 				if(Config.saveConfig()){
 					dialog.setVisible(false);
 				}else{
@@ -126,7 +137,7 @@ import com.tmser.train.ResManager;
 		
 		dialog.setResizable(false);
 		dialog.setContentPane(panelProxy);
-		dialog.setSize(new Dimension(300,200));
+		dialog.setSize(new Dimension(300,240));
         dialog.setLocationRelativeTo(parentsFrame);
         dialog.setVisible(true);
 	}

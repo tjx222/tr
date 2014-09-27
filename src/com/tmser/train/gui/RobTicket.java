@@ -95,6 +95,10 @@ import com.tmser.train.logic.TrainClient;
  * @version 1.0
  */
 public class RobTicket {
+	public HttpClient getHttpClient() {
+		return httpClient;
+	}
+
 	private static final Logger logger = LoggerFactory.getLogger(RobTicket.class);
 	public static final String LOGIN_BEGIN = "f1";
 	public static final String LOGIN_SUCC = "f2";
@@ -896,7 +900,7 @@ public class RobTicket {
 		if (isEnd) {
 			btnSORE.setText(ResManager.getString("RobTicket.btnSORE")); 
 			if (logic != null) {
-				logic.setEnd(true);
+				logic.end();
 			}
 			logic = null;
 		} else {
@@ -950,7 +954,7 @@ public class RobTicket {
 		this.btnLoad.setEnabled(false);
 		this.btnLoad.setText(ResManager.getString("RobTicket.btnLoad.in"));
 		clearUserList();
-		Thread loadTread = new LoadContactsThread(client, this);
+		Thread loadTread = new LoadContactsThread(this);
 		loadTread.start();
 	}
 	

@@ -17,16 +17,30 @@ import com.tmser.train.ResManager;
 import com.tmser.train.gui.RobTicket;
 
 public abstract class BaseThread extends Thread {
-	protected TrainClient client;
+	protected CaptchaClient client;
+	public void setClient(CaptchaClient client) {
+		this.client = client;
+	}
+
 	protected RobTicket rob;
 	/**
 	 * 构造函数
 	 * 
 	 * @param robTicket
 	 */
-	public BaseThread( RobTicket rob) {
-		this.client = rob.getClient();
+	public BaseThread(CaptchaClient client,RobTicket rob) {
 		this.rob = rob;
+		this.client = client;
+	}
+	
+	/**
+	 * 构造函数
+	 * 
+	 * @param robTicket
+	 */
+	public BaseThread(RobTicket rob) {
+		this.rob = rob;
+		this.client = rob.getClient();
 	}
 	
 	/**
@@ -110,12 +124,12 @@ public abstract class BaseThread extends Thread {
 	 */
 	protected String getRandCodeDailog(String url) {
 		byte[] image = client.getCodeByte(url);
-		File imgFile = new File("randcode.jpg");
+/*		File imgFile = new File("randcode.jpg");
 		try {
 			writeByteArrayToFile(imgFile, image);
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}*/
 		String randCodeByRob = "";
 		int count = 10; // 避免死循环
 		while (rob.isAutocode() && randCodeByRob.length() != 4 && count-- > 0) {
@@ -186,21 +200,6 @@ public abstract class BaseThread extends Thread {
 		public String getRandCodeByRob() {
 			return randCodeByRob;
 		}
-	}
-
-	/**
-	 * @return Returns the client.
-	 */
-	public TrainClient getClient() {
-		return client;
-	}
-
-	/**
-	 * @param client
-	 *            The client to set.
-	 */
-	public void setClient(TrainClient client) {
-		this.client = client;
 	}
 
 }
