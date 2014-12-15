@@ -1077,7 +1077,8 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 			responseBody = responseHandler.handleResponse(response);
 			log.debug(responseBody);
 			JSONObject json = new JSONObject(responseBody);
-			if("Y".equals(getString(json, "data"))){
+			JSONObject data = json.getJSONObject("data");
+			if("1".equals(getString(data, "result"))){
 				return true;
 			}
 		}catch(UnknownHostException e){
