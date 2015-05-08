@@ -42,6 +42,8 @@ public class LoginThread extends BaseThread {
 		try {
 				Result rs = new Result();
 				if (!Constants.isLoginSuc) { //如果还未登录，获取登录时验证码和随机数
+					trainClient.loginInit();
+					Thread.sleep(500);
 					rob.console(ResManager.getString("LoginThread.0", new String[]{rob.getUsername()})); 
 					Constants.randCode = getRandCodeDailog(Constants.LOGIN_CODE_URL);
 				}

@@ -270,6 +270,15 @@ public class LogicThread extends BaseThread {
 	 * @return
 	 */
 	private AutoTrainAI queryTrain(){
+		if(Constants.QUERY_LOG_URL != ""){
+			try {
+				trainClient.queryTrainLog(
+						rob.getFromCity(), rob.getToCity(), rob.getStartDate(),
+						rob.getRangDate(),rob.getLandDate(),rob.getTicketType());
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+			}
+		}
 		List<TrainQueryInfo> allTrain = trainClient.queryTrain(
 				rob.getFromCity(), rob.getToCity(), rob.getStartDate(),
 				rob.getRangDate(),rob.getLandDate(),rob.getTicketType());

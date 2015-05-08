@@ -5,6 +5,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -39,7 +41,9 @@ import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import static com.tmser.train.JSONUtil.*;
+
 import com.tmser.train.Constants;
 import com.tmser.train.NetConnectException;
 import com.tmser.train.ResManager;
@@ -408,6 +412,26 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 	}
 
 	/**
+	 * 用户登录初始化
+	 */
+	public void loginInit(){
+		HttpGet post = new HttpGet(Constants.LOGIN_INIT_URL);
+		post.setHeader("Referer","https://kyfw.12306.cn/otn/index/init");
+		post.setHeader("Host","kyfw.12306.cn");
+		//post.setHeader("Accept-Encoding","gzip,deflat"); 加了会乱码
+		post.setHeader("Accept-Language","zh-CN,zh;q=0.8");
+		post.setHeader("Connection","keep-alive");
+		try {
+			httpclient.execute(post);
+		}catch(UnknownHostException e){
+			throw new NetConnectException(e);
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new UnRepairException(e);
+		}
+	}
+	
+	/**
 	 * 检查用户是否已登录
 	 */
 	public boolean checkIsLogin(){
@@ -754,6 +778,52 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 		}
 		return rs;
 	}
+	/**
+	 * 查询列车信息
+	 * @param from
+	 * @param to
+	 * @param startDate
+	 * @param rangDate
+	 * @return
+	 */
+	public void queryTrainLog(String from, String to, String startDate, String rangDate, String landDate,String ticketType) {
+		log.debug("-------------------query train start-------------------");
+		if (rangDate == null || rangDate.isEmpty()) {
+			rangDate = "00:00--24:00";
+		}
+		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+		parameters.add(new BasicNameValuePair("leftTicketDTO.train_date", startDate));
+		parameters.add(new BasicNameValuePair("leftTicketDTO.from_station", Util.getCityCode(from)));
+		parameters.add(new BasicNameValuePair("leftTicketDTO.to_station", Util.getCityCode(to)));
+		parameters.add(new BasicNameValuePair("purpose_codes", getSearchType(ticketType)));
+		HttpGet get = new HttpGet(Constants.QUERY_LOG_URL + URLEncodedUtils.format(parameters, Consts.UTF_8));
+		log.info(Constants.QUERY_LOG_URL + URLEncodedUtils.format(parameters, Consts.UTF_8));
+		get.setHeader("Accept,","*/*");
+		get.setHeader("Host","kyfw.12306.cn");
+		get.setHeader("Accept-Language","zh-CN,zh;q=0.8");
+		get.setHeader("Connection","keep-alive");
+		get.setHeader("If-Modified-Since","0");
+		get.setHeader("X-Requested-With","XMLHttpRequest");
+		get.setHeader("Referer","https://kyfw.12306.cn/otn/leftTicket/init");
+		StringBuilder ck = new StringBuilder();
+		ck.append("_jc_save_fromStation=").append(from).append("%2C").append(Util.getCityCode(from)).append("; ")
+		.append("_jc_save_toStation=").append(to).append("%2C").append(Util.getCityCode(to)).append("; ")
+		.append("_jc_save_fromDate=").append(startDate).append("; ")
+		.append("_jc_save_toDate=2014-12-17; _jc_save_wfdc_flag=dc");
+		get.setHeader("Cookie",ck.toString());
+		String responseBody = null;
+		try {
+			HttpResponse response = httpclient.execute(get);
+			ResponseHandler<String> responseHandler = new BasicResponseHandler();
+			responseBody = responseHandler.handleResponse(response);
+			log.info(responseBody);
+		}catch(UnknownHostException e){
+			throw new NetConnectException(e);
+		}catch (Exception e) {
+			throw new UnRepairException(e);
+		}
+		log.debug("-------------------query train end-------------------");
+	}
 	
 	/**
 	 * 查询列车信息
@@ -775,14 +845,20 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 		parameters.add(new BasicNameValuePair("purpose_codes", getSearchType(ticketType)));
 		HttpGet get = new HttpGet(Constants.QUERY_TRAIN_URL + URLEncodedUtils.format(parameters, Consts.UTF_8));
 		log.info(Constants.QUERY_TRAIN_URL + URLEncodedUtils.format(parameters, Consts.UTF_8));
+		get.setHeader("Accept,","*/*");
 		get.setHeader("Referer","https://kyfw.12306.cn/otn/leftTicket/init");
 		get.setHeader("Host","kyfw.12306.cn");
-		get.setHeader("Content-Type","application/json;charset=UTF-8");
 		get.setHeader("Accept-Language","zh-CN,zh;q=0.8");
 		get.setHeader("Connection","keep-alive");
-		get.setHeader("Accept,","*/*");
 		get.setHeader("If-Modified-Since","0");
 		get.setHeader("X-Requested-With","XMLHttpRequest");
+		get.setHeader("Cookie","_jc_save_fromDate=2014-12-24");
+		StringBuilder ck = new StringBuilder();
+		ck.append("_jc_save_fromStation=").append(from).append("%2C").append(Util.getCityCode(from)).append("; ")
+		.append("_jc_save_toStation=").append(to).append("%2C").append(Util.getCityCode(to)).append("; ")
+		.append("_jc_save_fromDate=").append(startDate).append("; ")
+		.append("_jc_save_toDate=2014-12-17; _jc_save_wfdc_flag=dc");
+		get.setHeader("Cookie",ck.toString());
 		String responseBody = null;
 		List<TrainQueryInfo> all = Collections.emptyList();
 		try {
@@ -1266,53 +1342,6 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 	public void clear(){
 		if(httpclient != null)
 			httpclient.getConnectionManager().shutdown();
-	}
-	
-	public static void main(String[] args) throws JSONException {
-/*		try {
-			PoolingClientConnectionManager tcm = new PoolingClientConnectionManager();
-			tcm.setMaxTotal(10);
-			SSLContext ctx = SSLContext.getInstance("TLS"); 
-			X509TrustManager tm = new X509TrustManager() {
-				
-				public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-					return null;
-				}
-
-				public void checkClientTrusted(
-						java.security.cert.X509Certificate[] chain,
-						String authType)
-						throws java.security.cert.CertificateException {
-
-				}
-
-				public void checkServerTrusted(
-						java.security.cert.X509Certificate[] chain,
-						String authType)
-						throws java.security.cert.CertificateException {
-				}
-			};
-			ctx.init(null, new TrustManager[] { tm }, null);
-			SSLSocketFactory ssf = new SSLSocketFactory(ctx,
-					SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-			Scheme sch = new Scheme("https", 443, ssf); 
-			tcm.getSchemeRegistry().register(sch);
-			HttpClient httpClient = new DefaultHttpClient(tcm);
-			if (Config.isUseProxy()) {
-				HttpHost proxy = new HttpHost(Config.getProxyIp(),
-						Config.getProxyPort(), HttpHost.DEFAULT_SCHEME_NAME);
-				httpClient.getParams().setParameter(
-						ConnRoutePNames.DEFAULT_PROXY, proxy);
-			}
-			//this.httpClient.getParams().setParameter(HTTP.USER_AGENT,
-			//		"Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; Trident/5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; TEN)"); 
-			TrainClient client = new TrainClient(httpClient);
-			//client.queryTrain("BJP","PXG","2013-10-08","00:00--24:00");
-			
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}*/
-		//System.out.println(expireRange("00:00--12:00", "12:01"));
 	}
 
 }
