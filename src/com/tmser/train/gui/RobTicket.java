@@ -67,7 +67,6 @@ import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.PoolingClientConnectionManager;
-import org.apache.http.protocol.HTTP;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -317,8 +316,8 @@ public class RobTicket {
 				this.httpClient.getParams().setParameter(
 						ConnRoutePNames.DEFAULT_PROXY, proxy);
 			}
-			this.httpClient.getParams().setParameter(HTTP.USER_AGENT,
-					"Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; Trident/5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; TEN)"); 
+			//this.httpClient.getParams().setParameter(HTTP.USER_AGENT,
+			//		"Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; Trident/5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; TEN)"); 
 			this.client = new TrainClient(this.httpClient);
 			
 		} catch (Exception ex) {

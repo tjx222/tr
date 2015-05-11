@@ -184,15 +184,6 @@ import com.tmser.train.bean.TrainQueryInfo;
 			try {
 				if(Constants.isLoginSuc){
 				//	imgLabel.setVisible(true);
-					if(Constants.QUERY_LOG_URL != ""){
-						try {
-							 rob.getClient().queryTrainLog(
-									rob.getFromCity(), rob.getToCity(), rob.getStartDate(),
-									rob.getRangDate(),rob.getLandDate(),rob.getTicketType());
-							Thread.sleep(500);
-						} catch (InterruptedException e) {
-						}
-					}
 					List<TrainQueryInfo> allTrain = rob.getClient().queryTrain(
 							trainInfo.getFromStationName(), trainInfo.getToStationName(), trainInfo.getStartTime(),
 							trainInfo.getRangeDate(),rob.getLandDate(), rob.getTicketType());
