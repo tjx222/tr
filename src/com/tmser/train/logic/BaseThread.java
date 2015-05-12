@@ -1,7 +1,5 @@
 package com.tmser.train.logic;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,9 +9,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-
 import com.tmser.train.DamaUtil;
 import com.tmser.train.ResManager;
+import com.tmser.train.gui.DialogLabel;
 import com.tmser.train.gui.RobTicket;
 
 public abstract class BaseThread extends Thread {
@@ -132,7 +130,7 @@ public abstract class BaseThread extends Thread {
 		}*/
 		String randCodeByRob = "";
 		int count = 10; // 避免死循环
-		while (rob.isAutocode() && randCodeByRob.length() != 4 && count-- > 0) {
+		while (rob.isAutocode() && randCodeByRob.length() <= 3 && count-- > 0) {
 			randCodeByRob = getCode(image);
 			rob.console("RandCode: "+randCodeByRob);
 		}
@@ -140,15 +138,24 @@ public abstract class BaseThread extends Thread {
 			if(count == 0){
 				rob.console(ResManager.getString("LogicThread.err.code"));
 			}
-			JLabel label = new JLabel(ResManager.getString("LogicThread.23"), JLabel.CENTER);
+			
+
+			DialogLabel label = new DialogLabel(client,url,"", JLabel.CENTER);
 			label.setIcon(new ImageIcon(image));
-			CodeMouseAdapter cma = new CodeMouseAdapter(randCodeByRob,url);
-			label.addMouseListener(cma);
-			String input = JOptionPane.showInputDialog(rob.getFrame(), label,
-					ResManager.getString("LogicThread.25"), JOptionPane.DEFAULT_OPTION);
+			//CodeMouseAdapter cma = new CodeMouseAdapter(randCodeByRob,url);
+			//label.addMouseListener(cma);
+			int rs = JOptionPane.showConfirmDialog(rob.getFrame(), label,
+					ResManager.getString("LogicThread.25"), JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
+			
 				//randCodeByRob = cma.getRandCodeByRob();
 			//} else {
-		    randCodeByRob = input;
+		   // randCodeByRob = input;
+			if(JOptionPane.OK_OPTION == rs){
+				randCodeByRob = label.getCode();
+				System.out.println(randCodeByRob);
+			}else{
+				randCodeByRob = null;
+			}
 		}
 		return randCodeByRob;
 	}
@@ -173,33 +180,5 @@ public abstract class BaseThread extends Thread {
 		return randCodeByRob;
 	}
 
-	class CodeMouseAdapter extends MouseAdapter {
-		private String randCodeByRob="";
-		private String url;
-
-		/**
-		 * 构造函数
-		 * 
-		 * @param CodeMouseAdapter
-		 */
-
-		public CodeMouseAdapter(String randCodeByRob,String url) {
-			this.randCodeByRob = randCodeByRob;
-			this.url = url;
-		}
-
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			byte[] image = client.getCodeByte(url);
-			if(rob.isAutocode())
-				randCodeByRob = getCode(image);
-			JLabel label = (JLabel) e.getSource();
-			label.setIcon(new ImageIcon(image));
-		}
-
-		public String getRandCodeByRob() {
-			return randCodeByRob;
-		}
-	}
 
 }
