@@ -31,6 +31,12 @@ public class Constants {
 	 */
 	public static String LOGIN_INIT_URL= Config.getProperty("login_init_url");
 	
+	
+	/**
+	 * 登录反作弊验证码
+	 */
+	public static String BASE_VALIDATE_URL= Config.getProperty("base_validate_url");
+	
 	/**
 	 * 验证码验证
 	 */

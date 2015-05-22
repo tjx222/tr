@@ -13,6 +13,10 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.script.Invocable;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+
 import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;
 import org.htmlparser.Tag;
@@ -24,7 +28,6 @@ import org.htmlparser.util.ParserException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 
 import com.tmser.train.bean.Page;
 import com.tmser.train.bean.UserInfo;
@@ -279,7 +282,17 @@ public class Util {
 
         return true;
     }
+    
+    public static final String JSFUNCTION ="function bin216(s){var i,l,o='',n;s+='';b='';for(i=0,l=s.length;i<l;i++){b=s.charCodeAt(i);n=b.toString(16);o+=n.length<2?'0'+n:n}return o}var Base32=new function(){var delta=0x9E3779B8;function longArrayToString(data,includeLength){var length=data.length;var n=(length-1)<<2;if(includeLength){var m=data[length-1];if((m<n-3)||(m>n))return null;n=m}for(var i=0;i<length;i++){data[i]=String.fromCharCode(data[i]&0xff,data[i]>>>8&0xff,data[i]>>>16&0xff,data[i]>>>24&0xff)}if(includeLength){return data.join('').substring(0,n)}else{return data.join('')}};function stringToLongArray(string,includeLength){var length=string.length;var result=[];for(var i=0;i<length;i+=4){result[i>>2]=string.charCodeAt(i)|string.charCodeAt(i+1)<<8|string.charCodeAt(i+2)<<16|string.charCodeAt(i+3)<<24}if(includeLength){result[result.length]=length}return result};this.encrypt=function(string,key){if(string==''){return''}var v=stringToLongArray(string,true);var k=stringToLongArray(key,false);if(k.length<4){k.length=4}var n=v.length-1;var z=v[n],y=v[0];var mx,e,p,q=Math.floor(6+52/(n+1)),sum=0;while(0<q--){sum=sum+delta&0xffffffff;e=sum>>>2&3;for(p=0;p<n;p++){y=v[p+1];mx=(z>>>5^y<<2)+(y>>>3^z<<4)^(sum^y)+(k[p&3^e]^z);z=v[p]=v[p]+mx&0xffffffff}y=v[0];mx=(z>>>5^y<<2)+(y>>>3^z<<4)^(sum^y)+(k[p&3^e]^z);z=v[n]=v[n]+mx&0xffffffff}return longArrayToString(v,false)}};var keyStr='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';function encode32(input){input=escape(input);var output='';var chr1,chr2,chr3='';var enc1,enc2,enc3,enc4='';var i=0;do{chr1=input.charCodeAt(i++);chr2=input.charCodeAt(i++);chr3=input.charCodeAt(i++);enc1=chr1>>2;enc2=((chr1&3)<<4)|(chr2>>4);enc3=((chr2&15)<<2)|(chr3>>6);enc4=chr3&63;if(isNaN(chr2)){enc3=enc4=64}else if(isNaN(chr3)){enc4=64}output=output+keyStr.charAt(enc1)+keyStr.charAt(enc2)+keyStr.charAt(enc3)+keyStr.charAt(enc4);chr1=chr2=chr3='';enc1=enc2=enc3=enc4=''}while(i<input.length);return output}function getCode(key){return encode32(bin216(Base32.encrypt('1111',key)));}";
 
+    public static String getDynamicInput(String key) throws Exception{
+    	ScriptEngineManager factory = new ScriptEngineManager();  
+        ScriptEngine engine = factory.getEngineByName("JavaScript");
+        engine.eval(JSFUNCTION);  
+        Invocable inv = (Invocable) engine;  
+        return (String) inv.invokeFunction("getCode", key);  
+    }
+    
 	public static void main(String[] args) throws Exception {
 		//String html="0,<span id='id_240000T14500' class='base_txtdiv' onmouseover=javascript:onStopHover('240000T14500#BJP#PXG') onmouseout='onStopOut()'>T145</span>,<img src='/otsweb/images/tips/first.gif'>北京<br>12:09,萍乡<br>06:51,18:42,--,--,--,--,--,<font color='darkgray'>无</font>,<font color='darkgray'>无</font>,--,<font color='#008800'>有</font>,<font color='#008800'>有</font>,--,<input type='button' class='yuding_u' onmousemove=this.className='yuding_u_over' onmousedown=this.className='yuding_u_down' onmouseout=this.className='yuding_u' onclick=javascript:getSelected('T145#18:42#12:09#240000T14500#BJP#PXG#06:51#北京#萍乡#1*****30754*****00001*****04293*****0000#8950D43445E29A496A7F868A209DD2295FAFE47A61734FCF8D3B98E1') value='预订'></input>";
 		//String s = "{\"errMsg\":\"Y\"}";
@@ -299,5 +312,15 @@ public class Util {
 //			System.out.println(u.toString());
 //		}
 	//	System.out.println(formatDate("2014-01-08"));
+		//getDynamicInput("MjIwOTgy");
+		Pattern VALICDOE_PATTERN = Pattern.compile("gc\\(\\)\\{var \\w*='(\\w*)'");
+		String s ="function gc(){var nwucdh='MjM3NTQ4';var value=''";
+		Matcher matcher = VALICDOE_PATTERN.matcher (s);
+	    String str = "";
+	    while (matcher.find ())
+	        {
+	            str = matcher.group (1);
+	        }
+	        System.out.println(str);
 	}
 }

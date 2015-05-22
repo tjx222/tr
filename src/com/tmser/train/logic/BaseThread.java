@@ -152,7 +152,6 @@ public abstract class BaseThread extends Thread {
 		   // randCodeByRob = input;
 			if(JOptionPane.OK_OPTION == rs){
 				randCodeByRob = label.getCode();
-				System.out.println(randCodeByRob);
 			}else{
 				randCodeByRob = null;
 			}

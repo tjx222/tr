@@ -1,12 +1,16 @@
 package com.tmser.train.logic;
 
+import static com.tmser.train.JSONUtil.getBoolean;
+import static com.tmser.train.JSONUtil.getErrMsgString;
+import static com.tmser.train.JSONUtil.getJSONArray;
+import static com.tmser.train.JSONUtil.getJSONObject;
+import static com.tmser.train.JSONUtil.getString;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -15,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -41,8 +47,6 @@ import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import static com.tmser.train.JSONUtil.*;
 
 import com.tmser.train.Constants;
 import com.tmser.train.NetConnectException;
@@ -411,26 +415,6 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 		return rs;
 	}
 
-	/**
-	 * 用户登录初始化
-	 */
-	public void loginInit(){
-		HttpGet post = new HttpGet(Constants.LOGIN_INIT_URL);
-		post.setHeader("Referer","https://kyfw.12306.cn/otn/index/init");
-		post.setHeader("Host","kyfw.12306.cn");
-		//post.setHeader("Accept-Encoding","gzip,deflat"); 加了会乱码
-		post.setHeader("Accept-Language","zh-CN,zh;q=0.8");
-		post.setHeader("Connection","keep-alive");
-		try {
-			httpclient.execute(post);
-		}catch(UnknownHostException e){
-			throw new NetConnectException(e);
-		}catch (Exception e) {
-			e.printStackTrace();
-			throw new UnRepairException(e);
-		}
-	}
-	
 	/**
 	 * 检查用户是否已登录
 	 */
@@ -1065,17 +1049,15 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 		parameters.add(new BasicNameValuePair("loginUserDTO.user_name", username));
 		parameters.add(new BasicNameValuePair("randCode", randCode));
 		parameters.add(new BasicNameValuePair("userDTO.password", password));
+		parameters.add(new BasicNameValuePair("myversion", "undefined"));
+		parameters.add(getLoginValidate());
 		String responseBody = null;
 		HttpResponse response = null;
 		try {
 			UrlEncodedFormEntity uef = new UrlEncodedFormEntity(parameters,Consts.UTF_8);
 			httppost.setEntity(uef);
-			//OLD httppost.setHeader("Referer","https://dynamic.12306.cn/otsweb/loginAction.do?method=login");
 			httppost.setHeader("Referer","https://kyfw.12306.cn/otn/login/init");
-			
-			//OLD httppost.setHeader("Host","dynamic.12306.cn");
 			httppost.setHeader("Host","kyfw.12306.cn");
-			//post.setHeader("Accept-Encoding","gzip,deflat"); 加了会乱码
 			httppost.setHeader("Accept-Language","zh-CN,zh");
 			httppost.setHeader("Connection","keep-alive");
 			httppost.setHeader("Accept-Charset","utf-8");
@@ -1128,6 +1110,67 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 			throw new UnRepairException(e);
 		}
 		return rs;
+	}
+	
+	private static final Pattern VALICDOE_PATTERN = Pattern.compile("\"/otn/dynamicJs/(\\w*)\"");
+	
+	protected NameValuePair getLoginValidate(){
+		NameValuePair nv = null;
+		HttpGet get = new HttpGet(Constants.LOGIN_INIT_URL);
+		get.setHeader("Host","kyfw.12306.cn");
+		get.setHeader("Accept-Language","zh-CN,zh");
+		get.setHeader("Connection","keep-alive");
+		try {
+			ResponseHandler<String> responseHandler = new BasicResponseHandler();
+			String response = httpclient.execute(get,responseHandler);
+			log.debug(response);
+			//"/otn/dynamicJs/ljntzdr"
+			Matcher matcher = VALICDOE_PATTERN.matcher (response);
+		    String str = "";
+		    while (matcher.find ())
+		    {
+		            str = matcher.group(1);
+		    }
+		    log.info("valicode is : " + str);
+		    
+		    String vkey = getValcodeKey("/otn/dynamicJs/"+str);
+		    String value = Util.getDynamicInput(vkey);
+		    nv = new BasicNameValuePair(vkey,value);
+			
+		}catch(UnknownHostException e){
+			throw new NetConnectException(e);
+		}catch (Exception e) {
+			throw new UnRepairException(e);
+		}
+		log.debug("-------------------query order end---------------------");
+		return nv;
+	}
+	
+	private static final Pattern VALICDOE_KEY_PATTERN = Pattern.compile("gc\\(\\)\\{var \\w*='(\\w*)'");
+	
+	protected String getValcodeKey(String uri){
+		HttpGet get = new HttpGet(Constants.BASE_VALIDATE_URL+uri);
+		get.setHeader("Referer","https://kyfw.12306.cn/otn/login/init");
+		get.setHeader("Host","kyfw.12306.cn");
+		get.setHeader("Accept-Language","zh-CN,zh");
+		get.setHeader("Connection","keep-alive");
+		try {
+			ResponseHandler<String> responseHandler = new BasicResponseHandler();
+			String response = httpclient.execute(get,responseHandler);
+			log.debug(response);
+			Matcher matcher = VALICDOE_KEY_PATTERN.matcher (response);
+		    String str = "";
+		    while (matcher.find ())
+		    {
+		            str = matcher.group(1);
+		    }
+		    log.info("valicode key is : " + str);
+		    return str;
+		}catch(UnknownHostException e){
+			throw new NetConnectException(e);
+		}catch (Exception e) {
+			throw new UnRepairException(e);
+		}
 	}
 	
 	
