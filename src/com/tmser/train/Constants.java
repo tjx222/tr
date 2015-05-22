@@ -46,11 +46,20 @@ public class Constants {
 	 * 登录验证
 	 */
 	public static String LOGIN_VALIDATE = Config.getProperty("login_validate_url");
+	
+	
+	/**
+	 * 查询页面
+	 */
+	public static String LEFT_TICKET_URL = Config.getProperty("leftTicket_init_url");
+	
 	//
 	/**
 	 * 提交到预定页面
 	 */
 	public static String BOOK_URL = Config.getProperty("book_url");
+	
+	
 	
 	/**
 	 * 订单提交验证码

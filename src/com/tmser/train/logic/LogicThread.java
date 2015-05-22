@@ -63,6 +63,7 @@ public class LogicThread extends BaseThread {
 						String randCode = null;
 						rob.console(ResManager.getString("LogicThread.4")); 
 						boolean isLocked = rob.getTrainSet()[Constants.isLockTrain];
+						NameValuePair kcode = trainClient.checkSearch();
 						
 						AutoTrainAI ai = queryTrain();//查询出所有票
 						if (ai.getAllTrains().size() == 0 ) {
@@ -117,7 +118,7 @@ public class LogicThread extends BaseThread {
 							
 							//step 1 : 启动预定
 							rob.console(ResManager.getString("LogicThread.15"));
-							rs = trainClient.book(rob.getTicketType(), rob.getStartDate(), goHomeTrain);
+							rs = trainClient.book(rob.getTicketType(), rob.getStartDate(), goHomeTrain,kcode);
 								
 							if(rs.getState() != Result.SUCC){
 								rob.console(rs.getMsg());

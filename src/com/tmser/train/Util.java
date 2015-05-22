@@ -312,8 +312,8 @@ public class Util {
 //			System.out.println(u.toString());
 //		}
 	//	System.out.println(formatDate("2014-01-08"));
-		//getDynamicInput("MjIwOTgy");
-		Pattern VALICDOE_PATTERN = Pattern.compile("gc\\(\\)\\{var \\w*='(\\w*)'");
+		System.out.println(getDynamicInput("NzA0NzQ1"));
+		/*Pattern VALICDOE_PATTERN = Pattern.compile("gc\\(\\)\\{var \\w*='(\\w*)'");
 		String s ="function gc(){var nwucdh='MjM3NTQ4';var value=''";
 		Matcher matcher = VALICDOE_PATTERN.matcher (s);
 	    String str = "";
@@ -321,6 +321,6 @@ public class Util {
 	        {
 	            str = matcher.group (1);
 	        }
-	        System.out.println(str);
+	        System.out.println(str);*/
 	}
 }
