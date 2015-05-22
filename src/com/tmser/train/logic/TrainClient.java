@@ -94,8 +94,7 @@ public class TrainClient implements CaptchaClient{
 	 */
 	public TrainClient(HttpClient client) {
 		this.httpclient = client;
-		client.getParams().setParameter(HTTP.USER_AGENT,
-		"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.66 Safari/537.36"); 
+		client.getParams().setParameter(HTTP.USER_AGENT,UserAgent); 
 
 	}
 
@@ -153,9 +152,13 @@ public class TrainClient implements CaptchaClient{
 	
 	
 	public NameValuePair checkSearch(){
-		return getLoginValidate(Constants.LEFT_TICKET_URL);
+		return getLoginValidate(Constants.LEFT_TICKET_URL,true);
 	}
 	
+	private static final String UserAgent= "Mozilla/5.0 (Windows NT 5.1) " +  
+				        "AppleWebKit/535.11 (KHTML, like Gecko) " +  
+				        "Chrome/17.0.963.83 " +  
+				        "Safari/535.11";
 
 	/** 
 	 * 预订车票
@@ -220,11 +223,7 @@ public class TrainClient implements CaptchaClient{
 				post.setHeader("Accept-Language","zh-CN,zh;q=0.8");
 				post.setHeader("Connection","keep-alive");
 				post.setHeader("Content-Type","application/x-www-form-urlencoded; charset=UTF-8");
-				post.setHeader("User-Agent",   
-				        "Mozilla/5.0 (Windows NT 5.1) " +  
-				        "AppleWebKit/535.11 (KHTML, like Gecko) " +  
-				        "Chrome/17.0.963.83 " +  
-				        "Safari/535.11"); 
+				post.setHeader("User-Agent", UserAgent); 
 				ResponseHandler<String> responseHandler = new BasicResponseHandler();
 				String response = httpclient.execute(post,responseHandler);
 				log.info(" 提交预定：" + response);
@@ -428,6 +427,7 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 		post.setHeader("Content-Type","application/x-www-form-urlencoded; charset=UTF-8");
 		post.setHeader("If-Modified-Since","0");
 		post.setHeader("X-Requested-With","XMLHttpRequest");
+		post.setHeader("User-Agent", UserAgent); 
 		String responseBody;
 		try {
 			List <NameValuePair> nvps = new ArrayList <NameValuePair>();
@@ -1050,7 +1050,7 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 		parameters.add(new BasicNameValuePair("randCode", randCode));
 		parameters.add(new BasicNameValuePair("userDTO.password", password));
 		parameters.add(new BasicNameValuePair("myversion", "undefined"));
-		parameters.add(getLoginValidate("https://kyfw.12306.cn/otn/login/init"));
+		parameters.add(getLoginValidate("https://kyfw.12306.cn/otn/login/init",false));
 		String responseBody = null;
 		HttpResponse response = null;
 		try {
@@ -1112,14 +1112,15 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 		return rs;
 	}
 	
-	private static final Pattern VALICDOE_PATTERN = Pattern.compile("\"/otn/dynamicJs/(\\w*)\"");
+	private static final Pattern VALICDOE_PATTERN = Pattern.compile("/otn/dynamicJs/(\\w*)");
 	
-	protected NameValuePair getLoginValidate(String url){
+	protected NameValuePair getLoginValidate(String url,boolean callSub){
 		NameValuePair nv = null;
 		HttpGet get = new HttpGet(url);
 		get.setHeader("Host","kyfw.12306.cn");
 		get.setHeader("Accept-Language","zh-CN,zh");
 		get.setHeader("Connection","keep-alive");
+		get.setHeader("User-Agent", UserAgent); 
 		try {
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
 			String response = httpclient.execute(get,responseHandler);
@@ -1132,7 +1133,7 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 		    }
 		    log.info("valicode is : " + str);
 		    
-		    String vkey = getValcodeKey("/otn/dynamicJs/"+str,url);
+		    String vkey = getValcodeKey("/otn/dynamicJs/"+str,url,callSub);
 		    String value = Util.getDynamicInput(vkey);
 		    nv = new BasicNameValuePair(vkey,value);
 			
@@ -1147,24 +1148,52 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 	
 	private static final Pattern VALICDOE_KEY_PATTERN = Pattern.compile("gc\\(\\)\\{var \\w*='(\\w*)'");
 	
-	protected String getValcodeKey(String uri,String referer){
+	protected String getValcodeKey(String uri,String referer,boolean callSub){
 		HttpGet get = new HttpGet(Constants.BASE_VALIDATE_URL+uri);
 		get.setHeader("Referer",referer);
 		get.setHeader("Host","kyfw.12306.cn");
 		get.setHeader("Accept-Language","zh-CN,zh");
 		get.setHeader("Connection","keep-alive");
+		get.setHeader("User-Agent", UserAgent); 
 		try {
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
 			String response = httpclient.execute(get,responseHandler);
 			log.debug(response);
 			Matcher matcher = VALICDOE_KEY_PATTERN.matcher (response);
-		    String str = "";
+		    String code = "";
 		    while (matcher.find ())
 		    {
-		            str = matcher.group(1);
+		    	code = matcher.group(1);
 		    }
-		    log.info("valicode key is : " + str);
-		    return str;
+		    log.info("valicode key is : " + code);
+			matcher = VALICDOE_PATTERN.matcher (response);
+			String suburi = null;
+		    while (matcher.find ())
+		    {
+		    	suburi = matcher.group(1);
+		    }
+		    if(callSub){
+		    	callSubValidate(suburi,referer);
+		    }
+		    return code;
+		}catch(UnknownHostException e){
+			throw new NetConnectException(e);
+		}catch (Exception e) {
+			throw new UnRepairException(e);
+		}
+	}
+	
+	protected void callSubValidate(String uri,String referer){
+		HttpGet get = new HttpGet(Constants.BASE_VALIDATE_URL+"/otn/dynamicJs/"+uri);
+		get.setHeader("Referer",referer);
+		get.setHeader("Host","kyfw.12306.cn");
+		get.setHeader("Accept-Language","zh-CN,zh");
+		get.setHeader("Connection","keep-alive");
+		get.setHeader("User-Agent", UserAgent); 
+		try {
+			ResponseHandler<String> responseHandler = new BasicResponseHandler();
+			String response = httpclient.execute(get,responseHandler);
+			log.debug(response);
 		}catch(UnknownHostException e){
 			throw new NetConnectException(e);
 		}catch (Exception e) {
