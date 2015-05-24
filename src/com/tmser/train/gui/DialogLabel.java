@@ -149,8 +149,8 @@ public class DialogLabel extends JLabel{
 	public String getCode(){
 		StringBuilder sb = new StringBuilder();
 		for(Rectangle2D r : squares){
-			sb.append(Double.valueOf(r.getCenterX()).intValue()).append(",")
-			.append(Double.valueOf(r.getCenterY()).intValue()).append(",");
+			sb.append(Double.valueOf(r.getCenterX()+3).intValue()).append(",")
+			.append(Double.valueOf(r.getCenterY()-28).intValue()).append(",");
 		}
 		
 		return sb.length() > 0 ? sb.substring(0,sb.length()-1):null;

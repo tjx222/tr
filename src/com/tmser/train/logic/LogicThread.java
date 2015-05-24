@@ -64,7 +64,7 @@ public class LogicThread extends BaseThread {
 						rob.console(ResManager.getString("LogicThread.4")); 
 						boolean isLocked = rob.getTrainSet()[Constants.isLockTrain];
 						NameValuePair kcode = trainClient.checkSearch();
-						
+						Thread.sleep(2000);
 						AutoTrainAI ai = queryTrain();//查询出所有票
 						if (ai.getAllTrains().size() == 0 ) {
 							rob.console(MessageFormat.format(ResManager.getString("LogicThread.5") ,rob.getStartDate(),rob.getRangDate(),rob.getFromCity(), rob.getToCity())); 
@@ -141,6 +141,10 @@ public class LogicThread extends BaseThread {
 								if(randCode == null){
 										rob.console(ResManager.getString("LogicThread.30"));
 										break start;
+								}
+								if(!trainClient.checkRandCode(randCode,token.getToken())){
+									rs.setState(Result.FAIL);
+									continue;
 								}
 								formparams = trainClient.setOrderForm(randCode,token, rob.getSelectUsers(), goHomeTrain);
 								//step 3: 检查订单							

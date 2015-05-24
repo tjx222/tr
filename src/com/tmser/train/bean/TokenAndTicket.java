@@ -1,5 +1,8 @@
 package com.tmser.train.bean;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
 /**
  * 
  * @author tjx
@@ -11,6 +14,7 @@ public class TokenAndTicket {
 	private String keyIsChange;
 	private String tourFlag;
 	private String trainLocation;
+	private NameValuePair valiadePair;
 	
 	public String getTourFlag() {
 		return tourFlag;
@@ -41,6 +45,7 @@ public class TokenAndTicket {
 			this.keyIsChange = tokens[2];
 			this.tourFlag = tokens[3];
 			this.trainLocation = tokens[4];
+			this.valiadePair = new BasicNameValuePair(tokens[5], tokens[6]);
 		}
 	}
 	public String getToken() {
@@ -58,7 +63,15 @@ public class TokenAndTicket {
 	
 	@Override
 	public String toString(){
-		return "token = "+token+", ticket = "+ ticket;
+		return "token = "+token+", ticket = "+ ticket+", validatePair : "+ valiadePair.toString();
 	}
+	public NameValuePair getValiadePair() {
+		return valiadePair;
+	}
+	public void setValiadePair(NameValuePair valiadePair) {
+		this.valiadePair = valiadePair;
+	}
+	
+	
 	
 }

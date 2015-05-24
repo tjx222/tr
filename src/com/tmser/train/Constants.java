@@ -25,7 +25,7 @@ public class Constants {
 	
 	//public static String LOGIN_CODE_URL = "https://dynamic.12306.cn/otsweb/passCodeNewAction.do?module=login&rand=sjrand";
 	public static String LOGIN_CODE_URL = Config.getProperty("login_code_url");
-	
+
 	/**
 	 * 登录初始化
 	 */

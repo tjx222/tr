@@ -11,6 +11,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URLDecoder;
 import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -94,16 +95,15 @@ public class TrainClient implements CaptchaClient{
 	 */
 	public TrainClient(HttpClient client) {
 		this.httpclient = client;
-		client.getParams().setParameter(HTTP.USER_AGENT,UserAgent); 
-
 	}
 
 	/**
 	 * 获取令牌
 	 * @return
+	 * @throws Exception 
 	 */
 	 
-	public String getTokenAndLeftTicket(HttpEntity entity) {
+	public String getTokenAndLeftTicket(HttpEntity entity) throws Exception {
 		log.debug("-------------------get token start-------------------");
 		//HttpGet get = new HttpGet(Constants.GET_TOKEN_URL);
 		String token = "";
@@ -112,11 +112,13 @@ public class TrainClient implements CaptchaClient{
 		String tourFlag="";
 		String trainLocation ="";
 		BufferedReader br = null;
+		StringBuilder content = new StringBuilder();
 		try {
 			br = new BufferedReader(new InputStreamReader(
 					entity.getContent() , "UTF-8"));
 			String line = null;	
 			while ((line = br.readLine()) != null) {
+				content.append(line);
 				if(line.contains("globalRepeatSubmitToken")){
 					log.info("token Line: "+ line);
 					token = line.substring(line.indexOf("'")+1,line.length() -2);
@@ -145,20 +147,28 @@ public class TrainClient implements CaptchaClient{
 				e.printStackTrace();
 			}
 		}
+		Matcher matcher = VALICDOE_PATTERN.matcher (content);
+	    String str = "";
+	    while (matcher.find ())
+	    {
+	            str = matcher.group(1);
+	    }
+	    log.info("initDc valicode uri is : " + str);
+	    String vkey = getValcodeKey("/otn/dynamicJs/"+str,Constants.TOKEN_URL);
+	    String value = Util.getDynamicInput(vkey);
+	    
 		log.debug("-------------------get token end-------------------");
 		return new StringBuilder(token).append(",").append(ticket).append(",").append(keyIsChange)
-				.append(",").append(tourFlag).append(",").append(trainLocation).toString();
+				.append(",").append(tourFlag).append(",").append(trainLocation).append(",")
+				.append(vkey).append(",").append(value).toString();
 	}
 	
 	
 	public NameValuePair checkSearch(){
-		return getLoginValidate(Constants.LEFT_TICKET_URL,true);
+		return getLoginValidate(Constants.LEFT_TICKET_URL);
 	}
 	
-	private static final String UserAgent= "Mozilla/5.0 (Windows NT 5.1) " +  
-				        "AppleWebKit/535.11 (KHTML, like Gecko) " +  
-				        "Chrome/17.0.963.83 " +  
-				        "Safari/535.11";
+	private static final String UserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.154 Safari/537.36";
 
 	/** 
 	 * 预订车票
@@ -174,7 +184,7 @@ public class TrainClient implements CaptchaClient{
 		try {
 			Thread.sleep(2000);
 		if(checkIsLogin()){
-			Thread.sleep(1000);
+			Thread.sleep(200);
 			/*StringBuilder url = new StringBuilder(Constants.BOOK_URL);
 			url.append("?back_train_date=").append(Util.getCurDate())
 			.append("&train_date=").append(startDate)
@@ -203,7 +213,7 @@ public class TrainClient implements CaptchaClient{
 			formparams.add(new BasicNameValuePair("purpose_codes", getSearchType(ticketType))); //"ADULT"
 			formparams.add(new BasicNameValuePair("query_from_station_name", train.getFromStationName()));
 			formparams.add(new BasicNameValuePair("query_to_station_name", train.getToStationName()));
-			formparams.add(new BasicNameValuePair("secretStr", train.getSecretStr()));
+			formparams.add(new BasicNameValuePair("secretStr", URLDecoder.decode(train.getSecretStr())));
 			formparams.add(new BasicNameValuePair("undefined",""));
 			formparams.add(new BasicNameValuePair("myversion","undefined"));
 			formparams.add(kcode);
@@ -216,7 +226,7 @@ public class TrainClient implements CaptchaClient{
 			
 			UrlEncodedFormEntity uef = new UrlEncodedFormEntity(formparams, Consts.UTF_8);
 				post.setEntity(uef);
-				post.setHeader("Accept,","*/*");
+				post.setHeader("Accept","*/*");
 				post.setHeader("Referer","https://kyfw.12306.cn/otn/leftTicket/init");
 				post.setHeader("Origin","https://kyfw.12306.cn");
 				post.setHeader("X-Requested-With","XMLHttpRequest");
@@ -224,16 +234,19 @@ public class TrainClient implements CaptchaClient{
 				post.setHeader("Connection","keep-alive");
 				post.setHeader("Content-Type","application/x-www-form-urlencoded; charset=UTF-8");
 				post.setHeader("User-Agent", UserAgent); 
+				
+				StringBuilder ck = new StringBuilder();
+				ck.append("_jc_save_fromStation=").append(train.getFromStationName()).append("%2C").append(Util.getCityCode(train.getFromStationName())).append("; ")
+				.append("_jc_save_toStation=").append(train.getToStationName()).append("%2C").append(Util.getCityCode(train.getToStationName())).append("; ")
+				.append("_jc_save_fromDate=").append(startDate).append("; ")
+				.append("jc_save_showZtkyts=true; _jc_save_toDate=2015-05-24; _jc_save_detail=true; _jc_save_wfdc_flag=dc");
+				 
+				post.setHeader("Cookie",ck.toString());
+				
 				ResponseHandler<String> responseHandler = new BasicResponseHandler();
 				String response = httpclient.execute(post,responseHandler);
 				log.info(" 提交预定：" + response);
 				
-				/*br = new BufferedReader(new InputStreamReader(entity.getContent() , "UTF-8"));
-				String line="";
-				while ((line = br.readLine()) != null) {
-					System.out.println(line);
-				}*/
-				//rs.setMsg(getTokenAndLeftTicket(entity));
 				JSONObject json = new JSONObject(response);
 				if(getBoolean(json,"status")){
 					rs.setMsg(getToken());
@@ -264,52 +277,14 @@ public class TrainClient implements CaptchaClient{
 	
 	public String getToken(){
 		String token = null;
-/*		BasicClientCookie fromStation = new BasicClientCookie("_jc_save_fromStation","%u5317%u4EAC%2CBJP");
-		fromStation.setPath("/");
-		fromStation.setDomain("kyfw.12306.cn");
-		BasicClientCookie toStation = new BasicClientCookie("_jc_save_toStation","%u840D%u4E61%2CPXG;");
-		toStation.setPath("/");
-		toStation.setDomain("kyfw.12306.cn");
-		BasicClientCookie fromDate = new BasicClientCookie("_jc_save_fromDate","2014-01-08");
-		fromDate.setPath("/");
-		fromDate.setDomain("kyfw.12306.cn");
-		BasicClientCookie toDate = new BasicClientCookie("_jc_save_toDate","2014-01-05");
-		toDate.setPath("/");
-		toDate.setDomain("kyfw.12306.cn");
-		BasicClientCookie wfDc = new BasicClientCookie("_jc_save_wfdc_flag","dc");
-		wfDc.setPath("/");
-		wfDc.setDomain("kyfw.12306.cn");
-		
-		BasicClientCookie sid = new BasicClientCookie("JSESSIONID",getjSessionId());
-		sid.setPath("/otn");
-		sid.setDomain("kyfw.12306.cn");
-		BasicClientCookie big = new BasicClientCookie("BIGipServerotn",getBIGipServerotn());
-		big.setPath("/");
-		big.setDomain("kyfw.12306.cn");
-		CookieStore store = new BasicCookieStore(); 
-		store.addCookie(fromStation);
-		store.addCookie(toStation);
-		store.addCookie(fromDate);
-		store.addCookie(toDate);
-		store.addCookie(wfDc);
-		store.addCookie(sid);
-		store.addCookie(big);*/
-/*		for (Cookie cookie : cookies) {
-			System.out.println(cookie.getName()+" : "+ cookie.getValue());
-		}*/
 		HttpGet post = new HttpGet(Constants.TOKEN_URL);
 		
-		//post.setHeader("Referer","https://kyfw.12306.cn/otn/leftTicket/init");
-		//post.setHeader("Origin","https://kyfw.12306.cn");
 		post.setHeader("Host","kyfw.12306.cn");
 		post.setHeader("Accept-Language","zh-CN,zh;q=0.8");
 		post.setHeader("Connection","keep-alive");
 		post.setHeader("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+		post.setHeader("User-Agent", UserAgent);
 		try {
-			//List <NameValuePair> nvps = new ArrayList <NameValuePair>();
-			//nvps.add(new BasicNameValuePair("_json_att", ""));
-			//post.setEntity(new UrlEncodedFormEntity(nvps));
-			//((DefaultHttpClient) httpclient).setCookieStore(store);
 			HttpEntity entity = httpclient.execute(post).getEntity();
 			if(entity != null ){
 				token = getTokenAndLeftTicket(entity);
@@ -329,21 +304,6 @@ public class TrainClient implements CaptchaClient{
 	public List<NameValuePair> setOrderForm(String randCode, TokenAndTicket token,final List<UserInfo> users, final TrainQueryInfo train){
 		List<NameValuePair> formparams = new ArrayList<NameValuePair>();
 		log.info("UserSize:"+users.size());
-		/*
-		 * 
-cancel_flag:2
-bed_level_order_num:000000000000000000000000000000
-passengerTicketStr:1,0,1,陈花,1,360321199009255044,,N_1,0,1,陈艳锋,1,360321199007205043,13671246705,N_1,0,1,刘松青,1,360321198408065032,13120194361,N_1,0,1,谭金凤,1,360321198812015029,13671246705,N
-oldPassengerStr:陈花,1,360321199009255044,1_陈艳锋,1,360321199007205043,1_刘松青,1,360321198408065032,1_谭金凤,1,360321198812015029,1_
-tour_flag:dc
-randCode:pt79
-_json_att:
-REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
-		key_check_isChange:354286D6B6BDA053BD70FCC9499D1AA1720ADDAE186864D0B5349B63
-		leftTicketStr:1020103210405660000030355000001020100000
-		train_location:P2
-		*/
-		
 		StringBuilder passengerTicketStr = new StringBuilder();
 		StringBuilder oldPassengerStr = new StringBuilder();
 
@@ -380,6 +340,7 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 		forms.add(new BasicNameValuePair("cancel_flag", "2"));
 		forms.add(new BasicNameValuePair("bed_level_order_num", "000000000000000000000000000000"));
 		forms.add(new BasicNameValuePair("tour_flag", token.getTourFlag()));
+		forms.add(token.getValiadePair());
 		
 		String responseBody = null;
 		try {
@@ -392,6 +353,7 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 			post.setHeader("Accept-Language","zh-CN,zh");
 			post.setHeader("Connection","keep-alive");
 			post.setHeader("Accept-Charset","utf-8");
+			post.setHeader("User-Agent", UserAgent);
 			
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
 			responseBody = httpclient.execute(post, responseHandler);
@@ -428,6 +390,7 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 		post.setHeader("If-Modified-Since","0");
 		post.setHeader("X-Requested-With","XMLHttpRequest");
 		post.setHeader("User-Agent", UserAgent); 
+		post.setHeader("Accept","*/*");
 		String responseBody;
 		try {
 			List <NameValuePair> nvps = new ArrayList <NameValuePair>();
@@ -463,6 +426,7 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 		//post.setHeader("Accept-Encoding","gzip,deflat"); 加了会乱码
 		get.setHeader("Accept-Language","zh-CN,zh;q=0.8");
 		get.setHeader("Connection","keep-alive");
+		get.setHeader("User-Agent", UserAgent);
 		String response;
 		try {
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
@@ -485,17 +449,6 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 	 */
 	public Result getCount(TokenAndTicket token,String seat,String tiketType, final TrainQueryInfo train) {
 		log.debug("-------------------submit order start-------------------");
-		/*train_date:Wed Jan 08 2014 00:00:00 GMT+0800 (中国标准时间)
-		train_no:240000T1450U
-		stationTrainCode:T145
-		seatType:1
-		fromStationTelecode:BJP
-		toStationTelecode:PXG
-		leftTicket:1020103210405660000030355000001020100000
-		purpose_codes:00
-		_json_att:
-		REPEAT_SUBMIT_TOKEN:bbc93c86899a3fc03a96dd3f1a0f2fbf*/
-	//	train_date=Wed+Jan+08+2014+00%3A00%3A00+GMT%2B0800+(%E4%B8%AD%E5%9B%BD%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4)&train_no=240000T1450U&stationTrainCode=T145&seatType=1&fromStationTelecode=BJP&toStationTelecode=PXG&leftTicket=1020103190405660000010201000003035500000&purpose_codes=00&_json_att=&REPEAT_SUBMIT_TOKEN=93b172860e2e6b1717e4dced5f448c25
 		Result rs = new Result();
 		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 		parameters.add(new BasicNameValuePair("train_date", Util.formatDate(train.getStartTrainDate())));
@@ -525,7 +478,7 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 			get.setHeader("Accept-Language","zh-CN,zh;q=0.8");
 			get.setHeader("Connection","keep-alive");
 			get.setHeader("Accept","application/json, text/javascript, */*; q=0.01");
-			
+			get.setHeader("User-Agent", UserAgent);
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
 			responseBody = httpclient.execute(get, responseHandler);
 			JSONObject json = null;
@@ -607,6 +560,7 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 			post.setHeader("Connection","keep-alive");
 			post.setHeader("Accept-Language","zh-CN,zh;q=0.8");
 			post.setHeader("Accept","application/json, text/javascript, */*; q=0.01");
+			post.setHeader("User-Agent", UserAgent);
 			
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
 			responseBody = httpclient.execute(post, responseHandler);
@@ -661,7 +615,7 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 			get.setHeader("Accept-Language","zh-CN,zh");
 			get.setHeader("Connection","keep-alive");
 			get.setHeader("Accept-Charset","GBK,utf-8;q=0.7,*;q=0.3");
-			
+			get.setHeader("User-Agent", UserAgent);
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
 			responseBody = httpclient.execute(get, responseHandler);
 			JSONObject json = null;
@@ -743,6 +697,8 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 			post.setHeader("Accept-Language","zh-CN,zh");
 			post.setHeader("Connection","keep-alive");
 			post.setHeader("Accept-Charset","GBK,utf-8;q=0.7,*;q=0.3");
+			post.setHeader("User-Agent", UserAgent);
+			
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
 			String response = httpclient.execute(post, responseHandler);
 			if(response != null && response.indexOf("{")>-1){
@@ -789,11 +745,13 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 		get.setHeader("If-Modified-Since","0");
 		get.setHeader("X-Requested-With","XMLHttpRequest");
 		get.setHeader("Referer","https://kyfw.12306.cn/otn/leftTicket/init");
+		get.setHeader("User-Agent", UserAgent);
 		StringBuilder ck = new StringBuilder();
 		ck.append("_jc_save_fromStation=").append(from).append("%2C").append(Util.getCityCode(from)).append("; ")
 		.append("_jc_save_toStation=").append(to).append("%2C").append(Util.getCityCode(to)).append("; ")
 		.append("_jc_save_fromDate=").append(startDate).append("; ")
-		.append("_jc_save_toDate=2014-12-17; _jc_save_wfdc_flag=dc");
+		.append("jc_save_showZtkyts=true; _jc_save_toDate=2015-05-24; _jc_save_detail=true; _jc_save_wfdc_flag=dc");
+		 
 		get.setHeader("Cookie",ck.toString());
 		String responseBody = null;
 		try {
@@ -837,6 +795,8 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 		get.setHeader("If-Modified-Since","0");
 		get.setHeader("X-Requested-With","XMLHttpRequest");
 		get.setHeader("Cookie","_jc_save_fromDate=2014-12-24");
+		get.setHeader("User-Agent", UserAgent);
+		
 		StringBuilder ck = new StringBuilder();
 		ck.append("_jc_save_fromStation=").append(from).append("%2C").append(Util.getCityCode(from)).append("; ")
 		.append("_jc_save_toStation=").append(to).append("%2C").append(Util.getCityCode(to)).append("; ")
@@ -992,6 +952,7 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 		httppost.setHeader("Accept-Language","zh-CN,zh");
 		httppost.setHeader("Connection","keep-alive");
 		httppost.setHeader("Accept-Charset","GBK,utf-8;q=0.7,*;q=0.3");
+		httppost.setHeader("User-Agent", UserAgent);
 		
 		String responseBody = null;
 		Page<UserInfo> all = null;
@@ -1039,7 +1000,7 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 	public Result login(String username, String password, String randCode){
 		log.debug("-----------------login validate-----------------------");
 		Result rs = new Result();
-		if(!checkRandCode(randCode)){
+		if(!checkRandCode(randCode,null)){
 			rs.setState(Result.RAND_CODE_ERROR);
 			return rs;
 		}
@@ -1050,7 +1011,7 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 		parameters.add(new BasicNameValuePair("randCode", randCode));
 		parameters.add(new BasicNameValuePair("userDTO.password", password));
 		parameters.add(new BasicNameValuePair("myversion", "undefined"));
-		parameters.add(getLoginValidate("https://kyfw.12306.cn/otn/login/init",false));
+		parameters.add(getLoginValidate("https://kyfw.12306.cn/otn/login/init"));
 		String responseBody = null;
 		HttpResponse response = null;
 		try {
@@ -1061,6 +1022,8 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 			httppost.setHeader("Accept-Language","zh-CN,zh");
 			httppost.setHeader("Connection","keep-alive");
 			httppost.setHeader("Accept-Charset","utf-8");
+			httppost.setHeader("User-Agent", UserAgent);
+			
 			response = httpclient.execute(httppost);
 			if(log.isDebugEnabled()){
 				Header[] hds = response.getAllHeaders();
@@ -1114,13 +1077,17 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 	
 	private static final Pattern VALICDOE_PATTERN = Pattern.compile("/otn/dynamicJs/(\\w*)");
 	
-	protected NameValuePair getLoginValidate(String url,boolean callSub){
+	protected NameValuePair getLoginValidate(String url){
 		NameValuePair nv = null;
 		HttpGet get = new HttpGet(url);
 		get.setHeader("Host","kyfw.12306.cn");
+		get.setHeader("Accept,","*/*");
 		get.setHeader("Accept-Language","zh-CN,zh");
 		get.setHeader("Connection","keep-alive");
 		get.setHeader("User-Agent", UserAgent); 
+		get.setHeader("Referer", url);
+		get.setHeader("User-Agent", UserAgent);
+		
 		try {
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
 			String response = httpclient.execute(get,responseHandler);
@@ -1133,7 +1100,7 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 		    }
 		    log.info("valicode is : " + str);
 		    
-		    String vkey = getValcodeKey("/otn/dynamicJs/"+str,url,callSub);
+		    String vkey = getValcodeKey("/otn/dynamicJs/"+str,url);
 		    String value = Util.getDynamicInput(vkey);
 		    nv = new BasicNameValuePair(vkey,value);
 			
@@ -1148,9 +1115,10 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 	
 	private static final Pattern VALICDOE_KEY_PATTERN = Pattern.compile("gc\\(\\)\\{var \\w*='(\\w*)'");
 	
-	protected String getValcodeKey(String uri,String referer,boolean callSub){
+	protected String getValcodeKey(String uri,String referer){
 		HttpGet get = new HttpGet(Constants.BASE_VALIDATE_URL+uri);
 		get.setHeader("Referer",referer);
+		get.setHeader("Accept,","*/*");
 		get.setHeader("Host","kyfw.12306.cn");
 		get.setHeader("Accept-Language","zh-CN,zh");
 		get.setHeader("Connection","keep-alive");
@@ -1161,9 +1129,11 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 			log.debug(response);
 			Matcher matcher = VALICDOE_KEY_PATTERN.matcher (response);
 		    String code = "";
+		    int mcount = 0;
 		    while (matcher.find ())
 		    {
 		    	code = matcher.group(1);
+		    	
 		    }
 		    log.info("valicode key is : " + code);
 			matcher = VALICDOE_PATTERN.matcher (response);
@@ -1171,8 +1141,10 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 		    while (matcher.find ())
 		    {
 		    	suburi = matcher.group(1);
+		    	mcount ++;
 		    }
-		    if(callSub){
+		    if(mcount == 2){
+		    	Thread.sleep(200);
 		    	callSubValidate(suburi,referer);
 		    }
 		    return code;
@@ -1184,15 +1156,20 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 	}
 	
 	protected void callSubValidate(String uri,String referer){
-		HttpGet get = new HttpGet(Constants.BASE_VALIDATE_URL+"/otn/dynamicJs/"+uri);
-		get.setHeader("Referer",referer);
-		get.setHeader("Host","kyfw.12306.cn");
-		get.setHeader("Accept-Language","zh-CN,zh");
-		get.setHeader("Connection","keep-alive");
-		get.setHeader("User-Agent", UserAgent); 
+		HttpPost post = new HttpPost(Constants.BASE_VALIDATE_URL+"/otn/dynamicJs/"+uri);
+		post.setHeader("Referer",referer);
+		post.setHeader("Host","kyfw.12306.cn");
+		post.setHeader("Accept-Language","zh-CN,zh");
+		post.setHeader("Connection","keep-alive");
+		post.setHeader("User-Agent", UserAgent); 
+		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+		parameters.add(new BasicNameValuePair("_json_att", ""));
+		UrlEncodedFormEntity uef = new UrlEncodedFormEntity(parameters,Consts.UTF_8);
+		post.setEntity(uef);
+		
 		try {
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
-			String response = httpclient.execute(get,responseHandler);
+			String response = httpclient.execute(post,responseHandler);
 			log.debug(response);
 		}catch(UnknownHostException e){
 			throw new NetConnectException(e);
@@ -1202,23 +1179,34 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 	}
 	
 	
-	private boolean checkRandCode(String randCode){
+	public boolean checkRandCode(String randCode,String token){
 		HttpPost httppost = new HttpPost(Constants.CHECK_RAND);
 		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 		parameters.add(new BasicNameValuePair("randCode", randCode));
-		parameters.add(new BasicNameValuePair("rand", "sjrand"));
 		String responseBody = null;
 		HttpResponse response = null;
 		try {
+			log.info("randcode to validate is :"+ randCode);
+			if(token != null){
+				parameters.add(new BasicNameValuePair("REPEAT_SUBMIT_TOKEN", token));
+				parameters.add(new BasicNameValuePair("rand", "randp"));
+				httppost.setHeader("Referer","https://kyfw.12306.cn/otn/confirmPassenger/initDc");
+			}else{
+				parameters.add(new BasicNameValuePair("rand", "sjrand"));
+				httppost.setHeader("Referer","https://kyfw.12306.cn/otn/login/init");
+			}
+
 			UrlEncodedFormEntity uef = new UrlEncodedFormEntity(parameters,Consts.UTF_8);
 			httppost.setEntity(uef);
 			//OLD httppost.setHeader("Referer","https://dynamic.12306.cn/otsweb/loginAction.do?method=login");
-			httppost.setHeader("Referer","https://kyfw.12306.cn/otn/login/init");
+			
 			
 			httppost.setHeader("Host","kyfw.12306.cn");
 			httppost.setHeader("Accept-Language","zh-CN,zh");
 			httppost.setHeader("Connection","keep-alive");
 			httppost.setHeader("Accept-Charset","utf-8");
+			httppost.setHeader("User-Agent", UserAgent);
+			
 			response = httpclient.execute(httppost);
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
 			responseBody = responseHandler.handleResponse(response);
@@ -1253,6 +1241,8 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 		//post.setHeader("Accept-Encoding","gzip,deflat"); 加了会乱码
 		get.setHeader("Accept-Language","zh-CN,zh");
 		get.setHeader("Connection","keep-alive");
+		get.setHeader("User-Agent", UserAgent);
+		
 		try {
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
 			String response = httpclient.execute(get,responseHandler);
@@ -1312,12 +1302,14 @@ REPEAT_SUBMIT_TOKEN:bcd98b8c13878d64ecebf8a9da77b532
 		if(Constants.LOGIN_CODE_URL.equals(url)){
 			get.setHeader("Referer","https://kyfw.12306.cn/otn/login/init");
 		}else{
-			get.setHeader("Referer","https://kyfw.12306.cn/otn/login/init");
+			get.setHeader("Referer","https://kyfw.12306.cn/otn/confirmPassenger/initDc");
 		}
 		get.setHeader("Host","kyfw.12306.cn");
 		get.setHeader("Accept-Language","zh-CN,zh");
 		get.setHeader("Connection","keep-alive");
 		get.setHeader("Accept-Charset","GBK,utf-8;q=0.7,*;q=0.3");
+		get.setHeader("User-Agent", UserAgent);
+		
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		byte[] content = null;
 		try {

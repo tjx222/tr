@@ -55,7 +55,7 @@ public class LoginThread extends BaseThread {
 						break;
 					}
 					
-					rs = trainClient.login(rob.getUsername(), rob.getPassword(),	Constants.randCode);
+					rs = trainClient.login(rob.getUsername(), rob.getPassword(),Constants.randCode);
 					if (rs.getState() == Result.SUCC) {
 						if(rob.needRemberMe())
 							rob.writeUserInfo();
