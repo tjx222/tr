@@ -13,7 +13,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -33,16 +32,16 @@ import com.tmser.train.ResManager;
  */
  class ProxySetAction extends AbstractAction{
 	private static final long serialVersionUID = -798538352042404436L;
-	JFrame parentsFrame;
+	RobTicket robTicket;
 	JRadioButton rbEnableProxy,rbDisableProxy;
 	JButton btnApply;
 
-	protected ProxySetAction(JFrame frame) {
-		this.parentsFrame = frame;
+	protected ProxySetAction(RobTicket rob) {
+		this.robTicket = rob;
 	}
 
 	public void actionPerformed(ActionEvent e) {
-        final JDialog dialog = new JDialog(parentsFrame,
+        final JDialog dialog = new JDialog(robTicket.getFrame(),
                 ResManager.getString("RobTicket.miProxy"),
                 true);
         JPanel panelProxy = new JPanel();
@@ -105,15 +104,20 @@ import com.tmser.train.ResManager;
 							ResManager.getString("RobTicket.msg.tip"),JOptionPane.OK_OPTION);
 					return;
 				}
+				boolean proxy = Config.isUseProxy();
 				Config.setUseProxy(group.isSelected(rbEnableProxy.getModel()));
 				Config.setProxyIp(txtProxyIp.getText().trim());
 				Config.setProxyPort(txtProxyPort.getText().replaceAll(" ", ""));
 				if(Config.saveConfig()){
 					dialog.setVisible(false);
+					if(proxy != Config.isUseProxy()){
+						robTicket.setProxy();
+					}
 				}else{
 					JOptionPane.showConfirmDialog(dialog, ResManager.getString("RobTicket.msg.failture"),
 							ResManager.getString("RobTicket.msg.tip"),JOptionPane.OK_OPTION);
 				}
+				
 			}
 		
 		boolean checkFormat(String value){
@@ -135,7 +139,7 @@ import com.tmser.train.ResManager;
 		dialog.setResizable(false);
 		dialog.setContentPane(panelProxy);
 		dialog.setSize(new Dimension(300,220));
-        dialog.setLocationRelativeTo(parentsFrame);
+        dialog.setLocationRelativeTo(robTicket.getFrame());
         dialog.setVisible(true);
 	}
 }

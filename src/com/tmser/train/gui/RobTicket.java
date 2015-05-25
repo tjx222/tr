@@ -96,10 +96,6 @@ import com.tmser.train.logic.TrainClient;
  * @version 1.0
  */
 public class RobTicket {
-	public HttpClient getHttpClient() {
-		return httpClient;
-	}
-
 	private static final Logger logger = LoggerFactory.getLogger(RobTicket.class);
 	public static final String LOGIN_BEGIN = "f1";
 	public static final String LOGIN_SUCC = "f2";
@@ -231,6 +227,10 @@ public class RobTicket {
 	private LoginInfo li;
 	
 	private volatile boolean isIeOpen = false;
+	
+	public HttpClient getHttpClient() {
+		return httpClient;
+	}
 	
 	//<option value="1" selected="">成人票</option><option value="2">儿童票</option><option value="3">学生票</option><option value="4">残军票</option>
 	/**
@@ -793,7 +793,7 @@ public class RobTicket {
 		JMenuItem miProxy = new JMenuItem(
 				ResManager.getString("RobTicket.miProxy"));
 		mnOpt.add(miProxy);
-		miProxy.addActionListener(new ProxySetAction(frame));
+		miProxy.addActionListener(new ProxySetAction(this));
 		
 		JMenuItem miSms = new JMenuItem(
 				ResManager.getString("RobTicket.sms.setting"));
@@ -1461,6 +1461,16 @@ private void selectUser(JList list){
 		}
 	}
 
+	public void setProxy(){
+		if (Config.isUseProxy()) {
+			HttpHost proxy = new HttpHost(Config.getProxyIp(),
+					Config.getProxyPort(), HttpHost.DEFAULT_SCHEME_NAME);
+			httpClient.getParams().setParameter(
+					ConnRoutePNames.DEFAULT_PROXY, proxy);
+		}else{
+			httpClient.getParams().removeParameter(ConnRoutePNames.DEFAULT_PROXY);
+		}
+	}
 	/**
 	 * 退出线程
 	 * 
